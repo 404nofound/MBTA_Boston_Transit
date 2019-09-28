@@ -177,16 +177,15 @@ public class MapFragment extends Fragment implements
     }
 
     private void requestTimeSchedule(String id) {
-        String url = "https://api-v3.mbta.com/predictions?filter[route]=Blue,Orange,Red,Mattapan,Green-B,Green-C,Green-D,Green-E&filter[stop]=" + id;
+        String url = "https://api-v3.mbta.com/predictions?filter[route_type]=0,1&sort=stop_sequence,time&filter[stop]=" + id;
 
+        //Log.d("HHH", url);
         HttpClientUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
 
                 Gson gson = new Gson();
-                final TimeScheduleBean timeScheduleItem = gson.fromJson(response.body().string().trim(), TimeScheduleBean.class);
-
-
+                TimeScheduleBean timeScheduleItem = gson.fromJson(response.body().string().trim(), TimeScheduleBean.class);
 
                 for (int i = 0; i < timeScheduleItem.getData().size(); i++) {
                     //alertList.add(alertItem.getData().get(i));
@@ -195,10 +194,17 @@ public class MapFragment extends Fragment implements
                     //station[1] = nearbyStationItem.getIncluded().get(i).getId();
 
                     //stations.add(station);
-                    String route_id = timeScheduleItem.getData().get(i).getRelationships().getRoute().getData().getId();
-                    String arrTimeNode = timeScheduleItem.getData().get(i).getAttributes().getArrival_time();
+                    String arrTimeData = timeScheduleItem.getData().get(i).getAttributes().getArrival_time();
+                    String depTimeData = timeScheduleItem.getData().get(i).getAttributes().getDeparture_time();
+                    //String status = timeScheduleItem.getData().get(i).getAttributes().getStatus().toString() + "";
 
-                    Log.d("SSSS", route_id+","+arrTimeNode);
+                    String route_id = timeScheduleItem.getData().get(i).getRelationships().getRoute().getData().getId();
+                    int direction_id = timeScheduleItem.getData().get(i).getAttributes().getDirection_id();
+                    String stop_id = timeScheduleItem.getData().get(i).getRelationships().getStop().getData().getId();
+
+
+                    Log.d("DETAIL", route_id+","+direction_id+","+
+                            stop_id+","+""+","+arrTimeData+","+depTimeData);
                 }
 
                 /*if (getActivity() != null) {
@@ -209,24 +215,6 @@ public class MapFragment extends Fragment implements
                             //adapter.notifyDataSetChanged();
                         }
                     });
-                }*/
-
-
-                /*final String cause = alertItem.getData().get(0).getAttributes().getCause();
-                final String header = alertItem.getData().get(0).getAttributes().getHeader();
-
-                if (true) {
-                    if (getActivity() != null) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Toast.makeText(getActivity(), header+","+cause, Toast.LENGTH_SHORT).show();
-                                //showProgress(false);
-                                //updateMap();
-                                //fab.setVisibility(View.VISIBLE);
-                            }
-                        });
-                    }
                 }*/
             }
 
@@ -247,9 +235,9 @@ public class MapFragment extends Fragment implements
     }
 
     private void requestNearbyStations(double lat, double lng) {
-        String url = "https://api-v3.mbta.com/stops?include=parent_station&filter[route_type]=0,1&filter[latitude]=" + lat + "&filter[longitude]=" + lng + "&filter[radius]=0.01&sort=distance";
+        String url = "https://api-v3.mbta.com/stops?filter[route_type]=0,1&filter[latitude]=" + lat + "&filter[longitude]=" + lng + "&filter[radius]=0.01&sort=distance";
 
-        Log.d("QQQQ", url);
+        //Log.d("QQQQ", url);
         HttpClientUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
@@ -260,18 +248,14 @@ public class MapFragment extends Fragment implements
                 String ids = "";
 
                 for (int i = 0; i < nearbyStationItem.getData().size(); i++) {
-                    //alertList.add(alertItem.getData().get(i));
                     String[] station = new String[2];
                     station[0] = nearbyStationItem.getData().get(i).getAttributes().getName();
                     station[1] = nearbyStationItem.getData().get(i).getId();
-                    //station[1] = nearbyStationItem.getData().get(i).getRelationships().getParent_station().;
 
-                    Log.d("AAA", station[0]+","+station[1]);
+                    //Log.d("AAA", station[0]+","+station[1]);
+                    //stations.add(station);
 
-
-                    stations.add(station);
-
-                    ids += "," + station[1];
+                    ids += station[1] + ",";
                 }
 
 
@@ -286,27 +270,6 @@ public class MapFragment extends Fragment implements
                         }
                     });
                 }*/
-
-
-
-
-                /*final String cause = alertItem.getData().get(0).getAttributes().getCause();
-                final String header = alertItem.getData().get(0).getAttributes().getHeader();
-
-                if (true) {
-                    if (getActivity() != null) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Toast.makeText(getActivity(), header+","+cause, Toast.LENGTH_SHORT).show();
-                                //showProgress(false);
-                                //updateMap();
-                                //fab.setVisibility(View.VISIBLE);
-                            }
-                        });
-                    }
-                }*/
-
             }
 
             @Override
