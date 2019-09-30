@@ -10,9 +10,12 @@ public class TimeScheduleBean {
      * jsonapi : {"version":"1.0"}
      */
 
+
     private JsonapiBean jsonapi;
     private List<DataBeanXXXX> data;
     private List<IncludedBean> included;
+
+
 
     public JsonapiBean getJsonapi() {
         return jsonapi;
@@ -61,11 +64,21 @@ public class TimeScheduleBean {
          * relationships : {"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70130","type":"stop"}},"trip":{"data":{"id":"ADDED-1569507200","type":"trip"}},"vehicle":{"data":{"id":"G-10024","type":"vehicle"}}}
          * type : prediction
          */
+        private String stationName;
 
         private AttributesBean attributes;
         private String id;
         private RelationshipsBean relationships;
         private String type;
+
+
+        public String getStationName() {
+            return stationName;
+        }
+
+        public void setStationName(String stationName) {
+            this.stationName = stationName;
+        }
 
         public AttributesBean getAttributes() {
             return attributes;

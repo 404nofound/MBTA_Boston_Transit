@@ -18,9 +18,11 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.eddy.mbta.R;
-import com.eddy.mbta.json.AlertBean;
+
 import com.eddy.mbta.json.NearbyStationBean;
 import com.eddy.mbta.json.TimeScheduleBean;
 import com.eddy.mbta.utils.HttpClientUtil;
@@ -73,10 +75,10 @@ public class MapFragment extends Fragment implements
     public static double lng;
 
 
-    private ScheduleAdapter adapter;
-    private List<AlertBean.DataBean> scheduleList = new ArrayList<>();
+    private NearbyStationAdapter nearbyStationAdapter;
+    private List<NearbyStationBean.IncludedBean> nearbyStationList = new ArrayList<>();
 
-    private List<String[]> stations = new ArrayList<>();
+
 
     private MapViewModel mapViewModel;
 
@@ -118,12 +120,14 @@ public class MapFragment extends Fragment implements
             }
         });*/
 
-        /*RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+        //requestTimeSchedule(1,1,"");
+
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
 
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new ScheduleAdapter(scheduleList);
-        recyclerView.setAdapter(adapter);*/
+        nearbyStationAdapter = new NearbyStationAdapter(nearbyStationList);
+        recyclerView.setAdapter(nearbyStationAdapter);
 
         return root;
     }
@@ -176,10 +180,11 @@ public class MapFragment extends Fragment implements
         enableMyLocation();
     }
 
-    private void requestTimeSchedule(String id) {
-        String url = "https://api-v3.mbta.com/predictions?filter[route_type]=0,1&sort=stop_sequence,time&filter[stop]=" + id;
+    private void requestTimeSchedule(final int num, int direction, String id) {
+        String url = "https://api-v3.mbta.com/predictions?filter[route_type]=0,1&sort=time&filter[stop]=" + id + "&filter[direction_id]=" + direction;
 
-        //Log.d("HHH", url);
+        //String url = "https://api-v3.mbta.com/predictions?filter[route_type]=0,1&sort=stop_sequence,time&filter[stop]=place-brico,place-babck,place-plsgr,place-harvd,place-stplb,place-cool,place-grigg&sort=stop_sequence,time";
+        Log.d("HHH", url);
         HttpClientUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
@@ -187,35 +192,60 @@ public class MapFragment extends Fragment implements
                 Gson gson = new Gson();
                 TimeScheduleBean timeScheduleItem = gson.fromJson(response.body().string().trim(), TimeScheduleBean.class);
 
-                for (int i = 0; i < timeScheduleItem.getData().size(); i++) {
-                    //alertList.add(alertItem.getData().get(i));
-                    //String[] station = new String[2];
-                    //station[0] = nearbyStationItem.getIncluded().get(i).getAttributes().getName();
-                    //station[1] = nearbyStationItem.getIncluded().get(i).getId();
+                int size = timeScheduleItem.getData().size();
 
-                    //stations.add(station);
+                if (size > 2) {
+                    size = 2;
+                }
+
+                for (int i = 0; i < size; i++) {
+
+                    //timeScheduleItem.getData().get(i).setStationName(stationName);
+
+
                     String arrTimeData = timeScheduleItem.getData().get(i).getAttributes().getArrival_time();
                     String depTimeData = timeScheduleItem.getData().get(i).getAttributes().getDeparture_time();
-                    //String status = timeScheduleItem.getData().get(i).getAttributes().getStatus().toString() + "";
 
                     String route_id = timeScheduleItem.getData().get(i).getRelationships().getRoute().getData().getId();
                     int direction_id = timeScheduleItem.getData().get(i).getAttributes().getDirection_id();
                     String stop_id = timeScheduleItem.getData().get(i).getRelationships().getStop().getData().getId();
 
+                    Log.d("DETAIL", route_id+","+direction_id+","+
+                            stop_id+","+arrTimeData+","+depTimeData);
+
+                    /*scheduleList.get(num).setArrTime(arrTimeData);
+                    scheduleList.get(num).setDepTime(depTimeData);
+                    scheduleList.get(num).setRoute_id(route_id);
+                    scheduleList.get(num).setDirection_id(direction_id);
+                    //scheduleList.get(num).setArrTime(arrTimeData);*/
+
+                    //scheduleList.add(timeScheduleItem.getData().get(i));
+                    //alertList.add(alertItem.getData().get(i));
+                    //String[] station = new String[2];
+                    //station[0] = nearbyStationItem.getIncluded().get(i).getAttributes().getName();
+                    //station[1] = nearbyStationItem.getIncluded().get(i).getId();
+                }
+                    //stations.add(station);
+                    /*String arrTimeData = timeScheduleItem.getData().get(i).getAttributes().getArrival_time();
+                    String depTimeData = timeScheduleItem.getData().get(i).getAttributes().getDeparture_time();
+
+                    String route_id = timeScheduleItem.getData().get(i).getRelationships().getRoute().getData().getId();
+                    int direction_id = timeScheduleItem.getData().get(i).getAttributes().getDirection_id();
+                    String stop_id = timeScheduleItem.getData().get(i).getRelationships().getStop().getData().getId();
 
                     Log.d("DETAIL", route_id+","+direction_id+","+
-                            stop_id+","+""+","+arrTimeData+","+depTimeData);
-                }
+                            stop_id+","+arrTimeData+","+depTimeData);
+                }*/
 
-                /*if (getActivity() != null) {
+                if (getActivity() != null) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             //Toast.makeText(mContext, nearbyStationItem.getIncluded().get(0).getAttributes().getName(), Toast.LENGTH_LONG).show();
-                            //adapter.notifyDataSetChanged();
+                            nearbyStationAdapter.notifyDataSetChanged();
                         }
                     });
-                }*/
+                }
             }
 
             @Override
@@ -235,7 +265,7 @@ public class MapFragment extends Fragment implements
     }
 
     private void requestNearbyStations(double lat, double lng) {
-        String url = "https://api-v3.mbta.com/stops?filter[route_type]=0,1&filter[latitude]=" + lat + "&filter[longitude]=" + lng + "&filter[radius]=0.01&sort=distance";
+        String url = "https://api-v3.mbta.com/stops?include=parent_station&filter[route_type]=0,1&filter[latitude]=" + lat + "&filter[longitude]=" + lng + "&filter[radius]=0.01&sort=distance";
 
         //Log.d("QQQQ", url);
         HttpClientUtil.sendOkHttpRequest(url, new Callback() {
@@ -245,31 +275,38 @@ public class MapFragment extends Fragment implements
                 Gson gson = new Gson();
                 NearbyStationBean nearbyStationItem = gson.fromJson(response.body().string().trim(), NearbyStationBean.class);
 
-                String ids = "";
+                nearbyStationList.addAll(nearbyStationItem.getIncluded());
+                //String ids = "";
 
-                for (int i = 0; i < nearbyStationItem.getData().size(); i++) {
-                    String[] station = new String[2];
-                    station[0] = nearbyStationItem.getData().get(i).getAttributes().getName();
-                    station[1] = nearbyStationItem.getData().get(i).getId();
+                /*for (int i = 0; i < nearbyStationItem.getIncluded().size(); i++) {
 
-                    //Log.d("AAA", station[0]+","+station[1]);
-                    //stations.add(station);
+                    String stationName = nearbyStationItem.getIncluded().get(i).getAttributes().getName();
+                    String stationId = nearbyStationItem.getIncluded().get(i).getId();
 
-                    ids += station[1] + ",";
-                }
+                    Schedule schedule = new Schedule();
+                    schedule.setStationName(stationName);
+                    schedule.setStationId(stationId);
+                    scheduleList.add(schedule);
+
+                    Log.d("AAA", stationName+","+stationId);
 
 
-                requestTimeSchedule(ids);
+                    //requestTimeSchedule(i,0,stationId);
+                    //requestTimeSchedule(i,1,stationId);
+                } */
 
-                /*if (getActivity() != null) {
+
+
+
+                if (getActivity() != null) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             //Toast.makeText(mContext, nearbyStationItem.getIncluded().get(0).getAttributes().getName(), Toast.LENGTH_LONG).show();
-                            //adapter.notifyDataSetChanged();
+                            nearbyStationAdapter.notifyDataSetChanged();
                         }
                     });
-                }*/
+                }
             }
 
             @Override
