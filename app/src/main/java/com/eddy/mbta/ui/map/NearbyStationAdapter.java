@@ -12,7 +12,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eddy.mbta.R;
@@ -31,8 +30,6 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
     private Window mWindow;
     private View mRoot;
 
-    private FragmentActivity activity;
-
     static class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         ImageView wheelchair;
@@ -46,11 +43,10 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
         }
     }
 
-    public NearbyStationAdapter(List<NearbyStationBean.IncludedBean> nearbyStationList, Window window, View root, FragmentActivity act) {
+    public NearbyStationAdapter(List<NearbyStationBean.IncludedBean> nearbyStationList, Window window, View root) {
         mNearbyStationList = nearbyStationList;
         mWindow = window;
         mRoot = root;
-        activity = act;
     }
 
     @Override
@@ -66,7 +62,7 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
                 int position = holder.getAdapterPosition();
                 NearbyStationBean.IncludedBean station = mNearbyStationList.get(position);
 
-                SchedulePopWindow PopWin = new SchedulePopWindow(mContext, station.getId(), activity);
+                SchedulePopWindow PopWin = new SchedulePopWindow(mContext, station.getAttributes().getName(), station.getId());
 
                 PopWin.showAtLocation(mRoot.findViewById(R.id.layout), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
 

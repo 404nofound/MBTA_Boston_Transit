@@ -2,14 +2,24 @@ package com.eddy.mbta.ui.map;
 
 public class Schedule {
 
+    private int icon;
     private String stationName;
-    private String stationId;
-    private int direction_id;
     private String arrTime;
     private String depTime;
     private String route_id;
+    private String start;
+    private String end;
+
 
     public Schedule() {}
+
+    public int getIcon() {
+        return icon;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
+    }
 
     public String getStationName() {
         return stationName;
@@ -19,20 +29,20 @@ public class Schedule {
         this.stationName = stationName;
     }
 
-    public String getStationId() {
-        return stationId;
+    public String getStart() {
+        return start;
     }
 
-    public void setStationId(String stationId) {
-        this.stationId = stationId;
+    public void setStart(String start) {
+        this.start = start;
     }
 
-    public int getDirection_id() {
-        return direction_id;
+    public String getEnd() {
+        return end;
     }
 
-    public void setDirection_id(int direction_id) {
-        this.direction_id = direction_id;
+    public void setEnd(String end) {
+        this.end = end;
     }
 
     public String getArrTime() {

@@ -127,7 +127,7 @@ public class MapFragment extends Fragment implements
 
         Window window = getActivity().getWindow();
 
-        nearbyStationAdapter = new NearbyStationAdapter(nearbyStationList, window, root, getActivity());
+        nearbyStationAdapter = new NearbyStationAdapter(nearbyStationList, window, root);
         recyclerView.setAdapter(nearbyStationAdapter);
 
         return root;
@@ -173,7 +173,7 @@ public class MapFragment extends Fragment implements
         //poly = DecodePolylineUtil.decodePoly("qsaaGfrvpLYLuDxAI?e@MWASBcElAq@LsCZc@HaOfBoOlByB^??yB`@uE|@qBFqA@{AOu@Qo@]iAi@o@a@o@i@k@i@q@u@a@k@]m@c@{@Sc@Uq@_@qAm@wDCSo@sD??G_@Mm@Ge@IeACq@Ac@Ay@AkDAeDEmAMqAI_@Ia@I[Oc@i@iAU]_@_@SO}@g@IAIC{@CaB?uABcAEy@GiAMuAWYGc@KqDu@yHiAgBYO?_AM}@KyA[}@Ui@QmA]kA_@cA_@aA[}Am@??SI]KoBq@_AYoDcAeBc@mASwAOoBEs@?kCL}BDqC@cCFeA@_A@u@Dw@DmADiAF[@sBPyAF??u@DSByAPeAT}@V]Nk@Tm@X_@RcAv@WNo@r@]b@{DtF[h@}A|Bq@hAUZ}B|Cm@d@m@\\\\{@XY@MC_@QqBq@{F_C??g@ScnAl@??qCBie@i[y@c@m@QYIu@Gc@?i@DiARm@TQNa@f@uDbNIX??k@hBq@jBs@vBk@bA_JrQUj@??aDfI??[v@Wn@w@pBa@`Aa@fAwBtFc@~@k@hAsCxDwJ~N]|@Mb@K^CFKn@Gb@C\\\\ATCjAEt@GhBEbA??AXGlAAPM`DYjIM|CO|GM|DG|AGxCa@`MUbHs@fJOfD??ATIrB_Ap^s@jRWlJYdHOhGIpBKjAk@bBe@bAaDnGkBzD??m@pAwMpVgArCsBdGkEbPc@nAYb@a@d@eChDwG|HMPEFwCzNK^KVMJIB_@?iAO??kAOmB]gBGm@A[HSL[^a@|@e@fAo@r@iBh@aB^}@BkAGaNq@am@iDQ???sMUyQ~@uCJsBDo@Pc@Xm@l@m@bAaAvBu@pB]hAOx@UdAKr@??i@dD_@lDKlBOpCQjESvHKtEYbJg@rUGjCRnDFv@NbAPjAHRHLLFt@Nt@Vt@j@f@|@Vt@@DR~B@b@HpAFxN");
 
         LatLng my = new LatLng(lat, lng);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(my, 15));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(my, 13));
 
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMyLocationButtonClickListener(this);
@@ -184,7 +184,7 @@ public class MapFragment extends Fragment implements
 
 
     private void requestNearbyStations(double lat, double lng) {
-        String url = "https://api-v3.mbta.com/stops?include=parent_station&filter[route_type]=0,1&filter[latitude]=" + lat + "&filter[longitude]=" + lng + "&filter[radius]=0.01&sort=distance";
+        String url = "https://api-v3.mbta.com/stops?include=parent_station&filter[route_type]=0,1&filter[latitude]=" + lat + "&filter[longitude]=" + lng + "&filter[radius]=0.1&sort=distance";
 
         //Log.d("QQQQ", url);
         HttpClientUtil.sendOkHttpRequest(url, new Callback() {
