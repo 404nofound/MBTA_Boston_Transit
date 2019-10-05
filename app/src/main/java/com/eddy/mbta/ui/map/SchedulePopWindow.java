@@ -24,7 +24,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class SchedulePopWindow extends PopupWindow {
+public class SchedulePopWindow extends PopupWindow implements View.OnClickListener {
 
     private TimeScheduleAdapter adapter;
     private List<Schedule> mTotalList = new ArrayList<>();
@@ -32,8 +32,9 @@ public class SchedulePopWindow extends PopupWindow {
 
     private View view;
     private TextView startStation, endStation;
-    private ImageView red, mattapan, orange, greenb, greenc, greend, greene, blue;
+    private ImageView red, mattapan, orange, greenb, greenc, greend, greene, blue, overturn;
 
+    public String[] route_id = {"Red", "Mattapan", "Orange", "Green-B", "Green-C", "Green-D", "Green-E", "Blue"};
     public String[] start = {"Alewife", "Ashmont", "Oak Grove", "Park St", "North Station", "Park St", "Lechmere", "Bowdoin"};
     public String[] end = {"Braintree", "Mattapan", "Forest Hills", "Boston College", "Cleveland Circle", "Riverside", "Health St", "Wonderland"};
 
@@ -56,6 +57,17 @@ public class SchedulePopWindow extends PopupWindow {
         greend = view.findViewById(R.id.greend);
         greene = view.findViewById(R.id.greene);
         blue = view.findViewById(R.id.blue);
+        overturn = view.findViewById(R.id.overturn);
+
+        red.setOnClickListener(this);
+        mattapan.setOnClickListener(this);
+        orange.setOnClickListener(this);
+        greenb.setOnClickListener(this);
+        greenc.setOnClickListener(this);
+        greend.setOnClickListener(this);
+        greene.setOnClickListener(this);
+        blue.setOnClickListener(this);
+        overturn.setOnClickListener(this);
 
         stationName.setText(station_name);
 
@@ -130,6 +142,7 @@ public class SchedulePopWindow extends PopupWindow {
         @Override
         protected void onPostExecute(final TimeScheduleBean timeScheduleItem) {
 
+            int first_tag = 10;
             int number = timeScheduleItem.getData().size();
             for (int i = 0; i < number; i++) {
 
@@ -142,6 +155,7 @@ public class SchedulePopWindow extends PopupWindow {
                 int direction_id = timeScheduleItem.getData().get(i).getAttributes().getDirection_id();
 
                 if ("Orange".equals(route_id)) {
+                    if (first_tag > 2) first_tag = 2;
                     orange.setVisibility(View.VISIBLE);
                     schedule.setIcon(R.drawable.ic_orange);
                     if (direction_id == 0) {
@@ -152,6 +166,7 @@ public class SchedulePopWindow extends PopupWindow {
                         schedule.setEnd(start[2]);
                     }
                 } else if ("Red".equals(route_id)) {
+                    if (first_tag > 0) first_tag = 0;
                     red.setVisibility(View.VISIBLE);
                     schedule.setIcon(R.drawable.ic_red);
                     if (direction_id == 0) {
@@ -162,6 +177,7 @@ public class SchedulePopWindow extends PopupWindow {
                         schedule.setEnd(start[0]);
                     }
                 } else if ("Mattapan".equals(route_id)) {
+                    if (first_tag > 1) first_tag = 1;
                     mattapan.setVisibility(View.VISIBLE);
                     schedule.setIcon(R.drawable.ic_mattapan);
                     if (direction_id == 0) {
@@ -172,6 +188,7 @@ public class SchedulePopWindow extends PopupWindow {
                         schedule.setEnd(start[1]);
                     }
                 } else if ("Blue".equals(route_id)) {
+                    if (first_tag > 7) first_tag = 7;
                     blue.setVisibility(View.VISIBLE);
                     schedule.setIcon(R.drawable.ic_blue);
                     if (direction_id == 0) {
@@ -182,6 +199,7 @@ public class SchedulePopWindow extends PopupWindow {
                         schedule.setEnd(start[7]);
                     }
                 } else if (route_id.endsWith("B")) {
+                    if (first_tag > 3) first_tag = 3;
                     greenb.setVisibility(View.VISIBLE);
                     schedule.setIcon(R.drawable.ic_greenb);
                     if (direction_id == 0) {
@@ -192,6 +210,7 @@ public class SchedulePopWindow extends PopupWindow {
                         schedule.setEnd(start[3]);
                     }
                 } else if (route_id.endsWith("C")) {
+                    if (first_tag > 4) first_tag = 4;
                     greenc.setVisibility(View.VISIBLE);
                     schedule.setIcon(R.drawable.ic_greenc);
                     if (direction_id == 0) {
@@ -202,6 +221,7 @@ public class SchedulePopWindow extends PopupWindow {
                         schedule.setEnd(start[4]);
                     }
                 } else if (route_id.endsWith("D")) {
+                    if (first_tag > 5) first_tag = 5;
                     greend.setVisibility(View.VISIBLE);
                     schedule.setIcon(R.drawable.ic_greend);
                     if (direction_id == 0) {
@@ -212,6 +232,7 @@ public class SchedulePopWindow extends PopupWindow {
                         schedule.setEnd(start[5]);
                     }
                 } else if (route_id.endsWith("E")) {
+                    if (first_tag > 6) first_tag = 6;
                     greene.setVisibility(View.VISIBLE);
                     schedule.setIcon(R.drawable.ic_greene);
                     if (direction_id == 0) {
@@ -226,13 +247,20 @@ public class SchedulePopWindow extends PopupWindow {
                 schedule.setArrTime(arrTimeData);
                 schedule.setDepTime(depTimeData);
                 schedule.setRoute_id(route_id);
+                schedule.setDirection_id(direction_id);
 
-                mScheduleList.add(schedule);
+                mTotalList.add(schedule);
             }
 
-            startStation.setText(mScheduleList.get(0).getStart());
-            endStation.setText(mScheduleList.get(0).getEnd());
-            adapter.notifyDataSetChanged();
+            if (first_tag != 10) {
+                startStation.setText(start[first_tag]);
+                endStation.setText(end[first_tag]);
+                //adapter.notifyDataSetChanged();
+
+                setTrainLine(route_id[first_tag], 0);
+            }
+
+
 
             mTask = null;
 
@@ -244,7 +272,75 @@ public class SchedulePopWindow extends PopupWindow {
         }
     }
 
+    private void setTrainLine(String route_id, int direction_id) {
+        mScheduleList.clear();
+        for (Schedule s : mTotalList) {
+            if (s.getRoute_id().equals(route_id) && s.getDirection_id() == direction_id) {
+                mScheduleList.add(s);
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.red:
+                startStation.setText(start[0]);
+                endStation.setText(end[0]);
+                setTrainLine("Red", 0);
+                break;
+            case R.id.mattapan:
+                startStation.setText(start[1]);
+                endStation.setText(end[1]);
+                setTrainLine("Mattapan", 0);
+                break;
+            case R.id.orange:
+                startStation.setText(start[2]);
+                endStation.setText(end[2]);
+                setTrainLine("Orange", 0);
+                break;
+            case R.id.greenb:
+                startStation.setText(start[3]);
+                endStation.setText(end[3]);
+                setTrainLine("Green-B", 0);
+                break;
+            case R.id.greenc:
+                startStation.setText(start[4]);
+                endStation.setText(end[4]);
+                setTrainLine("Green-C", 0);
+                break;
+            case R.id.greend:
+                startStation.setText(start[5]);
+                endStation.setText(end[5]);
+                setTrainLine("Green-D", 0);
+                break;
+            case R.id.greene:
+                startStation.setText(start[6]);
+                endStation.setText(end[6]);
+                setTrainLine("Green-E", 0);
+                break;
+            case R.id.blue:
+                startStation.setText(start[7]);
+                endStation.setText(end[7]);
+                setTrainLine("Blue", 0);
+                break;
+            case R.id.overturn:
+                String s = startStation.getText().toString();
+                String e = endStation.getText().toString();
+                startStation.setText(e);
+                endStation.setText(s);
+                if (mScheduleList.get(0).getDirection_id() == 0) {
+                    setTrainLine(mScheduleList.get(0).getRoute_id(), 1);
+                } else {
+                    setTrainLine(mScheduleList.get(0).getRoute_id(), 0);
+                }
+
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 

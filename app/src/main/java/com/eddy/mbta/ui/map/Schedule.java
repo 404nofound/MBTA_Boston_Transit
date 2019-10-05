@@ -7,11 +7,19 @@ public class Schedule {
     private String arrTime;
     private String depTime;
     private String route_id;
+    private int direction_id;
     private String start;
     private String end;
 
-
     public Schedule() {}
+
+    public int getDirection_id() {
+        return direction_id;
+    }
+
+    public void setDirection_id(int direction_id) {
+        this.direction_id = direction_id;
+    }
 
     public int getIcon() {
         return icon;
