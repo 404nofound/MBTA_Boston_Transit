@@ -7,10 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,23 +26,13 @@ import okhttp3.Response;
 
 public class AlertsFragment extends Fragment {
 
-    private AlertsViewModel alertsViewModel;
-
     private AlertAdapter adapter;
     private List<AlertBean.DataBean> alertList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        alertsViewModel =
-                ViewModelProviders.of(this).get(AlertsViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_alerts, container, false);
-        //final TextView textView = root.findViewById(R.id.text_notifications);
-        alertsViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                //textView.setText(s);
-            }
-        });
 
         requestAlerts();
 

@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.eddy.mbta.ui.dashboard.DashboardFragment"
+        android:name="com.eddy.mbta.ui.stations.StationFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_train" />
 
     <fragment
         android:id="@+id/navigation_notifications"

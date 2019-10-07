@@ -78,8 +78,6 @@ public class MapFragment extends Fragment implements
     private NearbyStationAdapter nearbyStationAdapter;
     private List<NearbyStationBean.IncludedBean> nearbyStationList = new ArrayList<>();
 
-    private MapViewModel mapViewModel;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         //mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
