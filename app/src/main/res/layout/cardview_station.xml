@@ -18,23 +18,14 @@
         android:background="#ffffff"
         android:layout_margin="16dp">
 
-        <ImageView
-            android:id="@+id/route_image"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_greenb"
-            android:layout_marginEnd="20dp"
-            android:scaleType="centerCrop"/>
-
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/train_name"
+                android:id="@+id/station_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -42,34 +33,29 @@
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:gravity="center_vertical"
-                android:text="Green B"
+                android:text="North Station"
                 android:textSize="20sp"/>
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/station_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/start_station"
-                    style="@style/Widget.MaterialComponents.Chip.Action"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:chipMinHeight="40dp"
-                    android:layout_marginEnd="5dp"
-                    android:text="Start Station"/>
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/end_station"
-                    style="@style/Widget.MaterialComponents.Chip.Action"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:chipMinHeight="40dp"
-                    android:text="End Station"/>
-            </LinearLayout>
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:gravity="center_vertical"
+                android:text="1110 Commonwealth Ave, Boston, 02215"
+                android:textSize="16sp"/>
 
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/wheel_access"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/ic_wheelchair_disable"
+            android:layout_marginEnd="20dp"
+            android:scaleType="centerCrop"/>
 
     </LinearLayout>
 

@@ -1,6 +1,7 @@
 package com.eddy.mbta.ui.stations;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,11 +58,10 @@ public class TrainAdapter extends RecyclerView.Adapter<TrainAdapter.ViewHolder>{
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
-                /*AlertBean fruit = mAlertList.get(position);
-                Intent intent = new Intent(mContext, FruitActivity.class);
-                intent.putExtra(FruitActivity.FRUIT_NAME, fruit.getName());
-                intent.putExtra(FruitActivity.FRUIT_IMAGE_ID, fruit.getImageId());
-                mContext.startActivity(intent);*/
+
+                Intent intent = new Intent(mContext, DetailStationActivity.class);
+                intent.putExtra("train", route_id[position]);
+                mContext.startActivity(intent);
             }
         });
         return holder;

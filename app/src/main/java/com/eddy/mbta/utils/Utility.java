@@ -9,7 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Utility {
-    public static boolean handleTrainLineResponse(String response) {
+    public static boolean handleStationResponse(String response, String train) {
         if (!TextUtils.isEmpty(response)) {
             try {
                 JSONArray stationArray = new JSONArray(response);
@@ -17,10 +17,10 @@ public class Utility {
                 for (int i = 0; i < stationArray.length(); i++) {
                     JSONObject obj = stationArray.getJSONObject(i);
                     Station station = new Station();
-                    station.setStationName(obj.getString(""));
-                    station.setTrainName(obj.getString(""));
-                    station.setAddress(obj.getString(""));
-                    station.setWheelchair(obj.getInt(""));
+                    station.setStationName(obj.getString("name"));
+                    station.setTrainName(train);
+                    station.setAddress(obj.getString("address"));
+                    station.setWheelchair(obj.getInt("wheel"));
                     station.save();
                 }
                 return true;

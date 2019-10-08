@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">MBTA</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Map</string>
+    <string name="title_dashboard">Station</string>
+    <string name="title_notifications">Alert</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBenv056ScoAkEVbuAO5fGPkcBvz1GCPc4</string>
 
     <!--    Permissions    -->
