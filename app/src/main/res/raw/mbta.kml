@@ -41,7 +41,7 @@
       <Placemark>
         <name>Alewife</name>
         <Snippet/>
-        <description>Alewife</description>
+        <description>Click to see schedule/place-alfcl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.142483,42.395428</coordinates>
@@ -50,7 +50,7 @@
       <Placemark>
         <name>Davis</name>
         <Snippet/>
-        <description>Davis</description>
+        <description>Click to see schedule/place-davis</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.121815,42.396740</coordinates>
@@ -59,7 +59,7 @@
       <Placemark>
         <name>Porter</name>
         <Snippet/>
-        <description>Porter</description>
+        <description>Click to see schedule/place-portr</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.119149,42.388400</coordinates>
@@ -68,7 +68,7 @@
       <Placemark>
         <name>Harvard</name>
         <Snippet/>
-        <description>Harvard</description>
+        <description>Click to see schedule/place-harsq</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.118956,42.373362</coordinates>
@@ -77,7 +77,7 @@
       <Placemark>
         <name>Central</name>
         <Snippet/>
-        <description>Central</description>
+        <description>Click to see schedule/place-cntsq</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.103802,42.365486</coordinates>
@@ -86,7 +86,7 @@
       <Placemark>
         <name>Kendall/MIT</name>
         <Snippet/>
-        <description>Kendall/MIT</description>
+        <description>Click to see schedule/place-knncl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.086177,42.362491</coordinates>
@@ -95,7 +95,7 @@
       <Placemark>
         <name>Charles/MGH</name>
         <Snippet/>
-        <description>Charles/MGH</description>
+        <description>Click to see schedule/place-chmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.070628,42.361166</coordinates>
@@ -104,7 +104,7 @@
       <Placemark>
         <name>Park Street</name>
         <Snippet/>
-        <description>Park Street</description>
+        <description>Click to see schedule/place-pktrm</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.062424,42.356395</coordinates>
@@ -113,7 +113,7 @@
       <Placemark>
         <name>South Station</name>
         <Snippet/>
-        <description>South Station</description>
+        <description>Click to see schedule/place-sstat</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.055242,42.352271</coordinates>
@@ -122,7 +122,7 @@
       <Placemark>
         <name>Broadway</name>
         <Snippet/>
-        <description>Broadway</description>
+        <description>Click to see schedule/place-brdwy</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.056967,42.342622</coordinates>
@@ -131,7 +131,7 @@
       <Placemark>
         <name>Andrew</name>
         <Snippet/>
-        <description>Andrew</description>
+        <description>Click to see schedule/place-andrw</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.057655,42.330154</coordinates>
@@ -140,7 +140,7 @@
       <Placemark>
         <name>JFK/UMass</name>
         <Snippet/>
-        <description>JFK/UMass</description>
+        <description>Click to see schedule/place-jfk</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.052391,42.320685</coordinates>
@@ -149,7 +149,7 @@
       <Placemark>
         <name>Savin Hill</name>
         <Snippet/>
-        <description>Savin Hill</description>
+        <description>Click to see schedule/place-shmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.053331,42.311290</coordinates>
@@ -158,7 +158,7 @@
       <Placemark>
         <name>Fields Corner</name>
         <Snippet/>
-        <description>Fields Corner</description>
+        <description>Click to see schedule/place-fldcr</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.061667,42.300093</coordinates>
@@ -167,7 +167,7 @@
       <Placemark>
         <name>Shawmut</name>
         <Snippet/>
-        <description>Shawmut</description>
+        <description>Click to see schedule/place-smmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.065738,42.293126</coordinates>
@@ -176,7 +176,7 @@
       <Placemark>
         <name>Ashmont</name>
         <Snippet/>
-        <description>Ashmont</description>
+        <description>Click to see schedule/place-asmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.064489,42.284652</coordinates>
@@ -185,7 +185,7 @@
       <Placemark>
         <name>Cedar Grove</name>
         <Snippet/>
-        <description>Cedar Grove</description>
+        <description>Click to see schedule/place-cedgr</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.060432,42.279682</coordinates>
@@ -194,7 +194,7 @@
       <Placemark>
         <name>Butler Station</name>
         <Snippet/>
-        <description>Butler Station</description>
+        <description>Click to see schedule/place-butlr</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.062584,42.272343</coordinates>
@@ -203,7 +203,7 @@
       <Placemark>
         <name>Milton</name>
         <Snippet/>
-        <description>Milton</description>
+        <description>Click to see schedule/place-miltt</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.067673,42.270306</coordinates>
@@ -212,7 +212,7 @@
       <Placemark>
         <name>Central Avenue</name>
         <Snippet/>
-        <description>Central Avenue</description>
+        <description>Click to see schedule/place-cenav</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.073334,42.270027</coordinates>
@@ -221,7 +221,7 @@
       <Placemark>
         <name>Valley Road</name>
         <Snippet/>
-        <description>Valley Road</description>
+        <description>Click to see schedule/place-valrd</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.081566,42.268322</coordinates>
@@ -230,7 +230,7 @@
       <Placemark>
         <name>Capen Street</name>
         <Snippet/>
-        <description>Capen Street</description>
+        <description>Click to see schedule/place-capst</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.087753,42.267712</coordinates>
@@ -239,7 +239,7 @@
       <Placemark>
         <name>Mattapan</name>
         <Snippet/>
-        <description>Mattapan</description>
+        <description>Click to see schedule/place-matt</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.092241,42.267762</coordinates>
@@ -248,7 +248,7 @@
       <Placemark>
         <name>North Quincy</name>
         <Snippet/>
-        <description>North Quincy</description>
+        <description>Click to see schedule/place-nqncy</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.029583,42.275275</coordinates>
@@ -257,7 +257,7 @@
       <Placemark>
         <name>Wollaston</name>
         <Snippet/>
-        <description>Wollaston</description>
+        <description>Click to see schedule/place-wlsta</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.020337,42.266514</coordinates>
@@ -266,7 +266,7 @@
       <Placemark>
         <name>Quincy Center</name>
         <Snippet/>
-        <description>Quincy Center</description>
+        <description>Click to see schedule/place-qnctr</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.005409,42.251809</coordinates>
@@ -275,7 +275,7 @@
       <Placemark>
         <name>Quincy Adams</name>
         <Snippet/>
-        <description>Quincy Adams</description>
+        <description>Click to see schedule/place-qamnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.007153,42.233391</coordinates>
@@ -284,7 +284,7 @@
       <Placemark>
         <name>Braintree</name>
         <Snippet/>
-        <description>Braintree</description>
+        <description>Click to see schedule/place-brntn</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.001138,42.207854</coordinates>
@@ -293,7 +293,7 @@
       <Placemark>
         <name>Lechmere</name>
         <Snippet/>
-        <description>Lechmere</description>
+        <description>Click to see schedule/place-lech</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.076536,42.370772</coordinates>
@@ -302,7 +302,7 @@
       <Placemark>
         <name>Science Park</name>
         <Snippet/>
-        <description>Science Park</description>
+        <description>Click to see schedule/place-spmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.067666,42.366664</coordinates>
@@ -311,7 +311,7 @@
       <Placemark>
         <name>Government Center</name>
         <Snippet/>
-        <description>Government Center</description>
+        <description>Click to see schedule/place-gover</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.059215,42.359705</coordinates>
@@ -320,7 +320,7 @@
       <Placemark>
         <name>Boylston Street</name>
         <Snippet/>
-        <description>Boylston Street</description>
+        <description>Click to see schedule/place-boyls</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.064590,42.353020</coordinates>
@@ -329,7 +329,7 @@
       <Placemark>
         <name>Arlington</name>
         <Snippet/>
-        <description>Arlington</description>
+        <description>Click to see schedule/place-armnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.070893,42.351902</coordinates>
@@ -338,7 +338,7 @@
       <Placemark>
         <name>Copley</name>
         <Snippet/>
-        <description>Copley</description>
+        <description>Click to see schedule/place-coecl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.077447,42.349974</coordinates>
@@ -347,7 +347,7 @@
       <Placemark>
         <name>Hynes Convention Center</name>
         <Snippet/>
-        <description>Hynes Convention Center</description>
+        <description>Click to see schedule/place-hymnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.087903,42.347888</coordinates>
@@ -356,7 +356,7 @@
       <Placemark>
         <name>Kenmore</name>
         <Snippet/>
-        <description>Kenmore</description>
+        <description>Click to see schedule/place-kencl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.095169,42.348949</coordinates>
@@ -365,7 +365,7 @@
       <Placemark>
         <name>Blandford Street</name>
         <Snippet/>
-        <description>Blandford Street</description>
+        <description>Click to see schedule/place-bland</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.100258,42.349293</coordinates>
@@ -374,7 +374,7 @@
       <Placemark>
         <name>Boston University East</name>
         <Snippet/>
-        <description>Boston University East</description>
+        <description>Click to see schedule/place-buest</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.103889,42.349735</coordinates>
@@ -383,7 +383,7 @@
       <Placemark>
         <name>Boston University Central</name>
         <Snippet/>
-        <description>Boston University Central</description>
+        <description>Click to see schedule/place-bucen</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.106865,42.350082</coordinates>
@@ -392,7 +392,7 @@
       <Placemark>
         <name>Boston University West</name>
         <Snippet/>
-        <description>Boston University West</description>
+        <description>Click to see schedule/place-buwst</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.113876,42.350941</coordinates>
@@ -401,7 +401,7 @@
       <Placemark>
         <name>Saint Paul Street</name>
         <Snippet/>
-        <description>Saint Paul Street</description>
+        <description>Click to see schedule/place-stplb</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.116104,42.351200</coordinates>
@@ -410,7 +410,7 @@
       <Placemark>
         <name>Pleasant Street</name>
         <Snippet/>
-        <description>Pleasant Street</description>
+        <description>Click to see schedule/place-plsgr</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.118889,42.351521</coordinates>
@@ -419,7 +419,7 @@
       <Placemark>
         <name>Babcock Street</name>
         <Snippet/>
-        <description>Babcock Street</description>
+        <description>Click to see schedule/place-babck</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.121650,42.351820</coordinates>
@@ -428,7 +428,7 @@
       <Placemark>
         <name>Packards Corner</name>
         <Snippet/>
-        <description>Packards Corner</description>
+        <description>Click to see schedule/place-brico</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.125031,42.351967</coordinates>
@@ -436,8 +436,9 @@
       </Placemark>
       <Placemark>
         <name>Harvard Avenue</name>
+        <id>111</id>
         <Snippet/>
-        <description>Harvard Avenue</description>
+        <description>Click to see schedule/place-harvd</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.131355,42.350243</coordinates>
@@ -446,7 +447,7 @@
       <Placemark>
         <name>Griggs Street</name>
         <Snippet/>
-        <description>Griggs Street</description>
+        <description>Click to see schedule/place-grigg</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.134949,42.348545</coordinates>
@@ -455,7 +456,7 @@
       <Placemark>
         <name>Allston Street</name>
         <Snippet/>
-        <description>Allston Street</description>
+        <description>Click to see schedule/place-alsgr</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.137955,42.348701</coordinates>
@@ -464,7 +465,7 @@
       <Placemark>
         <name>Warren Street</name>
         <Snippet/>
-        <description>Warren Street</description>
+        <description>Click to see schedule/place-wrnst</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.140457,42.348343</coordinates>
@@ -473,7 +474,7 @@
       <Placemark>
         <name>Washington Street</name>
         <Snippet/>
-        <description>Washington Street</description>
+        <description>Click to see schedule/place-wascm</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.142853,42.343864</coordinates>
@@ -482,7 +483,7 @@
       <Placemark>
         <name>Sutherland Road</name>
         <Snippet/>
-        <description>Sutherland Road</description>
+        <description>Click to see schedule/place-sthld</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.146202,42.341614</coordinates>
@@ -491,7 +492,7 @@
       <Placemark>
         <name>Chiswick Road</name>
         <Snippet/>
-        <description>Chiswick Road</description>
+        <description>Click to see schedule/place-chswk</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.150711,42.340805</coordinates>
@@ -500,7 +501,7 @@
       <Placemark>
         <name>Chestnut Hill Avenue</name>
         <Snippet/>
-        <description>Chestnut Hill Avenue</description>
+        <description>Click to see schedule/place-chill</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.153160,42.338169</coordinates>
@@ -509,7 +510,7 @@
       <Placemark>
         <name>South Street</name>
         <Snippet/>
-        <description>South Street</description>
+        <description>Click to see schedule/place-sougr</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.157661,42.339600</coordinates>
@@ -518,7 +519,7 @@
       <Placemark>
         <name>Boston College</name>
         <Snippet/>
-        <description>Boston College</description>
+        <description>Click to see schedule/place-lake</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.166769,42.340081</coordinates>
@@ -527,7 +528,7 @@
       <Placemark>
         <name>St. Marys Street</name>
         <Snippet/>
-        <description>St. Marys Street</description>
+        <description>Click to see schedule/place-smary</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.107353,42.345974</coordinates>
@@ -536,7 +537,7 @@
       <Placemark>
         <name>Hawes Street</name>
         <Snippet/>
-        <description>Hawes Street</description>
+        <description>Click to see schedule/place-hwsst</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.111145,42.344906</coordinates>
@@ -545,7 +546,7 @@
       <Placemark>
         <name>Kent Street</name>
         <Snippet/>
-        <description>Kent Street</description>
+        <description>Click to see schedule/place-kntst</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.114197,42.344074</coordinates>
@@ -554,7 +555,7 @@
       <Placemark>
         <name>St. Paul Street</name>
         <Snippet/>
-        <description>St. Paul Street</description>
+        <description>Click to see schedule/place-stpul</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.116997,42.343327</coordinates>
@@ -563,7 +564,7 @@
       <Placemark>
         <name>Coolidge Corner</name>
         <Snippet/>
-        <description>Coolidge Corner</description>
+        <description>Click to see schedule/place-cool</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.121263,42.342116</coordinates>
@@ -572,7 +573,7 @@
       <Placemark>
         <name>Summit Avenue</name>
         <Snippet/>
-        <description>Summit Avenue</description>
+        <description>Click to see schedule/place-sumav</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.125610,42.341110</coordinates>
@@ -581,7 +582,7 @@
       <Placemark>
         <name>Brandon Hall</name>
         <Snippet/>
-        <description>Brandon Hall</description>
+        <description>Click to see schedule/place-bndhl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.129082,42.340023</coordinates>
@@ -590,7 +591,7 @@
       <Placemark>
         <name>Fairbanks Street</name>
         <Snippet/>
-        <description>Fairbanks Street</description>
+        <description>Click to see schedule/place-fbkst</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.131073,42.339725</coordinates>
@@ -599,7 +600,7 @@
       <Placemark>
         <name>Washington Square</name>
         <Snippet/>
-        <description>Washington Square</description>
+        <description>Click to see schedule/place-bcnwa</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.135330,42.339394</coordinates>
@@ -608,7 +609,7 @@
       <Placemark>
         <name>Tappan Street</name>
         <Snippet/>
-        <description>Tappan Street</description>
+        <description>Click to see schedule/place-tapst</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.138702,42.338459</coordinates>
@@ -617,7 +618,7 @@
       <Placemark>
         <name>Dean Road</name>
         <Snippet/>
-        <description>Dean Road</description>
+        <description>Click to see schedule/place-denrd</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.141853,42.337807</coordinates>
@@ -626,7 +627,7 @@
       <Placemark>
         <name>Englewood Avenue</name>
         <Snippet/>
-        <description>Englewood Avenue</description>
+        <description>Click to see schedule/place-engav</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.145660,42.336971</coordinates>
@@ -635,7 +636,7 @@
       <Placemark>
         <name>Cleveland Circle</name>
         <Snippet/>
-        <description>Cleveland Circle</description>
+        <description>Click to see schedule/place-clmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.149326,42.336142</coordinates>
@@ -644,7 +645,7 @@
       <Placemark>
         <name>Fenway</name>
         <Snippet/>
-        <description>Fenway</description>
+        <description>Click to see schedule/place-fenwy</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.104187,42.345394</coordinates>
@@ -653,7 +654,7 @@
       <Placemark>
         <name>Longwood</name>
         <Snippet/>
-        <description>Longwood</description>
+        <description>Click to see schedule/place-longw</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.110451,42.341145</coordinates>
@@ -662,7 +663,7 @@
       <Placemark>
         <name>Brookline Village</name>
         <Snippet/>
-        <description>Brookline Village</description>
+        <description>Click to see schedule/place-bvmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.116296,42.332774</coordinates>
@@ -671,7 +672,7 @@
       <Placemark>
         <name>Brookline Hills</name>
         <Snippet/>
-        <description>Brookline Hills</description>
+        <description>Click to see schedule/place-brkhl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.126999,42.331333</coordinates>
@@ -680,7 +681,7 @@
       <Placemark>
         <name>Beaconsfield</name>
         <Snippet/>
-        <description>Beaconsfield</description>
+        <description>Click to see schedule/place-bcnfd</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.140823,42.335846</coordinates>
@@ -689,7 +690,7 @@
       <Placemark>
         <name>Reservoir</name>
         <Snippet/>
-        <description>Reservoir</description>
+        <description>Click to see schedule/place-rsmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.148952,42.335027</coordinates>
@@ -698,7 +699,7 @@
       <Placemark>
         <name>Chestnut Hill</name>
         <Snippet/>
-        <description>Chestnut Hill</description>
+        <description>Click to see schedule/place-chhil</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.165314,42.326653</coordinates>
@@ -707,7 +708,7 @@
       <Placemark>
         <name>Newton Center</name>
         <Snippet/>
-        <description>Newton Center</description>
+        <description>Click to see schedule/place-newto</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.192429,42.329391</coordinates>
@@ -716,7 +717,7 @@
       <Placemark>
         <name>Newton Highland</name>
         <Snippet/>
-        <description>Newton Highland</description>
+        <description>Click to see schedule/place-newtn</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.206116,42.321735</coordinates>
@@ -725,7 +726,7 @@
       <Placemark>
         <name>Eliot</name>
         <Snippet/>
-        <description>Eliot</description>
+        <description>Click to see schedule/place-eliot</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.216713,42.319023</coordinates>
@@ -734,7 +735,7 @@
       <Placemark>
         <name>Waban</name>
         <Snippet/>
-        <description>Waban</description>
+        <description>Click to see schedule/place-waban</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.230728,42.325943</coordinates>
@@ -743,7 +744,7 @@
       <Placemark>
         <name>Woodland</name>
         <Snippet/>
-        <description>Woodland</description>
+        <description>Click to see schedule/place-woodl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.244301,42.333374</coordinates>
@@ -752,7 +753,7 @@
       <Placemark>
         <name>Riverside</name>
         <Snippet/>
-        <description>Riverside</description>
+        <description>Click to see schedule/place-river</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.251742,42.337059</coordinates>
@@ -761,7 +762,7 @@
       <Placemark>
         <name>Prudential</name>
         <Snippet/>
-        <description>Prudential</description>
+        <description>Click to see schedule/place-prmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.081696,42.345570</coordinates>
@@ -770,7 +771,7 @@
       <Placemark>
         <name>Symphony</name>
         <Snippet/>
-        <description>Symphony</description>
+        <description>Click to see schedule/place-symcl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.085056,42.342687</coordinates>
@@ -779,7 +780,7 @@
       <Placemark>
         <name>Northeastern University</name>
         <Snippet/>
-        <description>Northeastern University</description>
+        <description>Click to see schedule/place-nuniv</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.088806,42.340401</coordinates>
@@ -788,7 +789,7 @@
       <Placemark>
         <name>Museum of Fine Arts</name>
         <Snippet/>
-        <description>Museum of Fine Arts</description>
+        <description>Click to see schedule/place-mfa</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.095512,42.337711</coordinates>
@@ -797,7 +798,7 @@
       <Placemark>
         <name>Longwood Medical Area</name>
         <Snippet/>
-        <description>Longwood Medical Area</description>
+        <description>Click to see schedule/place-lngmd</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.100052,42.335960</coordinates>
@@ -806,7 +807,7 @@
       <Placemark>
         <name>Brigham Circle</name>
         <Snippet/>
-        <description>Brigham Circle</description>
+        <description>Click to see schedule/place-brmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.104609,42.334229</coordinates>
@@ -815,7 +816,7 @@
       <Placemark>
         <name>Fenwood Road</name>
         <Snippet/>
-        <description>Fenwood Road</description>
+        <description>Click to see schedule/place-fenwd</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.105728,42.333706</coordinates>
@@ -824,7 +825,7 @@
       <Placemark>
         <name>Mission Park</name>
         <Snippet/>
-        <description>Mission Park</description>
+        <description>Click to see schedule/place-mispk</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.109756,42.333195</coordinates>
@@ -833,7 +834,7 @@
       <Placemark>
         <name>Riverway</name>
         <Snippet/>
-        <description>Riverway</description>
+        <description>Click to see schedule/place-rvrwy</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.111931,42.331684</coordinates>
@@ -842,7 +843,7 @@
       <Placemark>
         <name>Back of the Hill</name>
         <Snippet/>
-        <description>Back of the Hill</description>
+        <description>Click to see schedule/place-bckhl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.111313,42.330139</coordinates>
@@ -851,7 +852,7 @@
       <Placemark>
         <name>Heath Street</name>
         <Snippet/>
-        <description>Heath Street</description>
+        <description>Click to see schedule/place-hsmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.110252,42.328316</coordinates>
@@ -860,7 +861,7 @@
       <Placemark>
         <name>Bowdoin</name>
         <Snippet/>
-        <description>Bowdoin</description>
+        <description>Click to see schedule/place-bomnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.062037,42.361365</coordinates>
@@ -870,7 +871,7 @@
       <Placemark>
         <name>Aquarium</name>
         <Snippet/>
-        <description>Aquarium</description>
+        <description>Click to see schedule/place-aqucl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.051652,42.359784</coordinates>
@@ -879,7 +880,7 @@
       <Placemark>
         <name>Maverick</name>
         <Snippet/>
-        <description>Maverick</description>
+        <description>Click to see schedule/place-mvbcl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.039530,42.369119</coordinates>
@@ -888,7 +889,7 @@
       <Placemark>
         <name>(Logan) Airport</name>
         <Snippet/>
-        <description>(Logan) Airport</description>
+        <description>Click to see schedule/place-aport</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.030395,42.374262</coordinates>
@@ -897,7 +898,7 @@
       <Placemark>
         <name>Wood Island</name>
         <Snippet/>
-        <description>Wood Island</description>
+        <description>Click to see schedule/place-wimnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.022865,42.379640</coordinates>
@@ -906,7 +907,7 @@
       <Placemark>
         <name>Orient Heights</name>
         <Snippet/>
-        <description>Orient Heights</description>
+        <description>Click to see schedule/place-orhte</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.004736,42.386867</coordinates>
@@ -915,7 +916,7 @@
       <Placemark>
         <name>Suffolk Downs</name>
         <Snippet/>
-        <description>Suffolk Downs</description>
+        <description>Click to see schedule/place-sdmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-70.997123,42.390501</coordinates>
@@ -924,7 +925,7 @@
       <Placemark>
         <name>Beachmont</name>
         <Snippet/>
-        <description>Beachmont</description>
+        <description>Click to see schedule/place-bmmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-70.992319,42.397542</coordinates>
@@ -933,7 +934,7 @@
       <Placemark>
         <name>Revere Beach</name>
         <Snippet/>
-        <description>Revere Beach</description>
+        <description>Click to see schedule/place-rbmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-70.992533,42.407843</coordinates>
@@ -942,7 +943,7 @@
       <Placemark>
         <name>Wonderland</name>
         <Snippet/>
-        <description>Wonderland</description>
+        <description>Click to see schedule/place-wondl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-70.991648,42.413420</coordinates>
@@ -951,7 +952,7 @@
       <Placemark>
         <name>Oak Grove</name>
         <Snippet/>
-        <description>Oak Grove</description>
+        <description>Click to see schedule/place-ogmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.071097,42.436680</coordinates>
@@ -960,7 +961,7 @@
       <Placemark>
         <name>Malden Center</name>
         <Snippet/>
-        <description>Malden Center</description>
+        <description>Click to see schedule/place-mlmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.074110,42.426632</coordinates>
@@ -969,7 +970,7 @@
       <Placemark>
         <name>Wellington</name>
         <Snippet/>
-        <description>Wellington</description>
+        <description>Click to see schedule/place-welln</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.077082,42.402370</coordinates>
@@ -978,7 +979,7 @@
       <Placemark>
         <name>Assembly</name>
         <Snippet/>
-        <description>Assembly</description>
+        <description>Click to see schedule/place-astao</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.077257,42.392811</coordinates>
@@ -987,7 +988,7 @@
       <Placemark>
         <name>Sullivan Square</name>
         <Snippet/>
-        <description>Sullivan Square</description>
+        <description>Click to see schedule/place-sull</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.076994,42.383975</coordinates>
@@ -996,7 +997,7 @@
       <Placemark>
         <name>Community College</name>
         <Snippet/>
-        <description>Community College</description>
+        <description>Click to see schedule/place-ccmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.069533,42.373622</coordinates>
@@ -1005,7 +1006,7 @@
         <Placemark>
             <name>North Station</name>
             <Snippet/>
-            <description>North Station</description>
+            <description>Click to see schedule/place-north</description>
             <styleUrl>#waypoint</styleUrl>
             <Point>
                 <coordinates>-71.061290,42.365577</coordinates>
@@ -1014,7 +1015,7 @@
         <Placemark>
             <name>Haymarket</name>
             <Snippet/>
-            <description>Haymarket</description>
+            <description>Click to see schedule/place-haecl</description>
             <styleUrl>#waypoint</styleUrl>
             <Point>
                 <coordinates>-71.058290,42.363021</coordinates>
@@ -1023,7 +1024,7 @@
         <Placemark>
             <name>State Street</name>
             <Snippet/>
-            <description>State Street</description>
+            <description>Click to see schedule/place-state</description>
             <styleUrl>#waypoint</styleUrl>
             <Point>
                 <coordinates>-71.057598,42.358978</coordinates>
@@ -1032,7 +1033,7 @@
         <Placemark>
             <name>Downtown Crossing</name>
             <Snippet/>
-            <description>Downtown Crossing</description>
+            <description>Click to see schedule/place-dwnxg</description>
             <styleUrl>#waypoint</styleUrl>
             <Point>
                 <coordinates>-71.060225,42.355518</coordinates>
@@ -1041,7 +1042,7 @@
       <Placemark>
         <name>Chinatown</name>
         <Snippet/>
-        <description>Chinatown</description>
+        <description>Click to see schedule/place-chncl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.062752,42.352547</coordinates>
@@ -1050,7 +1051,7 @@
       <Placemark>
         <name>Tufts Medical Center</name>
         <Snippet/>
-        <description>Tufts Medical Center</description>
+        <description>Click to see schedule/place-tumnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.063917,42.349662</coordinates>
@@ -1059,7 +1060,7 @@
       <Placemark>
         <name>Back Bay</name>
         <Snippet/>
-        <description>Back Bay</description>
+        <description>Click to see schedule/place-bbsta</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.075727,42.347350</coordinates>
@@ -1068,7 +1069,7 @@
       <Placemark>
         <name>Massachusetts Avenue</name>
         <Snippet/>
-        <description>Massachusetts Avenue</description>
+        <description>Click to see schedule/place-masta</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.083423,42.341512</coordinates>
@@ -1077,7 +1078,7 @@
       <Placemark>
         <name>Ruggles</name>
         <Snippet/>
-        <description>Ruggles</description>
+        <description>Click to see schedule/place-rugg</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.088961,42.336377</coordinates>
@@ -1086,7 +1087,7 @@
       <Placemark>
         <name>Roxbury Crossing</name>
         <Snippet/>
-        <description>Roxbury Crossing</description>
+        <description>Click to see schedule/place-rcmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.095451,42.331397</coordinates>
@@ -1095,7 +1096,7 @@
       <Placemark>
         <name>Jackson Square</name>
         <Snippet/>
-        <description>Jackson Square</description>
+        <description>Click to see schedule/place-jaksn</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.099592,42.323132</coordinates>
@@ -1104,7 +1105,7 @@
       <Placemark>
         <name>Stony Brook</name>
         <Snippet/>
-        <description>Stony Brook</description>
+        <description>Click to see schedule/place-sbmnl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.104248,42.317062</coordinates>
@@ -1113,7 +1114,7 @@
       <Placemark>
         <name>Green Street</name>
         <Snippet/>
-        <description>Green Street</description>
+        <description>Click to see schedule/place-grnst</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.107414,42.310525</coordinates>
@@ -1122,7 +1123,7 @@
       <Placemark>
         <name>Forest Hills</name>
         <Snippet/>
-        <description>Forest Hills</description>
+        <description>Click to see schedule/place-forhl</description>
         <styleUrl>#waypoint</styleUrl>
         <Point>
           <coordinates>-71.113686,42.300523</coordinates>

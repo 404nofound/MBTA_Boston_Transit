@@ -65,6 +65,7 @@ public class AlertsFragment extends Fragment {
                 Gson gson = new Gson();
                 AlertBean alertItem = gson.fromJson(response.body().string().trim(), AlertBean.class);
 
+                alertList.clear();
                 alertList.addAll(alertItem.getData());
 
                 if (getActivity() != null) {

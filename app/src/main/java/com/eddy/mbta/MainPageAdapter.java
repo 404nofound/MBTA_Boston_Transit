@@ -1,6 +1,7 @@
 package com.eddy.mbta;
 
 import android.content.Context;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -37,6 +38,13 @@ public class MainPageAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return mContext.getResources().getString(TAB_TITLES[position]);
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        if (position == 2) {
+            super.destroyItem(container, position, object);
+        }
     }
 }
 

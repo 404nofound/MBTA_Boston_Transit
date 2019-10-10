@@ -8,10 +8,13 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,6 +33,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -54,6 +58,7 @@ public class MapFragment extends Fragment implements
         OnMyLocationClickListener,
         LocationListener,
         GoogleMap.OnMarkerClickListener,
+        OnInfoWindowClickListener,
         OnMapReadyCallback {
 
     private View root;
@@ -165,10 +170,9 @@ public class MapFragment extends Fragment implements
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);
         enableMyLocation();
     }
-
-
 
     private void requestNearbyStations(double lat, double lng) {
         String url = "https://api-v3.mbta.com/stops?include=parent_station&filter[route_type]=0,1&filter[latitude]=" + lat + "&filter[longitude]=" + lng + "&filter[radius]=0.01&sort=distance";
@@ -209,7 +213,56 @@ public class MapFragment extends Fragment implements
     }
 
     @Override
+    public void onInfoWindowClick(Marker marker) {
+
+        SchedulePopWindow PopWin = new SchedulePopWindow(getActivity(), marker.getTitle(), marker.getSnippet().split("/")[1]);
+
+        PopWin.showAtLocation(root.findViewById(R.id.layout), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+
+        final Window window = getActivity().getWindow();
+        final WindowManager.LayoutParams params = window.getAttributes();
+
+        params.alpha = 0.7f;
+        window.setAttributes(params);
+
+        PopWin.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                params.alpha = 1f;
+                window.setAttributes(params);
+            }
+        });
+    }
+
+
+    @Override
     public boolean onMarkerClick(Marker marker) {
+
+        /*String id = "";
+        for (NearbyStationBean.IncludedBean s : nearbyStationList) {
+            if (s.getAttributes().getName().equals(marker.getTitle())) {
+                id = s.getId();
+            }
+        }
+
+        SchedulePopWindow PopWin = new SchedulePopWindow(getActivity(), marker.getTitle(), id);
+
+        PopWin.showAtLocation(root.findViewById(R.id.layout), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+
+        final Window window = getActivity().getWindow();
+        final WindowManager.LayoutParams params = window.getAttributes();
+
+        params.alpha = 0.7f;
+        window.setAttributes(params);
+
+        PopWin.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                params.alpha = 1f;
+                window.setAttributes(params);
+            }
+        });*/
+
         return false;
     }
 
