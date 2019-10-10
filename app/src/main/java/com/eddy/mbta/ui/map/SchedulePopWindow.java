@@ -3,6 +3,7 @@ package com.eddy.mbta.ui.map;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,7 +20,9 @@ import com.eddy.mbta.json.Schedule;
 import com.eddy.mbta.json.TimeScheduleBean;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -245,7 +248,29 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
                     }
                 }
 
-                schedule.setArrTime(arrTimeData);
+                if (!TextUtils.isEmpty(arrTimeData)) {
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    try {
+                        Date arr = df.parse(arrTimeData.substring(0, 19).replace("T", " "));
+                        Date dep = df.parse(arrTimeData.substring(0, 19).replace("T", " "));
+
+                        Date nowDate = df.parse(df.format(new Date()));
+
+                        long timeDifference = (arr.getTime() - nowDate.getTime())/1000;
+                        if (timeDifference < 0) {
+                            //timeDifference = (dep.getTime() - nowDate.getTime())/1000;
+                            schedule.setArrTime("Boarding");
+                        } else if (timeDifference > 60) {
+                            schedule.setArrTime(timeDifference/60+"m");
+                        } else {
+                            schedule.setArrTime(timeDifference+"s");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                //schedule.setArrTime(arrTimeData);
                 schedule.setDepTime(depTimeData);
                 schedule.setRoute_id(route_id);
                 schedule.setDirection_id(direction_id);
