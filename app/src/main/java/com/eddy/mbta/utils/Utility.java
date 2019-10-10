@@ -18,6 +18,7 @@ public class Utility {
 
                     Station station = new Station();
                     station.setStationName(obj.getString("name"));
+                    station.setAlias(obj.getString("id"));
                     station.setTrainName(train);
                     station.setAddress(obj.getString("address"));
                     station.setWheelchair(obj.getInt("wheel"));

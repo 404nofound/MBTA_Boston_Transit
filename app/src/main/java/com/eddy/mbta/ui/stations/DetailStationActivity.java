@@ -3,6 +3,7 @@ package com.eddy.mbta.ui.stations;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -53,7 +54,9 @@ public class DetailStationActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new StationAdapter(stationList);
+
+        Window window = this.getWindow();
+        adapter = new StationAdapter(stationList, window);
         recyclerView.setAdapter(adapter);
 
         swipeRefresh = findViewById(R.id.swipe_refresh);

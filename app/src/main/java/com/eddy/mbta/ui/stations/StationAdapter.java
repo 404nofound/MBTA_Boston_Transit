@@ -1,11 +1,14 @@
 package com.eddy.mbta.ui.stations;
 
 import android.content.Context;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -13,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.eddy.mbta.R;
 import com.eddy.mbta.db.Station;
+import com.eddy.mbta.ui.map.SchedulePopWindow;
 
 import java.util.List;
 
@@ -21,6 +25,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHold
     private static final String TAG = "StationAdapter";
 
     private Context mContext;
+    private Window mWindow;
 
     private List<Station> mStationList;
 
@@ -38,12 +43,13 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHold
         }
     }
 
-    public StationAdapter(List<Station> stationList) {
+    public StationAdapter(List<Station> stationList, Window window) {
         mStationList = stationList;
+        mWindow = window;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         if (mContext == null) {
             mContext = parent.getContext();
         }
@@ -53,6 +59,24 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
+                Station station = mStationList.get(position);
+
+                SchedulePopWindow PopWin = new SchedulePopWindow(mContext, station.getStationName(), station.getAlias());
+
+                PopWin.showAtLocation(mWindow.getDecorView().findViewById(R.id.layout), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+
+                final WindowManager.LayoutParams params = mWindow.getAttributes();
+
+                params.alpha = 0.7f;
+                mWindow.setAttributes(params);
+
+                PopWin.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        params.alpha = 1f;
+                        mWindow.setAttributes(params);
+                    }
+                });
 
             }
         });

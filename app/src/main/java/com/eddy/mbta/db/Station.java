@@ -6,6 +6,8 @@ public class Station extends LitePalSupport {
 
     private int id;
 
+    private String alias;
+
     private String stationName;
 
     private String trainName;
@@ -20,6 +22,14 @@ public class Station extends LitePalSupport {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
     }
 
     public String getStationName() {
