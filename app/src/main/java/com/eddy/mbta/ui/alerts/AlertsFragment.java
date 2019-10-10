@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.eddy.mbta.R;
 import com.eddy.mbta.json.AlertBean;
@@ -28,6 +29,7 @@ public class AlertsFragment extends Fragment {
 
     private AlertAdapter adapter;
     private List<AlertBean.DataBean> alertList = new ArrayList<>();
+    private SwipeRefreshLayout swipeRefresh;
 
     public static AlertsFragment newInstance() {
         Bundle args = new Bundle ();
@@ -50,6 +52,15 @@ public class AlertsFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new AlertAdapter(alertList);
         recyclerView.setAdapter(adapter);
+
+        swipeRefresh = root.findViewById(R.id.swipe_refresh);
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
 
         return root;
     }
@@ -91,5 +102,26 @@ public class AlertsFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void refresh() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        requestAlerts();
+                        adapter.notifyDataSetChanged();
+                        swipeRefresh.setRefreshing(false);
+                    }
+                });
+            }
+        }).start();
     }
 }

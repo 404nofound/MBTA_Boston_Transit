@@ -234,35 +234,8 @@ public class MapFragment extends Fragment implements
         });
     }
 
-
     @Override
     public boolean onMarkerClick(Marker marker) {
-
-        /*String id = "";
-        for (NearbyStationBean.IncludedBean s : nearbyStationList) {
-            if (s.getAttributes().getName().equals(marker.getTitle())) {
-                id = s.getId();
-            }
-        }
-
-        SchedulePopWindow PopWin = new SchedulePopWindow(getActivity(), marker.getTitle(), id);
-
-        PopWin.showAtLocation(root.findViewById(R.id.layout), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-
-        final Window window = getActivity().getWindow();
-        final WindowManager.LayoutParams params = window.getAttributes();
-
-        params.alpha = 0.7f;
-        window.setAttributes(params);
-
-        PopWin.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                params.alpha = 1f;
-                window.setAttributes(params);
-            }
-        });*/
-
         return false;
     }
 

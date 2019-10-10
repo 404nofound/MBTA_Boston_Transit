@@ -45,7 +45,7 @@ public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.ViewHolder>{
         if (mContext == null) {
             mContext = parent.getContext();
         }
-        View view = LayoutInflater.from(mContext).inflate(R.layout.alert_item, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.cardview_alert, parent, false);
         final ViewHolder holder = new ViewHolder(view);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

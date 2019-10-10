@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.eddy.mbta.R;
 
@@ -19,6 +20,7 @@ public class StationFragment extends Fragment {
 
     private TrainAdapter adapter;
     private List<Integer> trainList = new ArrayList<>();
+    private SwipeRefreshLayout swipeRefresh;
 
     public static StationFragment newInstance() {
         Bundle args = new Bundle ();
@@ -42,6 +44,15 @@ public class StationFragment extends Fragment {
         adapter = new TrainAdapter(trainList);
         recyclerView.setAdapter(adapter);
 
+        swipeRefresh = root.findViewById(R.id.swipe_refresh);
+        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
+
         return root;
     }
 
@@ -49,5 +60,24 @@ public class StationFragment extends Fragment {
         for (int i = 0; i < 8; i++) {
             trainList.add(i);
         }
+    }
+
+    private void refresh() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefresh.setRefreshing(false);
+                    }
+                });
+            }
+        }).start();
     }
 }

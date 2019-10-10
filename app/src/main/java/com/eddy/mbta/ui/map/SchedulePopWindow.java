@@ -44,7 +44,7 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
 
     public SchedulePopWindow(Context mContext, String station_name, String stop_id) {
 
-        view = LayoutInflater.from(mContext).inflate(R.layout.schedule_recyclerview, null);
+        view = LayoutInflater.from(mContext).inflate(R.layout.pop_window_schedule, null);
 
         TextView stationName = view.findViewById(R.id.station_name);
 

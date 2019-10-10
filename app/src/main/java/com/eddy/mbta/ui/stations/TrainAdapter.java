@@ -26,7 +26,7 @@ public class TrainAdapter extends RecyclerView.Adapter<TrainAdapter.ViewHolder>{
 
     public String[] route_id = {"Red", "Mattapan", "Orange", "Green B", "Green C", "Green D", "Green E", "Blue"};
     public String[] start = {"Alewife", "Ashmont", "Oak Grove", "Park St", "North Station", "Park St", "Lechmere", "Bowdoin"};
-    public String[] end = {"Braintree", "Mattapan", "Forest Hills", "Boston College", "Cleveland Cir", "Riverside", "Health St", "Wonderland"};
+    public String[] end = {"Ashmont/Braintree", "Mattapan", "Forest Hills", "Boston College", "Cleveland Circle", "Riverside", "Health St", "Wonderland"};
     private int[] icon = {R.drawable.ic_red, R.drawable.ic_mattapan, R.drawable.ic_orange, R.drawable.ic_greenb, R.drawable.ic_greenc, R.drawable.ic_greend, R.drawable.ic_greene, R.drawable.ic_blue};
 
     static class ViewHolder extends RecyclerView.ViewHolder {
