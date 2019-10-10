@@ -53,11 +53,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
-                /*AlertBean fruit = mAlertList.get(position);
-                Intent intent = new Intent(mContext, FruitActivity.class);
-                intent.putExtra(FruitActivity.FRUIT_NAME, fruit.getName());
-                intent.putExtra(FruitActivity.FRUIT_IMAGE_ID, fruit.getImageId());
-                mContext.startActivity(intent);*/
+
             }
         });
         return holder;
@@ -65,8 +61,8 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Log.d("Adapter", "get");
         Station station = mStationList.get(position);
+
         holder.nameView.setText(station.getStationName());
         holder.addressView.setText(station.getAddress());
         if (station.getWheelchair() == 1) {
@@ -80,6 +76,5 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHold
     public int getItemCount() {
         return mStationList.size();
     }
-
 }
 

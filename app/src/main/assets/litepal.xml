@@ -5,7 +5,6 @@
     <version value="1" />
 
     <list>
-        <mapping class="com.eddy.mbta.db.TrainLine" />
         <mapping class="com.eddy.mbta.db.Station" />
     </list>
 </litepal>

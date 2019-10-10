@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eddy.mbta.R;
+import com.eddy.mbta.json.Schedule;
 
 import java.util.List;
 
@@ -22,7 +23,6 @@ public class TimeScheduleAdapter extends RecyclerView.Adapter<TimeScheduleAdapte
 
     private List<Schedule> mScheduleList;
 
-
     static class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         ImageView routeImage;
@@ -31,10 +31,9 @@ public class TimeScheduleAdapter extends RecyclerView.Adapter<TimeScheduleAdapte
         public ViewHolder(View view) {
             super(view);
             cardView = (CardView) view;
-
-            routeImage = (ImageView) view.findViewById(R.id.route_image);
-            routeName = (TextView) view.findViewById(R.id.route_name);
-            time = (TextView) view.findViewById(R.id.time);
+            routeImage = view.findViewById(R.id.route_image);
+            routeName = view.findViewById(R.id.route_name);
+            time = view.findViewById(R.id.time);
 
         }
     }
@@ -55,8 +54,6 @@ public class TimeScheduleAdapter extends RecyclerView.Adapter<TimeScheduleAdapte
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
 
-
-
             }
         });
         return holder;
@@ -67,8 +64,7 @@ public class TimeScheduleAdapter extends RecyclerView.Adapter<TimeScheduleAdapte
 
         Schedule schedule = mScheduleList.get(position);
         holder.routeImage.setImageResource(schedule.getIcon());
-        holder.routeName.setText(schedule.getRoute_id()+","+schedule.getEnd());
-
+        holder.routeName.setText(schedule.getRoute_id());
         holder.time.setText(schedule.getArrTime());
 
     }
@@ -77,7 +73,6 @@ public class TimeScheduleAdapter extends RecyclerView.Adapter<TimeScheduleAdapte
     public int getItemCount() {
         return mScheduleList.size();
     }
-
 }
 
 

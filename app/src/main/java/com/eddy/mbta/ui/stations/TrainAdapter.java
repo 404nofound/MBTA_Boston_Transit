@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,7 +32,8 @@ public class TrainAdapter extends RecyclerView.Adapter<TrainAdapter.ViewHolder>{
     static class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         ImageView iconView;
-        TextView nameView, startView, endView;
+        TextView nameView;
+        Button startView, endView;
 
         public ViewHolder(View view) {
             super(view);
@@ -80,6 +82,5 @@ public class TrainAdapter extends RecyclerView.Adapter<TrainAdapter.ViewHolder>{
     public int getItemCount() {
         return mTrainList.size();
     }
-
 }
 

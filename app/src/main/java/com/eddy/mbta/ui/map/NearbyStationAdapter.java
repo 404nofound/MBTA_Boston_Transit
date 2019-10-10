@@ -38,8 +38,8 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
         public ViewHolder(View view) {
             super(view);
             cardView = (CardView) view;
-            stationName = (TextView) view.findViewById(R.id.station_name);
-            wheelchair = (ImageView) view.findViewById(R.id.wheelchair);
+            stationName = view.findViewById(R.id.station_name);
+            wheelchair = view.findViewById(R.id.wheelchair);
         }
     }
 
@@ -60,6 +60,7 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
+
                 NearbyStationBean.IncludedBean station = mNearbyStationList.get(position);
 
                 SchedulePopWindow PopWin = new SchedulePopWindow(mContext, station.getAttributes().getName(), station.getId());
@@ -79,14 +80,8 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
                         mWindow.setAttributes(params);
                     }
                 });
-
-                /*Intent intent = new Intent(mContext, FruitActivity.class);
-                intent.putExtra(FruitActivity.FRUIT_NAME, fruit.getName());
-                intent.putExtra(FruitActivity.FRUIT_IMAGE_ID, fruit.getImageId());
-                mContext.startActivity(intent);*/
             }
         });
-
         return holder;
     }
 
@@ -103,18 +98,12 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
         } else {
             holder.wheelchair.setImageResource(R.drawable.ic_wheelchair_disable);
         }
-        //holder.directionInfo.setText(schedule.getAttributes().getDirection_id()+"");
-        //holder.arrTime.setText(schedule.getAttributes().getArrival_time());
-        //holder.depTime.setText(schedule.getAttributes().getDeparture_time());
-        //holder.alertDesc.setText(alert.getAttributes().getHeader());
-        //Glide.with(mContext).load(alert.getImageId()).into(holder.fruitImage);
     }
 
     @Override
     public int getItemCount() {
         return mNearbyStationList.size();
     }
-
 }
 
 

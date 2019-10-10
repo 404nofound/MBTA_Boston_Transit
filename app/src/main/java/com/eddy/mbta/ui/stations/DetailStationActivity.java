@@ -1,14 +1,12 @@
 package com.eddy.mbta.ui.stations;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -22,6 +20,7 @@ import org.litepal.LitePal;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import okhttp3.Call;
@@ -34,7 +33,6 @@ public class DetailStationActivity extends AppCompatActivity {
     private List<Station> stationList = new ArrayList<>();
 
     private StationAdapter adapter;
-
     private SwipeRefreshLayout swipeRefresh;
 
     private String train;
@@ -44,16 +42,12 @@ public class DetailStationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_station);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         train = getIntent().getStringExtra("train");
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(train);
-            //actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         }
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
@@ -76,14 +70,12 @@ public class DetailStationActivity extends AppCompatActivity {
 
     private void queryStation() {
         dataList = LitePal.where("trainName = ?", train).find(Station.class);
-        Log.d("SSSSSSS", stationList.size()+"");
         if (dataList.size() > 0) {
             stationList.clear();
             for (Station s : dataList) {
                 stationList.add(s);
             }
             adapter.notifyDataSetChanged();
-            Log.d("SSSSSSS", stationList.get(0).getAddress());
         } else {
             String url = "http://209.222.10.90/stop.php";
             queryFromServer(url);
@@ -95,7 +87,6 @@ public class DetailStationActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call call, Response response)  throws IOException {
                 String responseText = response.body().string();
-                Log.d("YYYY", responseText);
                 boolean result = false;
                 result = Utility.handleStationResponse(responseText, train);
 
@@ -114,7 +105,7 @@ public class DetailStationActivity extends AppCompatActivity {
                 DetailStationActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //Snackbar
+                        Toast.makeText(DetailStationActivity.this, "Internet Error", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -133,8 +124,8 @@ public class DetailStationActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //initFruits();
-                        //adapter.notifyDataSetChanged();
+                        queryStation();
+                        adapter.notifyDataSetChanged();
                         swipeRefresh.setRefreshing(false);
                     }
                 });
@@ -143,7 +134,7 @@ public class DetailStationActivity extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar, menu);
+        getMenuInflater().inflate(R.menu.toolbar_station, menu);
         return true;
     }
 
@@ -154,18 +145,14 @@ public class DetailStationActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.backup:
-                Toast.makeText(this, "You clicked Backup", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.delete:
-                Toast.makeText(this, "You clicked Delete", Toast.LENGTH_SHORT).show();
+                Collections.reverse(stationList);
+                adapter.notifyDataSetChanged();
                 break;
             case R.id.settings:
-                Toast.makeText(this, "You clicked Settings", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "You clicked About", Toast.LENGTH_SHORT).show();
                 break;
             default:
         }
         return true;
     }
-
-
 }

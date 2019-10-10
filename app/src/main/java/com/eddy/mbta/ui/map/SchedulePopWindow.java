@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eddy.mbta.R;
+import com.eddy.mbta.json.Schedule;
 import com.eddy.mbta.json.TimeScheduleBean;
 import com.google.gson.Gson;
 
@@ -83,7 +85,7 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
         // 设置外部可点击
         this.setOutsideTouchable(true);
         // mMenuView添加OnTouchListener监听判断获取触屏位置如果在选择框外面则销毁弹出框
-        /*this.view.setOnTouchListener(new View.OnTouchListener() {
+        this.view.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 int height = view.findViewById(R.id.pop_layout).getTop();
 
@@ -95,7 +97,7 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
                 }
                 return true;
             }
-        });*/
+        });
 
         // 设置视图
         this.setContentView(this.view);
@@ -132,9 +134,8 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
                 Gson gson = new Gson();
                 timeScheduleItem = gson.fromJson(response.body().string().trim(), TimeScheduleBean.class);
 
-                //mScheduleList.addAll(timeScheduleItem.getData());
-
             } catch (Exception e) {
+
             }
             return timeScheduleItem;
         }
@@ -255,15 +256,10 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
             if (first_tag != 10) {
                 startStation.setText(start[first_tag]);
                 endStation.setText(end[first_tag]);
-                //adapter.notifyDataSetChanged();
-
                 setTrainLine(route_id[first_tag], 0);
             }
 
-
-
             mTask = null;
-
         }
 
         @Override
@@ -335,7 +331,6 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
                 } else {
                     setTrainLine(mScheduleList.get(0).getRoute_id(), 0);
                 }
-
                 break;
             default:
                 break;

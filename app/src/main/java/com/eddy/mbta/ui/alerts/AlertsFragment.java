@@ -29,6 +29,14 @@ public class AlertsFragment extends Fragment {
     private AlertAdapter adapter;
     private List<AlertBean.DataBean> alertList = new ArrayList<>();
 
+    public static AlertsFragment newInstance() {
+        Bundle args = new Bundle ();
+
+        AlertsFragment fragment = new AlertsFragment ();
+        fragment.setArguments (args);
+        return fragment;
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -36,14 +44,12 @@ public class AlertsFragment extends Fragment {
 
         requestAlerts();
 
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
 
         recyclerView.setLayoutManager(layoutManager);
         adapter = new AlertAdapter(alertList);
         recyclerView.setAdapter(adapter);
-
-
 
         return root;
     }
@@ -59,11 +65,7 @@ public class AlertsFragment extends Fragment {
                 Gson gson = new Gson();
                 AlertBean alertItem = gson.fromJson(response.body().string().trim(), AlertBean.class);
 
-                for (int i = 0; i < alertItem.getData().size(); i++) {
-                    alertList.add(alertItem.getData().get(i));
-                    //final String cause = alertItem.getData().get(i).getAttributes().getCause();
-                    //String header = alertItem.getData().get(i).getAttributes().getHeader();
-                }
+                alertList.addAll(alertItem.getData());
 
                 if (getActivity() != null) {
                     getActivity().runOnUiThread(new Runnable() {
@@ -73,27 +75,6 @@ public class AlertsFragment extends Fragment {
                         }
                     });
                 }
-
-
-
-
-                /*final String cause = alertItem.getData().get(0).getAttributes().getCause();
-                final String header = alertItem.getData().get(0).getAttributes().getHeader();
-
-                if (true) {
-                    if (getActivity() != null) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //Toast.makeText(getActivity(), header+","+cause, Toast.LENGTH_SHORT).show();
-                                //showProgress(false);
-                                //updateMap();
-                                //fab.setVisibility(View.VISIBLE);
-                            }
-                        });
-                    }
-                }*/
-
             }
 
             @Override
@@ -103,7 +84,7 @@ public class AlertsFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getActivity(), "获取失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Internet Error", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

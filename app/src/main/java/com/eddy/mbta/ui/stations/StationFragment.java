@@ -20,6 +20,13 @@ public class StationFragment extends Fragment {
     private TrainAdapter adapter;
     private List<Integer> trainList = new ArrayList<>();
 
+    public static StationFragment newInstance() {
+        Bundle args = new Bundle ();
+
+        StationFragment fragment = new StationFragment ();
+        fragment.setArguments (args);
+        return fragment;
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -27,8 +34,6 @@ public class StationFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_train, container, false);
 
         init();
-
-
 
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);

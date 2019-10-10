@@ -8,7 +8,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +49,6 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-
 public class MapFragment extends Fragment implements
         OnMyLocationButtonClickListener,
         OnMyLocationClickListener,
@@ -61,29 +59,32 @@ public class MapFragment extends Fragment implements
     private View root;
     private Context mContext;
 
-    private GoogleMap mMap;
-
     private boolean mPermissionDenied = false;
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
     private FusedLocationProviderClient mFusedLocationClient;
     private LocationManager locationManager;
-
-
-    public static double lat;
-    public static double lng;
+    private GoogleMap mMap;
+    private static double lat;
+    private static double lng;
 
 
     private NearbyStationAdapter nearbyStationAdapter;
     private List<NearbyStationBean.IncludedBean> nearbyStationList = new ArrayList<>();
 
+    public static MapFragment newInstance() {
+        Bundle args = new Bundle ();
+
+        MapFragment fragment = new MapFragment ();
+        fragment.setArguments (args);
+        return fragment;
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        //mapViewModel = ViewModelProviders.of(this).get(MapViewModel.class);
-        root = inflater.inflate(R.layout.fragment_map, container, false);
 
-        //final TextView textView = root.findViewById(R.id.text_home);
+        root = inflater.inflate(R.layout.fragment_map, container, false);
 
         mContext = getActivity();
 
@@ -109,18 +110,8 @@ public class MapFragment extends Fragment implements
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        /*mapViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                //textView.setText(s);
-            }
-        });*/
-
-        //requestTimeSchedule(1,1,"");
-
-        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
-
         recyclerView.setLayoutManager(layoutManager);
 
         Window window = getActivity().getWindow();
@@ -144,14 +135,20 @@ public class MapFragment extends Fragment implements
                             mContext, R.raw.style_json));
 
             if (!success) {
-                Log.e("AAA", "Style parsing failed.");
+                Toast.makeText(mContext, "Parse Failed", Toast.LENGTH_SHORT).show();
             }
         } catch (Resources.NotFoundException e) {
-            Log.e("AAA", "Can't find style. Error: ", e);
+            Toast.makeText(mContext, "KML File Error", Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            KmlLayer layer = new KmlLayer(mMap, R.raw.mbta, mContext);
+            layer.addLayerToMap();
+        } catch (Exception e) {
+            Toast.makeText(mContext, "Loading Map Error", Toast.LENGTH_SHORT).show();
         }
 
         /*
-
             PolylineOptions rectOptions = new PolylineOptions();
             Polyline polyline = mMap.addPolyline(rectOptions
                     .addAll(poly)
@@ -161,14 +158,6 @@ public class MapFragment extends Fragment implements
                     //.color(Color.rgb(234,127,1))
                     .geodesic(true));
         */
-        try {
-            KmlLayer layer = new KmlLayer(mMap, R.raw.mbta, mContext);
-            layer.addLayerToMap();
-        } catch (Exception e) {
-
-        }
-
-        //poly = DecodePolylineUtil.decodePoly("qsaaGfrvpLYLuDxAI?e@MWASBcElAq@LsCZc@HaOfBoOlByB^??yB`@uE|@qBFqA@{AOu@Qo@]iAi@o@a@o@i@k@i@q@u@a@k@]m@c@{@Sc@Uq@_@qAm@wDCSo@sD??G_@Mm@Ge@IeACq@Ac@Ay@AkDAeDEmAMqAI_@Ia@I[Oc@i@iAU]_@_@SO}@g@IAIC{@CaB?uABcAEy@GiAMuAWYGc@KqDu@yHiAgBYO?_AM}@KyA[}@Ui@QmA]kA_@cA_@aA[}Am@??SI]KoBq@_AYoDcAeBc@mASwAOoBEs@?kCL}BDqC@cCFeA@_A@u@Dw@DmADiAF[@sBPyAF??u@DSByAPeAT}@V]Nk@Tm@X_@RcAv@WNo@r@]b@{DtF[h@}A|Bq@hAUZ}B|Cm@d@m@\\\\{@XY@MC_@QqBq@{F_C??g@ScnAl@??qCBie@i[y@c@m@QYIu@Gc@?i@DiARm@TQNa@f@uDbNIX??k@hBq@jBs@vBk@bA_JrQUj@??aDfI??[v@Wn@w@pBa@`Aa@fAwBtFc@~@k@hAsCxDwJ~N]|@Mb@K^CFKn@Gb@C\\\\ATCjAEt@GhBEbA??AXGlAAPM`DYjIM|CO|GM|DG|AGxCa@`MUbHs@fJOfD??ATIrB_Ap^s@jRWlJYdHOhGIpBKjAk@bBe@bAaDnGkBzD??m@pAwMpVgArCsBdGkEbPc@nAYb@a@d@eChDwG|HMPEFwCzNK^KVMJIB_@?iAO??kAOmB]gBGm@A[HSL[^a@|@e@fAo@r@iBh@aB^}@BkAGaNq@am@iDQ???sMUyQ~@uCJsBDo@Pc@Xm@l@m@bAaAvBu@pB]hAOx@UdAKr@??i@dD_@lDKlBOpCQjESvHKtEYbJg@rUGjCRnDFv@NbAPjAHRHLLFt@Nt@Vt@j@f@|@Vt@@DR~B@b@HpAFxN");
 
         LatLng my = new LatLng(lat, lng);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(my, 13));
@@ -182,9 +171,8 @@ public class MapFragment extends Fragment implements
 
 
     private void requestNearbyStations(double lat, double lng) {
-        String url = "https://api-v3.mbta.com/stops?include=parent_station&filter[route_type]=0,1&filter[latitude]=" + lat + "&filter[longitude]=" + lng + "&filter[radius]=0.1&sort=distance";
+        String url = "https://api-v3.mbta.com/stops?include=parent_station&filter[route_type]=0,1&filter[latitude]=" + lat + "&filter[longitude]=" + lng + "&filter[radius]=0.01&sort=distance";
 
-        //Log.d("QQQQ", url);
         HttpClientUtil.sendOkHttpRequest(url, new Callback() {
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
@@ -193,33 +181,11 @@ public class MapFragment extends Fragment implements
                 NearbyStationBean nearbyStationItem = gson.fromJson(response.body().string().trim(), NearbyStationBean.class);
 
                 nearbyStationList.addAll(nearbyStationItem.getIncluded());
-                //String ids = "";
-
-                /*for (int i = 0; i < nearbyStationItem.getIncluded().size(); i++) {
-
-                    String stationName = nearbyStationItem.getIncluded().get(i).getAttributes().getName();
-                    String stationId = nearbyStationItem.getIncluded().get(i).getId();
-
-                    Schedule schedule = new Schedule();
-                    schedule.setStationName(stationName);
-                    schedule.setStationId(stationId);
-                    scheduleList.add(schedule);
-
-                    Log.d("AAA", stationName+","+stationId);
-
-
-                    //requestTimeSchedule(i,0,stationId);
-                    //requestTimeSchedule(i,1,stationId);
-                } */
-
-
-
 
                 if (getActivity() != null) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            //Toast.makeText(mContext, nearbyStationItem.getIncluded().get(0).getAttributes().getName(), Toast.LENGTH_LONG).show();
                             nearbyStationAdapter.notifyDataSetChanged();
                         }
                     });
@@ -233,7 +199,7 @@ public class MapFragment extends Fragment implements
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getActivity(), "获取失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Internet Error", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -244,7 +210,6 @@ public class MapFragment extends Fragment implements
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        Log.d("TTT", "Clicked");
         return false;
     }
 

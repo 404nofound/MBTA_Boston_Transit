@@ -29,10 +29,10 @@ public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.ViewHolder>{
         public ViewHolder(View view) {
             super(view);
             cardView = (CardView) view;
-            alertTitle = (TextView) view.findViewById(R.id.alert_title);
-            alertTime = (TextView) view.findViewById(R.id.alert_time);
-            alertLifeCycle = (TextView) view.findViewById(R.id.alert_lifecycle);
-            alertDesc = (TextView) view.findViewById(R.id.alert_desc);
+            alertTitle = view.findViewById(R.id.alert_title);
+            alertTime = view.findViewById(R.id.alert_time);
+            alertLifeCycle = view.findViewById(R.id.alert_lifecycle);
+            alertDesc = view.findViewById(R.id.alert_desc);
         }
     }
 
@@ -51,11 +51,6 @@ public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.ViewHolder>{
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
-                /*AlertBean fruit = mAlertList.get(position);
-                Intent intent = new Intent(mContext, FruitActivity.class);
-                intent.putExtra(FruitActivity.FRUIT_NAME, fruit.getName());
-                intent.putExtra(FruitActivity.FRUIT_IMAGE_ID, fruit.getImageId());
-                mContext.startActivity(intent);*/
             }
         });
         return holder;
@@ -68,13 +63,11 @@ public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.ViewHolder>{
         holder.alertTime.setText(alert.getAttributes().getUpdated_at().substring(0, 10));
         holder.alertLifeCycle.setText(alert.getAttributes().getLifecycle());
         holder.alertDesc.setText(alert.getAttributes().getHeader());
-        //Glide.with(mContext).load(alert.getImageId()).into(holder.fruitImage);
     }
 
     @Override
     public int getItemCount() {
         return mAlertList.size();
     }
-
 }
 

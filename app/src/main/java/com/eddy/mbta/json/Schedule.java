@@ -1,4 +1,4 @@
-package com.eddy.mbta.ui.map;
+package com.eddy.mbta.json;
 
 public class Schedule {
 

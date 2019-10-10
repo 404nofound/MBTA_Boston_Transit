@@ -13,9 +13,9 @@ public class Utility {
         if (!TextUtils.isEmpty(response)) {
             try {
                 JSONArray stationArray = new JSONArray(response);
-
                 for (int i = 0; i < stationArray.length(); i++) {
                     JSONObject obj = stationArray.getJSONObject(i);
+
                     Station station = new Station();
                     station.setStationName(obj.getString("name"));
                     station.setTrainName(train);

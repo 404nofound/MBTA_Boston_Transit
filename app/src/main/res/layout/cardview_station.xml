@@ -33,17 +33,16 @@
                 android:textStyle="bold"
                 android:textColor="#000000"
                 android:gravity="center_vertical"
-                android:text="North Station"
-                android:textSize="20sp"/>
+                android:textSize="18sp"/>
 
             <TextView
                 android:id="@+id/station_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:ellipsize="end"
-                android:singleLine="true"
+                android:maxLines="3"
                 android:gravity="center_vertical"
-                android:text="1110 Commonwealth Ave, Boston, 02215"
                 android:textSize="16sp"/>
 
         </LinearLayout>
@@ -53,8 +52,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_wheelchair_disable"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="15dp"
             android:scaleType="centerCrop"/>
 
     </LinearLayout>

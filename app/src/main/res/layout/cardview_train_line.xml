@@ -20,10 +20,9 @@
 
         <ImageView
             android:id="@+id/route_image"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_greenb"
             android:layout_marginEnd="20dp"
             android:scaleType="centerCrop"/>
 
@@ -41,9 +40,10 @@
                 android:singleLine="true"
                 android:textStyle="bold"
                 android:textColor="#000000"
+                android:layout_marginStart="2dp"
+                android:layout_marginBottom="5dp"
                 android:gravity="center_vertical"
-                android:text="Green B"
-                android:textSize="20sp"/>
+                android:textSize="18sp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,22 +51,19 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
-                <com.google.android.material.chip.Chip
+                <Button
                     android:id="@+id/start_station"
-                    style="@style/Widget.MaterialComponents.Chip.Action"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:chipMinHeight="40dp"
-                    android:layout_marginEnd="5dp"
-                    android:text="Start Station"/>
+                    android:layout_height="50dp"
+                    android:textSize="12sp"
+                    android:layout_marginEnd="5dp" />
 
-                <com.google.android.material.chip.Chip
+                <Button
                     android:id="@+id/end_station"
-                    style="@style/Widget.MaterialComponents.Chip.Action"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:chipMinHeight="40dp"
-                    android:text="End Station"/>
+                    android:layout_height="50dp"
+                    android:textSize="12sp"/>
+
             </LinearLayout>
 
         </LinearLayout>
