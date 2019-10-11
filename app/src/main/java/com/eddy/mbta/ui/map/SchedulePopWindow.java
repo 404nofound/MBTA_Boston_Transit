@@ -36,6 +36,8 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
     private List<Schedule> mScheduleList = new ArrayList<>();
 
     private View view;
+    private RecyclerView recyclerView;
+    private View holderView;
     private TextView startStation, endStation;
     private ImageView red, mattapan, orange, greenb, greenc, greend, greene, blue, overturn;
 
@@ -43,6 +45,8 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
     public String[] start = {"Alewife", "Ashmont", "Oak Grove", "Park St", "North Station", "Park St", "Lechmere", "Bowdoin"};
     public String[] end = {"Braintree", "Mattapan", "Forest Hills", "Boston College", "Cleveland Circle", "Riverside", "Health St", "Wonderland"};
 
+    private String route = "";
+    private int direction = 0;
     private requestScheduleTask mTask;
 
     public SchedulePopWindow(Context mContext, String station_name, String stop_id) {
@@ -63,6 +67,7 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
         greene = view.findViewById(R.id.greene);
         blue = view.findViewById(R.id.blue);
         overturn = view.findViewById(R.id.overturn);
+        holderView = view.findViewById(R.id.holder_place);
 
         red.setOnClickListener(this);
         mattapan.setOnClickListener(this);
@@ -79,7 +84,7 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
         mTask = new requestScheduleTask(stop_id);
         mTask.execute((Void) null);
 
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView = view.findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(mContext, 1);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new TimeScheduleAdapter(mScheduleList);
@@ -248,15 +253,21 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
                     }
                 }
 
-                if (!TextUtils.isEmpty(arrTimeData)) {
+                if (!TextUtils.isEmpty(arrTimeData)||!TextUtils.isEmpty(depTimeData)) {
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     try {
-                        Date arr = df.parse(arrTimeData.substring(0, 19).replace("T", " "));
-                        Date dep = df.parse(arrTimeData.substring(0, 19).replace("T", " "));
+                        Date showDate;
+                        if (TextUtils.isEmpty(arrTimeData)) {
+                            showDate = df.parse(depTimeData.substring(0, 19).replace("T", " "));
+                        } else {
+                            showDate = df.parse(arrTimeData.substring(0, 19).replace("T", " "));
+                        }
+                        //Date arr = df.parse(arrTimeData.substring(0, 19).replace("T", " "));
+                        //Date dep = df.parse(arrTimeData.substring(0, 19).replace("T", " "));
 
                         Date nowDate = df.parse(df.format(new Date()));
 
-                        long timeDifference = (arr.getTime() - nowDate.getTime())/1000;
+                        long timeDifference = (showDate.getTime() - nowDate.getTime())/1000;
                         if (timeDifference < 0) {
                             //timeDifference = (dep.getTime() - nowDate.getTime())/1000;
                             schedule.setArrTime("Boarding");
@@ -269,6 +280,8 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
                         e.printStackTrace();
                     }
 
+                } else {
+                    continue;
                 }
                 //schedule.setArrTime(arrTimeData);
                 schedule.setDepTime(depTimeData);
@@ -279,6 +292,24 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
             }
 
             if (first_tag != 10) {
+                if (first_tag == 0) {
+                    red.setBackgroundResource(R.drawable.bg_border);
+                } else if (first_tag == 1) {
+                    mattapan.setBackgroundResource(R.drawable.bg_border);
+                } else if (first_tag == 2) {
+                    orange.setBackgroundResource(R.drawable.bg_border);
+                } else if (first_tag == 3) {
+                    greenb.setBackgroundResource(R.drawable.bg_border);
+                } else if (first_tag == 4) {
+                    greenc.setBackgroundResource(R.drawable.bg_border);
+                } else if (first_tag == 5) {
+                    greend.setBackgroundResource(R.drawable.bg_border);
+                } else if (first_tag == 6) {
+                    greene.setBackgroundResource(R.drawable.bg_border);
+                } else if (first_tag == 7) {
+                    blue.setBackgroundResource(R.drawable.bg_border);
+                }
+
                 startStation.setText(start[first_tag]);
                 endStation.setText(end[first_tag]);
                 setTrainLine(route_id[first_tag], 0);
@@ -294,54 +325,72 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
     }
 
     private void setTrainLine(String route_id, int direction_id) {
+        route = route_id;
         mScheduleList.clear();
         for (Schedule s : mTotalList) {
             if (s.getRoute_id().equals(route_id) && s.getDirection_id() == direction_id) {
                 mScheduleList.add(s);
             }
         }
-        adapter.notifyDataSetChanged();
+
+        if (mScheduleList.size() != 0) {
+            holderView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            adapter.notifyDataSetChanged();
+        } else {
+            holderView.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.red:
+                setBackground(red);
                 startStation.setText(start[0]);
                 endStation.setText(end[0]);
                 setTrainLine("Red", 0);
                 break;
             case R.id.mattapan:
+                setBackground(mattapan);
                 startStation.setText(start[1]);
                 endStation.setText(end[1]);
                 setTrainLine("Mattapan", 0);
                 break;
             case R.id.orange:
+                setBackground(orange);
                 startStation.setText(start[2]);
                 endStation.setText(end[2]);
                 setTrainLine("Orange", 0);
                 break;
             case R.id.greenb:
+                setBackground(greenb);
                 startStation.setText(start[3]);
                 endStation.setText(end[3]);
                 setTrainLine("Green-B", 0);
                 break;
             case R.id.greenc:
+                setBackground(greenc);
                 startStation.setText(start[4]);
                 endStation.setText(end[4]);
                 setTrainLine("Green-C", 0);
                 break;
             case R.id.greend:
+                setBackground(greend);
                 startStation.setText(start[5]);
                 endStation.setText(end[5]);
                 setTrainLine("Green-D", 0);
                 break;
             case R.id.greene:
+                setBackground(greene);
                 startStation.setText(start[6]);
                 endStation.setText(end[6]);
                 setTrainLine("Green-E", 0);
                 break;
             case R.id.blue:
+                setBackground(blue);
                 startStation.setText(start[7]);
                 endStation.setText(end[7]);
                 setTrainLine("Blue", 0);
@@ -351,15 +400,31 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
                 String e = endStation.getText().toString();
                 startStation.setText(e);
                 endStation.setText(s);
-                if (mScheduleList.get(0).getDirection_id() == 0) {
-                    setTrainLine(mScheduleList.get(0).getRoute_id(), 1);
+
+                if (direction == 0) {
+                    direction = 1;
+                    setTrainLine(route, 1);
                 } else {
-                    setTrainLine(mScheduleList.get(0).getRoute_id(), 0);
+                    direction = 0;
+                    setTrainLine(route, 0);
                 }
                 break;
             default:
                 break;
         }
+    }
+
+    private void setBackground(ImageView view) {
+        red.setBackgroundResource(0);
+        mattapan.setBackgroundResource(0);
+        orange.setBackgroundResource(0);
+        greenb.setBackgroundResource(0);
+        greenc.setBackgroundResource(0);
+        greend.setBackgroundResource(0);
+        greene.setBackgroundResource(0);
+        blue.setBackgroundResource(0);
+
+        view.setBackgroundResource(R.drawable.bg_border);
     }
 }
 

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -28,8 +29,6 @@ import com.eddy.mbta.R;
 import com.eddy.mbta.json.NearbyStationBean;
 import com.eddy.mbta.utils.HttpClientUtil;
 import com.eddy.mbta.utils.PermissionUtils;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -41,7 +40,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 import com.google.maps.android.data.kml.KmlLayer;
 
@@ -68,7 +66,7 @@ public class MapFragment extends Fragment implements
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
-    private FusedLocationProviderClient mFusedLocationClient;
+    //private FusedLocationProviderClient mFusedLocationClient;
     private LocationManager locationManager;
     private GoogleMap mMap;
     private static double lat;
@@ -93,7 +91,7 @@ public class MapFragment extends Fragment implements
 
         mContext = getActivity();
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
+        /*mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
@@ -102,18 +100,32 @@ public class MapFragment extends Fragment implements
                 @Override
                 public void onSuccess(Location location) {
                     if (location != null) {
-                        lat = location.getLatitude();
-                        lng = location.getLongitude();
-                        onMapReady(mMap);
+                        //lat = location.getLatitude();
+                        //lng = location.getLongitude();
+                        //onMapReady(mMap);
 
-                        requestNearbyStations(lat, lng);
+                        //requestNearbyStations(lat, lng);
                     }
                 }
             });
-        }
+        }*/
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        } else {
+            locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+            Criteria criteria = new Criteria();
+            String provider = locationManager.getBestProvider(criteria, true);
+            Location location = locationManager.getLastKnownLocation(provider);
+
+            lat = location.getLatitude();
+            lng = location.getLongitude();
+
+            requestNearbyStations(lat, lng);
+        }
 
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
