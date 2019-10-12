@@ -1,5 +1,7 @@
 package com.eddy.mbta.ui.stations;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -147,12 +149,15 @@ public class DetailStationActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
-            case R.id.backup:
+            case R.id.exchange:
                 Collections.reverse(stationList);
                 adapter.notifyDataSetChanged();
                 break;
             case R.id.settings:
-                Toast.makeText(this, "You clicked About", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Github Visit", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://github.com/404nofound"));
+                startActivity(intent);
                 break;
             default:
         }

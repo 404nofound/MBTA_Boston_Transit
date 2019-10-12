@@ -56,14 +56,12 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:text="Updated at: "
-                    android:layout_weight="0"
                     android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/alert_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:gravity="start"
                     android:textSize="13sp" />
 
@@ -73,7 +71,7 @@
                 android:id="@+id/alert_lifecycle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:gravity="end"
                 android:textColor="@color/orange"
                 android:textSize="13sp" />

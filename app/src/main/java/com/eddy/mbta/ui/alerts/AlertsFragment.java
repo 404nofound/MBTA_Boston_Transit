@@ -67,7 +67,7 @@ public class AlertsFragment extends Fragment {
 
     public void requestAlerts() {
 
-        String url = "https://api-v3.mbta.com/alerts?filter[route_type]=0,1&filter[datetime]=NOW";
+        String url = "https://api-v3.mbta.com/alerts?filter[route_type]=0,1&sort=lifecycle";
 
         HttpClientUtil.sendOkHttpRequest(url, new Callback() {
             @Override
