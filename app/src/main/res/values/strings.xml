@@ -5,6 +5,7 @@
     <string name="tab_text_2">Station</string>
     <string name="tab_text_3">Alert</string>
 
+    <string name="google_route_key">AIzaSyA9EJnO5l1_984auwYgXZRaDychH78sd28</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBenv056ScoAkEVbuAO5fGPkcBvz1GCPc4</string>
 
     <!--    Permissions    -->

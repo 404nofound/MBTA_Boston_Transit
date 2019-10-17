@@ -1,14 +1,19 @@
 package com.eddy.mbta.ui.map;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,8 +32,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.eddy.mbta.R;
 import com.eddy.mbta.json.NearbyStationBean;
+import com.eddy.mbta.json.RouteBean;
+import com.eddy.mbta.service.TimeScheduleService;
 import com.eddy.mbta.utils.HttpClientUtil;
 import com.eddy.mbta.utils.PermissionUtils;
+import com.eddy.mbta.utils.Utility;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -38,8 +46,12 @@ import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.maps.android.data.kml.KmlLayer;
 
@@ -57,7 +69,8 @@ public class MapFragment extends Fragment implements
         LocationListener,
         GoogleMap.OnMarkerClickListener,
         OnInfoWindowClickListener,
-        OnMapReadyCallback {
+        OnMapReadyCallback,
+        NearbyStationAdapter.Listener {
 
     private View root;
     private Context mContext;
@@ -72,9 +85,11 @@ public class MapFragment extends Fragment implements
     private static double lat;
     private static double lng;
 
-
     private NearbyStationAdapter nearbyStationAdapter;
     private List<NearbyStationBean.IncludedBean> nearbyStationList = new ArrayList<>();
+
+    private List<LatLng> routeList = new ArrayList<>();
+    private Polyline polyline;
 
     public static MapFragment newInstance() {
         Bundle args = new Bundle ();
@@ -134,6 +149,7 @@ public class MapFragment extends Fragment implements
         Window window = getActivity().getWindow();
 
         nearbyStationAdapter = new NearbyStationAdapter(nearbyStationList, window, root);
+        nearbyStationAdapter.setListener(this);
         recyclerView.setAdapter(nearbyStationAdapter);
 
         return root;
@@ -240,6 +256,17 @@ public class MapFragment extends Fragment implements
         PopWin.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
+
+                if(SchedulePopWindow.handler!=null){
+                    SchedulePopWindow.handler.removeCallbacksAndMessages(null);
+                }
+                Intent stopIntent = new Intent(mContext, TimeScheduleService.class);
+                mContext.stopService(stopIntent);
+
+                AlarmManager manager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+                PendingIntent pi = PendingIntent.getService(mContext, 0, stopIntent, 0);
+                manager.cancel(pi);
+
                 params.alpha = 1f;
                 window.setAttributes(params);
             }
@@ -248,7 +275,86 @@ public class MapFragment extends Fragment implements
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+        //requestRoute(marker.getPosition().latitude, marker.getPosition().longitude);
         return false;
+    }
+
+    @Override
+    public void onClick(int position) {
+        NearbyStationBean.IncludedBean station = nearbyStationList.get(position);
+        requestRoute(station.getAttributes().getLatitude(), station.getAttributes().getLongitude());
+    }
+
+    private void requestRoute(final double latitude, final double longitude) {
+        String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + lat + "," + lng
+                + "&destination=" + latitude + "," + longitude + "&mode=walking&key=AIzaSyA9EJnO5l1_984auwYgXZRaDychH78sd28";
+
+        Log.d("GOOGLE", url);
+
+        HttpClientUtil.sendOkHttpRequest(url, new Callback() {
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+
+                Gson gson = new Gson();
+                RouteBean route = gson.fromJson(response.body().string().trim(), RouteBean.class);
+
+                routeList = Utility.decodePoly(route.getRoutes().get(0).getOverview_polyline().getPoints());
+
+                final String distance = route.getRoutes().get(0).getLegs().get(0).getDistance().getText();
+                final String duration = route.getRoutes().get(0).getLegs().get(0).getDuration().getText();
+
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            if (polyline != null) {
+                                polyline.remove();
+                            }
+
+                            PolylineOptions rectOptions = new PolylineOptions();
+                            polyline = mMap.addPolyline(rectOptions
+                                    .addAll(routeList)
+                                    .width(8)
+                                    .color(Color.BLUE)
+                                    .geodesic(true));
+
+                            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                            builder.include(new LatLng(lat, lng));
+                            builder.include(new LatLng(latitude, longitude));
+
+                            LatLngBounds bounds = builder.build();
+                            int padding = 200; // offset from edges of the map in pixels
+                            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+
+                            mMap.animateCamera(cu);
+
+                            Snackbar.make(getView(), "Tips: " + distance + " away, about " + duration, Snackbar.LENGTH_LONG)
+                                    .setAction("Dismiss", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                        }
+                                    }).show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(), "Internet Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
+
     }
 
     private void enableMyLocation() {

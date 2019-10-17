@@ -1,9 +1,11 @@
 package com.eddy.mbta.ui.map;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
-import android.text.TextUtils;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,23 +19,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.eddy.mbta.R;
 import com.eddy.mbta.json.Schedule;
-import com.eddy.mbta.json.TimeScheduleBean;
-import com.google.gson.Gson;
+import com.eddy.mbta.service.Bean;
+import com.eddy.mbta.service.TimeScheduleService;
 
-import java.text.SimpleDateFormat;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class SchedulePopWindow extends PopupWindow implements View.OnClickListener {
 
     private TimeScheduleAdapter adapter;
     private List<Schedule> mTotalList = new ArrayList<>();
     private List<Schedule> mScheduleList = new ArrayList<>();
+    private Set<Integer> set = new TreeSet<>();
 
     private View view;
     private RecyclerView recyclerView;
@@ -45,13 +45,16 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
     public String[] start = {"Alewife", "Ashmont", "Oak Grove", "Park St", "North Station", "Park St", "Lechmere", "Bowdoin"};
     public String[] end = {"Braintree", "Mattapan", "Forest Hills", "Boston College", "Cleveland Circle", "Riverside", "Health St", "Wonderland"};
 
-    private String route = "";
+    private int route = -1;
     private int direction = 0;
-    private requestScheduleTask mTask;
 
-    public SchedulePopWindow(Context mContext, String station_name, String stop_id) {
+    public static Handler handler;
+
+    public SchedulePopWindow(final Context mContext, String station_name, String stop_id) {
 
         view = LayoutInflater.from(mContext).inflate(R.layout.pop_window_schedule, null);
+
+        handler = new CustomerHandler(this);
 
         TextView stationName = view.findViewById(R.id.station_name);
 
@@ -81,8 +84,15 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
 
         stationName.setText(station_name);
 
-        mTask = new requestScheduleTask(stop_id);
-        mTask.execute((Void) null);
+        Intent startIntent = new Intent(mContext, TimeScheduleService.class);
+        startIntent.putExtra("stop_id", stop_id);
+        mContext.startService(startIntent);
+
+        //Intent bindIntent = new Intent(mContext, TimeScheduleService.class);
+        //mContext.bindService(startIntent, connection, Context.BIND_AUTO_CREATE);
+
+        //mTask = new requestScheduleTask(stop_id);
+        //mTask.execute((Void) null);
 
         recyclerView = view.findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(mContext, 1);
@@ -94,12 +104,13 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
         this.setOutsideTouchable(true);
         // mMenuView添加OnTouchListener监听判断获取触屏位置如果在选择框外面则销毁弹出框
         this.view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
             public boolean onTouch(View v, MotionEvent event) {
                 int height = view.findViewById(R.id.pop_layout).getTop();
-
                 int y = (int) event.getY();
+
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (y < height) {
+                    if (y <= height) {
                         dismiss();
                     }
                 }
@@ -122,7 +133,117 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
         this.setAnimationStyle(R.style.pop_up_anim);
     }
 
-    private class requestScheduleTask extends AsyncTask<Void, Void, TimeScheduleBean> {
+    private void init() {
+        int first_tag = 10;
+
+        red.setVisibility(View.GONE);
+        mattapan.setVisibility(View.GONE);
+        orange.setVisibility(View.GONE);
+        greenb.setVisibility(View.GONE);
+        greenc.setVisibility(View.GONE);
+        greend.setVisibility(View.GONE);
+        greene.setVisibility(View.GONE);
+        blue.setVisibility(View.GONE);
+
+        for (int i : set) {
+            if (i == 0) {
+                if (first_tag > 0) first_tag = 0;
+                red.setVisibility(View.VISIBLE);
+            } else if (i == 1) {
+                if (first_tag > 1) first_tag = 1;
+                mattapan.setVisibility(View.VISIBLE);
+            } else if (i == 2) {
+                if (first_tag > 2) first_tag = 2;
+                orange.setVisibility(View.VISIBLE);
+            } else if (i == 3) {
+                if (first_tag > 3) first_tag = 3;
+                greenb.setVisibility(View.VISIBLE);
+            } else if (i == 4) {
+                if (first_tag > 4) first_tag = 4;
+                greenc.setVisibility(View.VISIBLE);
+            } else if (i == 5) {
+                if (first_tag > 5) first_tag = 5;
+                greend.setVisibility(View.VISIBLE);
+            } else if (i == 6) {
+                if (first_tag > 6) first_tag = 6;
+                greene.setVisibility(View.VISIBLE);
+            } else if (i == 7) {
+                if (first_tag > 7) first_tag = 7;
+                blue.setVisibility(View.VISIBLE);
+            }
+        }
+
+
+        if (route == -1) {
+            route = first_tag;
+
+            if (first_tag == 0) {
+                setBackground(red);
+            } else if (first_tag == 1) {
+                setBackground(mattapan);
+            } else if (first_tag == 2) {
+                setBackground(orange);
+            } else if (first_tag == 3) {
+                setBackground(greenb);
+            } else if (first_tag == 4) {
+                setBackground(greenc);
+            } else if (first_tag == 5) {
+                setBackground(greend);
+            } else if (first_tag == 6) {
+                setBackground(greene);
+            } else if (first_tag == 7) {
+                setBackground(blue);
+            }
+        }
+
+        setTrainLine(route, direction);
+
+        Log.d("Service", start[route]+","+end[route]+","+route_id[route]+","+direction);
+
+    }
+
+    class CustomerHandler extends Handler {
+
+        private final WeakReference<SchedulePopWindow> mActivity;
+        public CustomerHandler(SchedulePopWindow activity) {
+            mActivity=new WeakReference<SchedulePopWindow>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            if (msg.what == 1) {
+                Bean obj = (Bean) msg.obj;
+                SchedulePopWindow activity = mActivity.get();
+                if(activity != null) {
+                    mTotalList = obj.getList();
+                    set = obj.getSet();
+                    init();
+                    /*Log.d("Service", "PopWindow:"+obj.getList().size()+"");
+                    if (first_tag == 10) {
+                        //mTotalList.clear();
+                        //set.clear();
+                        Log.d("Service", "1 Works");
+                        mTotalList = obj.getList();
+                        set = obj.getSet();
+                        Log.d("Service", "1 inside:"+mTotalList.size());
+                        init();
+                    } else {
+                        Log.d("Service", "2 Works");
+                        //mTotalList.clear();
+                        mTotalList = obj.getList();
+                        Log.d("Service", "2 inside:OBJ"+obj.getList().size());
+                        Log.d("Service", "2 inside:TOTAL"+mTotalList.size());
+                        init();
+                    }*/
+
+                }
+            }
+        }
+    }
+
+    /*private class requestScheduleTask extends AsyncTask<Void, Void, TimeScheduleBean> {
         private final String mId;
 
         requestScheduleTask(String id) {
@@ -322,16 +443,28 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
         protected void onCancelled() {
             mTask = null;
         }
-    }
+    }*/
 
-    private void setTrainLine(String route_id, int direction_id) {
-        route = route_id;
+    private void setTrainLine(int mRoute, int direction_id) {
+        route = mRoute;
+        direction = direction_id;
+
+        if (direction_id == 0) {
+            startStation.setText(start[mRoute]);
+            endStation.setText(end[mRoute]);
+        } else {
+            startStation.setText(end[mRoute]);
+            endStation.setText(start[mRoute]);
+        }
+
         mScheduleList.clear();
         for (Schedule s : mTotalList) {
-            if (s.getRoute_id().equals(route_id) && s.getDirection_id() == direction_id) {
+            if (s.getRoute_id().equals(route_id[mRoute]) && s.getDirection_id() == direction_id) {
                 mScheduleList.add(s);
             }
         }
+        Log.d("Service", "Set FUnction"+mTotalList.size());
+        Log.d("Service", "Set FUnction: Show List:"+mScheduleList.size());
 
         if (mScheduleList.size() != 0) {
             holderView.setVisibility(View.GONE);
@@ -349,63 +482,40 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
         switch (v.getId()) {
             case R.id.red:
                 setBackground(red);
-                startStation.setText(start[0]);
-                endStation.setText(end[0]);
-                setTrainLine("Red", 0);
+                setTrainLine(0, 0);
                 break;
             case R.id.mattapan:
                 setBackground(mattapan);
-                startStation.setText(start[1]);
-                endStation.setText(end[1]);
-                setTrainLine("Mattapan", 0);
+                setTrainLine(1, 0);
                 break;
             case R.id.orange:
                 setBackground(orange);
-                startStation.setText(start[2]);
-                endStation.setText(end[2]);
-                setTrainLine("Orange", 0);
+                setTrainLine(2, 0);
                 break;
             case R.id.greenb:
                 setBackground(greenb);
-                startStation.setText(start[3]);
-                endStation.setText(end[3]);
-                setTrainLine("Green-B", 0);
+                setTrainLine(3, 0);
                 break;
             case R.id.greenc:
                 setBackground(greenc);
-                startStation.setText(start[4]);
-                endStation.setText(end[4]);
-                setTrainLine("Green-C", 0);
+                setTrainLine(4, 0);
                 break;
             case R.id.greend:
                 setBackground(greend);
-                startStation.setText(start[5]);
-                endStation.setText(end[5]);
-                setTrainLine("Green-D", 0);
+                setTrainLine(5, 0);
                 break;
             case R.id.greene:
                 setBackground(greene);
-                startStation.setText(start[6]);
-                endStation.setText(end[6]);
-                setTrainLine("Green-E", 0);
+                setTrainLine(6, 0);
                 break;
             case R.id.blue:
                 setBackground(blue);
-                startStation.setText(start[7]);
-                endStation.setText(end[7]);
-                setTrainLine("Blue", 0);
+                setTrainLine(7, 0);
                 break;
             case R.id.overturn:
-                String s = startStation.getText().toString();
-                String e = endStation.getText().toString();
-                startStation.setText(e);
-                endStation.setText(s);
-
                 if (direction == 0) {
-                    direction = 1;
                     setTrainLine(route, 1);
                 } else {
-                    direction = 0;
                     setTrainLine(route, 0);
                 }
                 break;
@@ -426,6 +536,7 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
 
         view.setBackgroundResource(R.drawable.bg_border);
     }
+
 }
 
 

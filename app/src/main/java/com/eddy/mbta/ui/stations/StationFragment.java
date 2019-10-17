@@ -56,6 +56,7 @@ public class StationFragment extends Fragment {
         return root;
     }
 
+
     public void init() {
         for (int i = 0; i < 8; i++) {
             trainList.add(i);

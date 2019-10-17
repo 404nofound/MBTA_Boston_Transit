@@ -20,4 +20,12 @@ public class HttpClientUtil {
         Request request = new Request.Builder().url(address).post(requestBody).build();
         client.newCall(request).enqueue(callback);
     }
+
+    public static void sendOkHttpPostRequest1(String address, okhttp3.Callback callback) {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(address)
+                .addHeader("accept", "text/event-stream")
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
 }

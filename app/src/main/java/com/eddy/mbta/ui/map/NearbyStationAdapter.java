@@ -1,6 +1,9 @@
 package com.eddy.mbta.ui.map;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.eddy.mbta.R;
 import com.eddy.mbta.json.NearbyStationBean;
+import com.eddy.mbta.service.TimeScheduleService;
 
 import java.util.List;
 
@@ -30,15 +34,22 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
     private Window mWindow;
     private View mRoot;
 
+    private Listener listener;
+
+    interface Listener {
+        abstract void onClick(int position);
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
-        ImageView wheelchair;
+        ImageView directionButton, wheelchair;
         TextView stationName;
 
         public ViewHolder(View view) {
             super(view);
             cardView = (CardView) view;
             stationName = view.findViewById(R.id.station_name);
+            directionButton = view.findViewById(R.id.direction);
             wheelchair = view.findViewById(R.id.wheelchair);
         }
     }
@@ -56,6 +67,16 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
         }
         View view = LayoutInflater.from(mContext).inflate(R.layout.cardview_nearby_station, parent, false);
         final ViewHolder holder = new ViewHolder(view);
+
+        holder.directionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+
+                listener.onClick(position);
+            }
+        });
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +97,17 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
                 PopWin.setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override
                     public void onDismiss() {
+
+                        if(SchedulePopWindow.handler!=null){
+                            SchedulePopWindow.handler.removeCallbacksAndMessages(null);
+                        }
+                        Intent stopIntent = new Intent(mContext, TimeScheduleService.class);
+                        mContext.stopService(stopIntent);
+
+                        AlarmManager manager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+                        PendingIntent pi = PendingIntent.getService(mContext, 0, stopIntent, 0);
+                        manager.cancel(pi);
+
                         params.alpha = 1f;
                         mWindow.setAttributes(params);
                     }
@@ -103,6 +135,10 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
     @Override
     public int getItemCount() {
         return mNearbyStationList.size();
+    }
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
     }
 }
 
