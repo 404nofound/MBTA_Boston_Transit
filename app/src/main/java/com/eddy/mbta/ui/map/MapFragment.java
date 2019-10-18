@@ -139,7 +139,7 @@ public class MapFragment extends Fragment implements
             lat = location.getLatitude();
             lng = location.getLongitude();
 
-            requestNearbyStations(lat, lng);
+            requestNearbyStations(lat, lng, 0.01);
         }
 
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
@@ -202,8 +202,9 @@ public class MapFragment extends Fragment implements
         enableMyLocation();
     }
 
-    private void requestNearbyStations(double lat, double lng) {
-        String url = "https://api-v3.mbta.com/stops?include=parent_station&filter[route_type]=0,1&filter[latitude]=" + lat + "&filter[longitude]=" + lng + "&filter[radius]=0.01&sort=distance";
+    private void requestNearbyStations(double mlat, double mlng, final double mradius) {
+        //double radius = 0.01;
+        String url = "https://api-v3.mbta.com/stops?include=parent_station&filter[route_type]=0,1&filter[latitude]=" + mlat + "&filter[longitude]=" + mlng + "&filter[radius]=" + mradius + "&sort=distance";
 
         HttpClientUtil.sendOkHttpRequest(url, new Callback() {
             @Override
@@ -212,15 +213,28 @@ public class MapFragment extends Fragment implements
                 Gson gson = new Gson();
                 NearbyStationBean nearbyStationItem = gson.fromJson(response.body().string().trim(), NearbyStationBean.class);
 
-                nearbyStationList.addAll(nearbyStationItem.getIncluded());
+                if (nearbyStationItem.getIncluded().size() == 0) {
+                    if (mradius >= 0.05) {
+                        Snackbar.make(getView(), "It seems like you are away from stations, Please using search station function.", Snackbar.LENGTH_LONG)
+                                .setAction("Dismiss", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                    }
+                                }).show();
+                    } else {
+                        requestNearbyStations(lat, lng, mradius + 0.02);
+                    }
+                } else {
+                    nearbyStationList.addAll(nearbyStationItem.getIncluded());
 
-                if (getActivity() != null) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            nearbyStationAdapter.notifyDataSetChanged();
-                        }
-                    });
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                nearbyStationAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
                 }
             }
 
