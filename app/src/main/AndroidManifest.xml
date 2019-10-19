@@ -21,9 +21,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
-            android:name=".service.TimeScheduleService"
+            android:name=".service.AlertService"
             android:enabled="true"
             android:exported="true"></service>
+        <service
+            android:name=".service.TimeScheduleService"
+            android:enabled="true"
+            android:exported="true" />
 
         <activity android:name=".ui.stations.DetailStationActivity" />
         <activity

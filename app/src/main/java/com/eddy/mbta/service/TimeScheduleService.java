@@ -116,7 +116,6 @@ public class TimeScheduleService extends Service {
         @Override
         protected void onPostExecute(final TimeScheduleBean timeScheduleItem) {
 
-            //int first_tag = 10;
             set.clear();
             list.clear();
             int number = timeScheduleItem.getData().size();

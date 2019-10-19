@@ -88,12 +88,6 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
         startIntent.putExtra("stop_id", stop_id);
         mContext.startService(startIntent);
 
-        //Intent bindIntent = new Intent(mContext, TimeScheduleService.class);
-        //mContext.bindService(startIntent, connection, Context.BIND_AUTO_CREATE);
-
-        //mTask = new requestScheduleTask(stop_id);
-        //mTask.execute((Void) null);
-
         recyclerView = view.findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(mContext, 1);
         recyclerView.setLayoutManager(layoutManager);
@@ -206,7 +200,7 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
 
         private final WeakReference<SchedulePopWindow> mActivity;
         public CustomerHandler(SchedulePopWindow activity) {
-            mActivity=new WeakReference<SchedulePopWindow>(activity);
+            mActivity = new WeakReference<SchedulePopWindow> (activity);
         }
 
         @Override
@@ -220,230 +214,10 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
                     mTotalList = obj.getList();
                     set = obj.getSet();
                     init();
-                    /*Log.d("Service", "PopWindow:"+obj.getList().size()+"");
-                    if (first_tag == 10) {
-                        //mTotalList.clear();
-                        //set.clear();
-                        Log.d("Service", "1 Works");
-                        mTotalList = obj.getList();
-                        set = obj.getSet();
-                        Log.d("Service", "1 inside:"+mTotalList.size());
-                        init();
-                    } else {
-                        Log.d("Service", "2 Works");
-                        //mTotalList.clear();
-                        mTotalList = obj.getList();
-                        Log.d("Service", "2 inside:OBJ"+obj.getList().size());
-                        Log.d("Service", "2 inside:TOTAL"+mTotalList.size());
-                        init();
-                    }*/
-
                 }
             }
         }
     }
-
-    /*private class requestScheduleTask extends AsyncTask<Void, Void, TimeScheduleBean> {
-        private final String mId;
-
-        requestScheduleTask(String id) {
-            mId = id;
-        }
-
-        @Override
-        protected TimeScheduleBean doInBackground(Void... params) {
-            TimeScheduleBean timeScheduleItem = null;
-            try {
-                String url = "https://api-v3.mbta.com/predictions?filter[route_type]=0,1&sort=direction_id,time&filter[stop]=" + mId;
-
-                OkHttpClient client = new OkHttpClient();
-                Request request = new Request.Builder().url(url).build();
-                Response response = client.newCall(request).execute();
-
-                Gson gson = new Gson();
-                timeScheduleItem = gson.fromJson(response.body().string().trim(), TimeScheduleBean.class);
-
-            } catch (Exception e) {
-
-            }
-            return timeScheduleItem;
-        }
-
-        @Override
-        protected void onPostExecute(final TimeScheduleBean timeScheduleItem) {
-
-            int first_tag = 10;
-            int number = timeScheduleItem.getData().size();
-            for (int i = 0; i < number; i++) {
-
-                Schedule schedule = new Schedule();
-
-                String arrTimeData = timeScheduleItem.getData().get(i).getAttributes().getArrival_time();
-                String depTimeData = timeScheduleItem.getData().get(i).getAttributes().getDeparture_time();
-
-                String route_id = timeScheduleItem.getData().get(i).getRelationships().getRoute().getData().getId();
-                int direction_id = timeScheduleItem.getData().get(i).getAttributes().getDirection_id();
-
-                if ("Orange".equals(route_id)) {
-                    if (first_tag > 2) first_tag = 2;
-                    orange.setVisibility(View.VISIBLE);
-                    schedule.setIcon(R.drawable.ic_orange);
-                    if (direction_id == 0) {
-                        schedule.setStart(start[2]);
-                        schedule.setEnd(end[2]);
-                    } else {
-                        schedule.setStart(end[2]);
-                        schedule.setEnd(start[2]);
-                    }
-                } else if ("Red".equals(route_id)) {
-                    if (first_tag > 0) first_tag = 0;
-                    red.setVisibility(View.VISIBLE);
-                    schedule.setIcon(R.drawable.ic_red);
-                    if (direction_id == 0) {
-                        schedule.setStart(start[0]);
-                        schedule.setEnd(end[0]);
-                    } else {
-                        schedule.setStart(end[0]);
-                        schedule.setEnd(start[0]);
-                    }
-                } else if ("Mattapan".equals(route_id)) {
-                    if (first_tag > 1) first_tag = 1;
-                    mattapan.setVisibility(View.VISIBLE);
-                    schedule.setIcon(R.drawable.ic_mattapan);
-                    if (direction_id == 0) {
-                        schedule.setStart(start[1]);
-                        schedule.setEnd(end[1]);
-                    } else {
-                        schedule.setStart(end[1]);
-                        schedule.setEnd(start[1]);
-                    }
-                } else if ("Blue".equals(route_id)) {
-                    if (first_tag > 7) first_tag = 7;
-                    blue.setVisibility(View.VISIBLE);
-                    schedule.setIcon(R.drawable.ic_blue);
-                    if (direction_id == 0) {
-                        schedule.setStart(start[7]);
-                        schedule.setEnd(end[7]);
-                    } else {
-                        schedule.setStart(end[7]);
-                        schedule.setEnd(start[7]);
-                    }
-                } else if (route_id.endsWith("B")) {
-                    if (first_tag > 3) first_tag = 3;
-                    greenb.setVisibility(View.VISIBLE);
-                    schedule.setIcon(R.drawable.ic_greenb);
-                    if (direction_id == 0) {
-                        schedule.setStart(start[3]);
-                        schedule.setEnd(end[3]);
-                    } else {
-                        schedule.setStart(end[3]);
-                        schedule.setEnd(start[3]);
-                    }
-                } else if (route_id.endsWith("C")) {
-                    if (first_tag > 4) first_tag = 4;
-                    greenc.setVisibility(View.VISIBLE);
-                    schedule.setIcon(R.drawable.ic_greenc);
-                    if (direction_id == 0) {
-                        schedule.setStart(start[4]);
-                        schedule.setEnd(end[4]);
-                    } else {
-                        schedule.setStart(end[4]);
-                        schedule.setEnd(start[4]);
-                    }
-                } else if (route_id.endsWith("D")) {
-                    if (first_tag > 5) first_tag = 5;
-                    greend.setVisibility(View.VISIBLE);
-                    schedule.setIcon(R.drawable.ic_greend);
-                    if (direction_id == 0) {
-                        schedule.setStart(start[5]);
-                        schedule.setEnd(end[5]);
-                    } else {
-                        schedule.setStart(end[5]);
-                        schedule.setEnd(start[5]);
-                    }
-                } else if (route_id.endsWith("E")) {
-                    if (first_tag > 6) first_tag = 6;
-                    greene.setVisibility(View.VISIBLE);
-                    schedule.setIcon(R.drawable.ic_greene);
-                    if (direction_id == 0) {
-                        schedule.setStart(start[6]);
-                        schedule.setEnd(end[6]);
-                    } else {
-                        schedule.setStart(end[6]);
-                        schedule.setEnd(start[6]);
-                    }
-                }
-
-                if (!TextUtils.isEmpty(arrTimeData)||!TextUtils.isEmpty(depTimeData)) {
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    try {
-                        Date showDate;
-                        if (TextUtils.isEmpty(arrTimeData)) {
-                            showDate = df.parse(depTimeData.substring(0, 19).replace("T", " "));
-                        } else {
-                            showDate = df.parse(arrTimeData.substring(0, 19).replace("T", " "));
-                        }
-                        //Date arr = df.parse(arrTimeData.substring(0, 19).replace("T", " "));
-                        //Date dep = df.parse(arrTimeData.substring(0, 19).replace("T", " "));
-
-                        Date nowDate = df.parse(df.format(new Date()));
-
-                        long timeDifference = (showDate.getTime() - nowDate.getTime())/1000;
-                        if (timeDifference < 0) {
-                            //timeDifference = (dep.getTime() - nowDate.getTime())/1000;
-                            schedule.setArrTime("Boarding");
-                        } else if (timeDifference > 60) {
-                            schedule.setArrTime(timeDifference/60+"m");
-                        } else {
-                            schedule.setArrTime(timeDifference+"s");
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                } else {
-                    continue;
-                }
-                //schedule.setArrTime(arrTimeData);
-                schedule.setDepTime(depTimeData);
-                schedule.setRoute_id(route_id);
-                schedule.setDirection_id(direction_id);
-
-                mTotalList.add(schedule);
-            }
-
-            if (first_tag != 10) {
-                if (first_tag == 0) {
-                    red.setBackgroundResource(R.drawable.bg_border);
-                } else if (first_tag == 1) {
-                    mattapan.setBackgroundResource(R.drawable.bg_border);
-                } else if (first_tag == 2) {
-                    orange.setBackgroundResource(R.drawable.bg_border);
-                } else if (first_tag == 3) {
-                    greenb.setBackgroundResource(R.drawable.bg_border);
-                } else if (first_tag == 4) {
-                    greenc.setBackgroundResource(R.drawable.bg_border);
-                } else if (first_tag == 5) {
-                    greend.setBackgroundResource(R.drawable.bg_border);
-                } else if (first_tag == 6) {
-                    greene.setBackgroundResource(R.drawable.bg_border);
-                } else if (first_tag == 7) {
-                    blue.setBackgroundResource(R.drawable.bg_border);
-                }
-
-                startStation.setText(start[first_tag]);
-                endStation.setText(end[first_tag]);
-                setTrainLine(route_id[first_tag], 0);
-            }
-
-            mTask = null;
-        }
-
-        @Override
-        protected void onCancelled() {
-            mTask = null;
-        }
-    }*/
 
     private void setTrainLine(int mRoute, int direction_id) {
         route = mRoute;
