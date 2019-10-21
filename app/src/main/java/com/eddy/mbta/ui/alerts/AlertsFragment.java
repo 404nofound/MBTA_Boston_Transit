@@ -103,7 +103,7 @@ public class AlertsFragment extends Fragment {
         }).start();
     }
 
-    class CustomerHandler extends Handler {
+    static class CustomerHandler extends Handler {
 
         private final WeakReference<AlertsFragment> mActivity;
         public CustomerHandler(AlertsFragment activity) {
@@ -120,9 +120,9 @@ public class AlertsFragment extends Fragment {
                 if(activity != null) {
                     List<AlertBean.DataBean> list = (List<AlertBean.DataBean>) msg.obj;
                     Log.d("AlertService", "Fragment:"+list.size());
-                    alertList.clear();
-                    alertList.addAll(list);
-                    adapter.notifyDataSetChanged();
+                    activity.alertList.clear();
+                    activity.alertList.addAll(list);
+                    activity.adapter.notifyDataSetChanged();
                 }
             }
         }

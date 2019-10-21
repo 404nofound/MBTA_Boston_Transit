@@ -82,8 +82,10 @@ public class MapFragment extends Fragment implements
     //private FusedLocationProviderClient mFusedLocationClient;
     private LocationManager locationManager;
     private GoogleMap mMap;
-    private static double lat;
-    private static double lng;
+    private Location lastSearchLocation;
+    private Location mLocation;
+    //private static double lat;
+    //private static double lng;
 
     private NearbyStationAdapter nearbyStationAdapter;
     private List<NearbyStationBean.IncludedBean> nearbyStationList = new ArrayList<>();
@@ -131,15 +133,20 @@ public class MapFragment extends Fragment implements
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         } else {
-            locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
             Criteria criteria = new Criteria();
+            locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
             String provider = locationManager.getBestProvider(criteria, true);
-            Location location = locationManager.getLastKnownLocation(provider);
 
-            lat = location.getLatitude();
-            lng = location.getLongitude();
+            Log.d("HEIHEI", provider);
+            locationManager.requestLocationUpdates(provider, 5000, 1, this);
 
-            requestNearbyStations(lat, lng, 0.01);
+            mLocation = locationManager.getLastKnownLocation(provider);
+            lastSearchLocation = mLocation;
+
+            //lat = mLocation.getLatitude();
+            //lng = mLocation.getLongitude();
+
+            requestNearbyStations(lastSearchLocation.getLatitude(), lastSearchLocation.getLongitude(), 0.01);
         }
 
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
@@ -192,7 +199,7 @@ public class MapFragment extends Fragment implements
                     .geodesic(true));
         */
 
-        LatLng my = new LatLng(lat, lng);
+        LatLng my = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(my, 13));
 
         mMap.setOnMarkerClickListener(this);
@@ -211,7 +218,7 @@ public class MapFragment extends Fragment implements
             public void onResponse(Call call, final Response response) throws IOException {
 
                 Gson gson = new Gson();
-                NearbyStationBean nearbyStationItem = gson.fromJson(response.body().string().trim(), NearbyStationBean.class);
+                final NearbyStationBean nearbyStationItem = gson.fromJson(response.body().string().trim(), NearbyStationBean.class);
 
                 if (nearbyStationItem.getIncluded().size() == 0) {
                     if (mradius >= 0.05) {
@@ -222,16 +229,24 @@ public class MapFragment extends Fragment implements
                                     }
                                 }).show();
                     } else {
-                        requestNearbyStations(lat, lng, mradius + 0.02);
+                        requestNearbyStations(lastSearchLocation.getLatitude(), lastSearchLocation.getLongitude(), mradius + 0.02);
                     }
                 } else {
-                    nearbyStationList.addAll(nearbyStationItem.getIncluded());
 
                     if (getActivity() != null) {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                nearbyStationAdapter.notifyDataSetChanged();
+                                if (nearbyStationList.size() == 0) {
+                                    nearbyStationList.addAll(nearbyStationItem.getIncluded());
+                                    nearbyStationAdapter.notifyItemRangeInserted(0, nearbyStationList.size());
+                                } else {
+                                    int previousSize = nearbyStationList.size();
+                                    nearbyStationList.clear();
+                                    nearbyStationAdapter.notifyItemRangeRemoved(0, previousSize);
+                                    nearbyStationList.addAll(nearbyStationItem.getIncluded());
+                                    nearbyStationAdapter.notifyItemRangeInserted(0, nearbyStationList.size());
+                                }
                             }
                         });
                     }
@@ -300,7 +315,7 @@ public class MapFragment extends Fragment implements
     }
 
     private void requestRoute(final double latitude, final double longitude) {
-        String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + lat + "," + lng
+        String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + mLocation.getLatitude() + "," + mLocation.getLongitude()
                 + "&destination=" + latitude + "," + longitude + "&mode=walking&key=AIzaSyA9EJnO5l1_984auwYgXZRaDychH78sd28";
 
         Log.d("GOOGLE", url);
@@ -334,7 +349,7 @@ public class MapFragment extends Fragment implements
                                     .geodesic(true));
 
                             LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                            builder.include(new LatLng(lat, lng));
+                            builder.include(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()));
                             builder.include(new LatLng(latitude, longitude));
 
                             LatLngBounds bounds = builder.build();
@@ -397,10 +412,20 @@ public class MapFragment extends Fragment implements
 
     @Override
     public void onLocationChanged(Location location) {
+        mLocation = location;
+        float dis = location.distanceTo(lastSearchLocation);
+        Log.d("HEIHEI", dis+",");
+
+        if (dis >= 20) {
+            //nearbyStationList.clear();
+            lastSearchLocation = location;
+            requestNearbyStations(location.getLatitude(), location.getLongitude(), 0.01);
+        }
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
-        mMap.animateCamera(cameraUpdate);
-        locationManager.removeUpdates(this);
+        //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+        //mMap.animateCamera(cameraUpdate);
+        //locationManager.removeUpdates(this);
+        Log.d("HEIHEI", lastSearchLocation.getLatitude()+","+mLocation.getLatitude());
     }
 
     @Override

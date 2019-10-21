@@ -196,7 +196,7 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
 
     }
 
-    class CustomerHandler extends Handler {
+    static class CustomerHandler extends Handler {
 
         private final WeakReference<SchedulePopWindow> mActivity;
         public CustomerHandler(SchedulePopWindow activity) {
@@ -211,9 +211,9 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
                 Bean obj = (Bean) msg.obj;
                 SchedulePopWindow activity = mActivity.get();
                 if(activity != null) {
-                    mTotalList = obj.getList();
-                    set = obj.getSet();
-                    init();
+                    activity.mTotalList = obj.getList();
+                    activity.set = obj.getSet();
+                    activity.init();
                 }
             }
         }
