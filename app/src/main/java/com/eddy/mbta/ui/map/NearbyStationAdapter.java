@@ -98,7 +98,7 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
                     @Override
                     public void onDismiss() {
 
-                        if(SchedulePopWindow.handler!=null){
+                        if(SchedulePopWindow.handler != null){
                             SchedulePopWindow.handler.removeCallbacksAndMessages(null);
                         }
                         Intent stopIntent = new Intent(mContext, TimeScheduleService.class);

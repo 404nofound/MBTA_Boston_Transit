@@ -1,6 +1,9 @@
 package com.eddy.mbta.ui.stations;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.eddy.mbta.R;
 import com.eddy.mbta.db.Station;
+import com.eddy.mbta.service.TimeScheduleService;
 import com.eddy.mbta.ui.map.SchedulePopWindow;
 
 import java.util.List;
@@ -73,6 +77,18 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHold
                 PopWin.setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override
                     public void onDismiss() {
+
+                        if(SchedulePopWindow.handler != null){
+                            SchedulePopWindow.handler.removeCallbacksAndMessages(null);
+                        }
+
+                        Intent stopIntent = new Intent(mContext, TimeScheduleService.class);
+                        mContext.stopService(stopIntent);
+
+                        AlarmManager manager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+                        PendingIntent pi = PendingIntent.getService(mContext, 0, stopIntent, 0);
+                        manager.cancel(pi);
+
                         params.alpha = 1f;
                         mWindow.setAttributes(params);
                     }

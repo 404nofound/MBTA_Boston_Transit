@@ -21,11 +21,13 @@ public class HttpClientUtil {
         client.newCall(request).enqueue(callback);
     }
 
-    public static void sendOkHttpPostRequest1(String address, okhttp3.Callback callback) {
+    public static void submitAdvice(String address, String info, String value, okhttp3.Callback callback) {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(address)
-                .addHeader("accept", "text/event-stream")
+        RequestBody requestBody = new FormBody.Builder()
+                .add("info", info)
+                .add("suggestion", value)
                 .build();
+        Request request = new Request.Builder().url(address).post(requestBody).build();
         client.newCall(request).enqueue(callback);
     }
 }

@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_main);
         }
 
         mViewPager = findViewById(R.id.view_pager);
@@ -50,14 +50,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Toast.makeText(this, "Future Goal", Toast.LENGTH_SHORT).show();
-                //finish();
+                Toast.makeText(this, "Welcome to Boston T", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.backup:
-                Toast.makeText(this, "Test 1", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.delete:
-                Toast.makeText(this, "Test 2", Toast.LENGTH_SHORT).show();
+            case R.id.report:
+                Intent report = new Intent(MainActivity.this, ReportActivity.class);
+                startActivity(report);
                 break;
             case R.id.settings:
                 Toast.makeText(this, "Github Visit", Toast.LENGTH_SHORT).show();
