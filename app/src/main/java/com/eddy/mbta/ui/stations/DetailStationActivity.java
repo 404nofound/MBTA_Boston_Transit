@@ -76,24 +76,28 @@ public class DetailStationActivity extends AppCompatActivity {
     private void queryStation() {
         dataList = LitePal.where("trainName = ?", train).find(Station.class);
         if (dataList.size() > 0) {
-            stationList.clear();
-            for (Station s : dataList) {
-                stationList.add(s);
+            if (stationList.size() != 0) {
+                stationList.clear();
+                stationList.addAll(dataList);
+                adapter.notifyItemRangeChanged(0, stationList.size());
+            } else {
+                stationList.addAll(dataList);
+                adapter.notifyItemRangeInserted(0, stationList.size());
             }
-            adapter.notifyDataSetChanged();
         } else {
-            String url = "http://209.222.10.90/stop.php";
-            queryFromServer(url);
+            queryFromServer();
         }
     }
 
-    private void queryFromServer(String url) {
-        HttpClientUtil.sendOkHttpPostRequest(url, "train", train.replace(" ", "").toLowerCase(), new Callback() {
+    private void queryFromServer() {
+        String url = "http://209.222.10.90/stop.php";
+
+        HttpClientUtil.getStation(url, train.replace(" ", "").toLowerCase(), new Callback() {
             @Override
             public void onResponse(Call call, Response response)  throws IOException {
                 String responseText = response.body().string();
-                boolean result = false;
-                result = Utility.handleStationResponse(responseText, train);
+
+                boolean result = Utility.handleStationResponse(responseText, train);
 
                 if (result) {
                     DetailStationActivity.this.runOnUiThread(new Runnable() {
@@ -130,7 +134,6 @@ public class DetailStationActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         queryStation();
-                        adapter.notifyDataSetChanged();
                         swipeRefresh.setRefreshing(false);
                     }
                 });
@@ -151,7 +154,7 @@ public class DetailStationActivity extends AppCompatActivity {
                 break;
             case R.id.exchange:
                 Collections.reverse(stationList);
-                adapter.notifyDataSetChanged();
+                adapter.notifyItemRangeChanged(0, stationList.size());
                 break;
             case R.id.settings:
                 Toast.makeText(this, "Github Visit", Toast.LENGTH_SHORT).show();

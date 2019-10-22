@@ -72,20 +72,14 @@ public class MapFragment extends Fragment implements
         OnMapReadyCallback,
         NearbyStationAdapter.Listener {
 
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private View root;
     private Context mContext;
-
     private boolean mPermissionDenied = false;
-
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-
-    //private FusedLocationProviderClient mFusedLocationClient;
     private LocationManager locationManager;
     private GoogleMap mMap;
     private Location lastSearchLocation;
     private Location mLocation;
-    //private static double lat;
-    //private static double lng;
 
     private NearbyStationAdapter nearbyStationAdapter;
     private List<NearbyStationBean.IncludedBean> nearbyStationList = new ArrayList<>();
@@ -108,25 +102,6 @@ public class MapFragment extends Fragment implements
 
         mContext = getActivity();
 
-        /*mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
-
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        } else {
-            mFusedLocationClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
-                    if (location != null) {
-                        //lat = location.getLatitude();
-                        //lng = location.getLongitude();
-                        //onMapReady(mMap);
-
-                        //requestNearbyStations(lat, lng);
-                    }
-                }
-            });
-        }*/
-
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -142,9 +117,6 @@ public class MapFragment extends Fragment implements
 
             mLocation = locationManager.getLastKnownLocation(provider);
             lastSearchLocation = mLocation;
-
-            //lat = mLocation.getLatitude();
-            //lng = mLocation.getLongitude();
 
             requestNearbyStations(lastSearchLocation.getLatitude(), lastSearchLocation.getLongitude(), 0.01);
         }
@@ -168,12 +140,8 @@ public class MapFragment extends Fragment implements
         mMap = googleMap;
 
         try {
-            // Customise the styling of the base map using a JSON object defined
-            // in a raw resource file.
             boolean success = mMap.setMapStyle(
-                    MapStyleOptions.loadRawResourceStyle(
-                            mContext, R.raw.style_json));
-
+                    MapStyleOptions.loadRawResourceStyle(mContext, R.raw.style_json));
             if (!success) {
                 Toast.makeText(mContext, "Parse Failed", Toast.LENGTH_SHORT).show();
             }
@@ -188,17 +156,6 @@ public class MapFragment extends Fragment implements
             Toast.makeText(mContext, "Loading Map Error", Toast.LENGTH_SHORT).show();
         }
 
-        /*
-            PolylineOptions rectOptions = new PolylineOptions();
-            Polyline polyline = mMap.addPolyline(rectOptions
-                    .addAll(poly)
-                    .width(8)
-                    //.color(Color.BLUE)
-                    .color(colors[i])
-                    //.color(Color.rgb(234,127,1))
-                    .geodesic(true));
-        */
-
         LatLng my = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(my, 13));
 
@@ -210,7 +167,7 @@ public class MapFragment extends Fragment implements
     }
 
     private void requestNearbyStations(double mlat, double mlng, final double mradius) {
-        //double radius = 0.01;
+
         String url = "https://api-v3.mbta.com/stops?include=parent_station&filter[route_type]=0,1&filter[latitude]=" + mlat + "&filter[longitude]=" + mlng + "&filter[radius]=" + mradius + "&sort=distance";
 
         HttpClientUtil.sendOkHttpRequest(url, new Callback() {
@@ -237,16 +194,13 @@ public class MapFragment extends Fragment implements
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (nearbyStationList.size() == 0) {
-                                    nearbyStationList.addAll(nearbyStationItem.getIncluded());
-                                    nearbyStationAdapter.notifyItemRangeInserted(0, nearbyStationList.size());
-                                } else {
-                                    int previousSize = nearbyStationList.size();
+                                int previousSize = nearbyStationList.size();
+                                if (previousSize != 0) {
                                     nearbyStationList.clear();
                                     nearbyStationAdapter.notifyItemRangeRemoved(0, previousSize);
-                                    nearbyStationList.addAll(nearbyStationItem.getIncluded());
-                                    nearbyStationAdapter.notifyItemRangeInserted(0, nearbyStationList.size());
                                 }
+                                nearbyStationList.addAll(nearbyStationItem.getIncluded());
+                                nearbyStationAdapter.notifyItemRangeInserted(0, nearbyStationList.size());
                             }
                         });
                     }
@@ -266,7 +220,6 @@ public class MapFragment extends Fragment implements
                 }
             }
         });
-
     }
 
     @Override
@@ -286,7 +239,7 @@ public class MapFragment extends Fragment implements
             @Override
             public void onDismiss() {
 
-                if(SchedulePopWindow.handler!=null){
+                if(SchedulePopWindow.handler != null){
                     SchedulePopWindow.handler.removeCallbacksAndMessages(null);
                 }
                 Intent stopIntent = new Intent(mContext, TimeScheduleService.class);
@@ -304,7 +257,6 @@ public class MapFragment extends Fragment implements
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        //requestRoute(marker.getPosition().latitude, marker.getPosition().longitude);
         return false;
     }
 
@@ -383,7 +335,6 @@ public class MapFragment extends Fragment implements
                 }
             }
         });
-
     }
 
     private void enableMyLocation() {
@@ -417,7 +368,7 @@ public class MapFragment extends Fragment implements
         Log.d("HEIHEI", dis+",");
 
         if (dis >= 20) {
-            //nearbyStationList.clear();
+
             lastSearchLocation = location;
             requestNearbyStations(location.getLatitude(), location.getLongitude(), 0.01);
         }

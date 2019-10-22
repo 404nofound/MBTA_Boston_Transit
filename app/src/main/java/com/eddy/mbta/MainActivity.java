@@ -16,8 +16,6 @@ import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ViewPager mViewPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,12 +30,11 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_main);
         }
 
-        mViewPager = findViewById(R.id.view_pager);
+        ViewPager mViewPager = findViewById(R.id.view_pager);
         MainPageAdapter adapter = new MainPageAdapter(this, getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
 
         TabLayout tabLayout = findViewById(R.id.tabs);
-        //tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setupWithViewPager(mViewPager);
     }
 
@@ -53,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Welcome to Boston T", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.report:
-                Intent report = new Intent(MainActivity.this, ReportActivity.class);
+                Intent report = new Intent(MainActivity.this, FeedbackActivity.class);
                 startActivity(report);
                 break;
             case R.id.settings:

@@ -17,8 +17,6 @@ import java.util.List;
 
 public class TimeScheduleAdapter extends RecyclerView.Adapter<TimeScheduleAdapter.ViewHolder>{
 
-    private static final String TAG = "TimeScheduleAdapter";
-
     private Context mContext;
 
     private List<Schedule> mScheduleList;
@@ -34,7 +32,6 @@ public class TimeScheduleAdapter extends RecyclerView.Adapter<TimeScheduleAdapte
             routeImage = view.findViewById(R.id.route_image);
             routeName = view.findViewById(R.id.route_name);
             time = view.findViewById(R.id.time);
-
         }
     }
 
@@ -53,7 +50,6 @@ public class TimeScheduleAdapter extends RecyclerView.Adapter<TimeScheduleAdapte
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
-
             }
         });
         return holder;
@@ -61,12 +57,10 @@ public class TimeScheduleAdapter extends RecyclerView.Adapter<TimeScheduleAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
         Schedule schedule = mScheduleList.get(position);
         holder.routeImage.setImageResource(schedule.getIcon());
         holder.routeName.setText(schedule.getRoute_id());
         holder.time.setText(schedule.getArrTime());
-
     }
 
     @Override

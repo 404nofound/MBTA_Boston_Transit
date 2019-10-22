@@ -13,21 +13,14 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eddy.mbta.R;
+import com.eddy.mbta.utils.Utility;
 
 import java.util.List;
 
 public class TrainAdapter extends RecyclerView.Adapter<TrainAdapter.ViewHolder>{
 
-    private static final String TAG = "TrainAdapter";
-
     private Context mContext;
-
     private List<Integer> mTrainList;
-
-    public String[] route_id = {"Red", "Mattapan", "Orange", "Green B", "Green C", "Green D", "Green E", "Blue"};
-    public String[] start = {"Alewife", "Ashmont", "Oak Grove", "Park St", "North Station", "Park St", "Lechmere", "Bowdoin"};
-    public String[] end = {"Ashmont/Braintree", "Mattapan", "Forest Hills", "Boston College", "Cleveland Circle", "Riverside", "Health St", "Wonderland"};
-    private int[] icon = {R.drawable.ic_red, R.drawable.ic_mattapan, R.drawable.ic_orange, R.drawable.ic_greenb, R.drawable.ic_greenc, R.drawable.ic_greend, R.drawable.ic_greene, R.drawable.ic_blue};
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
@@ -54,6 +47,7 @@ public class TrainAdapter extends RecyclerView.Adapter<TrainAdapter.ViewHolder>{
         if (mContext == null) {
             mContext = parent.getContext();
         }
+
         View view = LayoutInflater.from(mContext).inflate(R.layout.cardview_train_line, parent, false);
         final ViewHolder holder = new ViewHolder(view);
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +56,7 @@ public class TrainAdapter extends RecyclerView.Adapter<TrainAdapter.ViewHolder>{
                 int position = holder.getAdapterPosition();
 
                 Intent intent = new Intent(mContext, DetailStationActivity.class);
-                intent.putExtra("train", route_id[position]);
+                intent.putExtra("train", Utility.route_id[position]);
                 mContext.startActivity(intent);
             }
         });
@@ -72,10 +66,10 @@ public class TrainAdapter extends RecyclerView.Adapter<TrainAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         int num = mTrainList.get(position);
-        holder.nameView.setText(route_id[num]);
-        holder.startView.setText(start[num]);
-        holder.endView.setText(end[num]);
-        holder.iconView.setImageResource(icon[num]);
+        holder.nameView.setText(Utility.route_id[num]);
+        holder.startView.setText(Utility.start[num]);
+        holder.endView.setText(Utility.end[num]);
+        holder.iconView.setImageResource(Utility.icon[num]);
     }
 
     @Override

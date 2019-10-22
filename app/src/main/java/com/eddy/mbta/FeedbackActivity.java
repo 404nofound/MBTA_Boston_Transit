@@ -22,7 +22,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class ReportActivity extends AppCompatActivity {
+public class FeedbackActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class ReportActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Advice");
+            actionBar.setTitle("Feedback");
         }
 
         final EditText editText = findViewById(R.id.edit);
@@ -48,7 +48,7 @@ public class ReportActivity extends AppCompatActivity {
                             "手机型号:" + android.os.Build.MODEL +
                                     ",SDK版本:" + android.os.Build.VERSION.SDK +
                                     ",系统版本:" + android.os.Build.VERSION.RELEASE+
-                                    ",软件版本:"+getAppVersionName(ReportActivity.this);
+                                    ",软件版本:"+getAppVersionName(FeedbackActivity.this);
 
                     String url = "http://209.222.10.90/feedback.php";
                     HttpClientUtil.submitAdvice(url, info, text, new Callback() {
@@ -63,29 +63,29 @@ public class ReportActivity extends AppCompatActivity {
                                 tip = "Server Error";
                             }
 
-                            ReportActivity.this.runOnUiThread(new Runnable() {
+                            FeedbackActivity.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(ReportActivity.this, tip, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(FeedbackActivity.this, tip, Toast.LENGTH_LONG).show();
                                 }
                             });
                         }
 
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            ReportActivity.this.runOnUiThread(new Runnable() {
+                            FeedbackActivity.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(ReportActivity.this, "Internet Error", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(FeedbackActivity.this, "Internet Error", Toast.LENGTH_LONG).show();
                                 }
                             });
                         }
                     });
                     finish();
                 } else if (TextUtils.isEmpty(text)) {
-                    Toast.makeText(ReportActivity.this, "No Empty Please.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FeedbackActivity.this, "No Empty Please.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(ReportActivity.this, "Please notice word length.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FeedbackActivity.this, "Please notice word length.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

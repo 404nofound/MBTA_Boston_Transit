@@ -16,8 +16,6 @@ import java.util.List;
 
 public class AlertAdapter extends RecyclerView.Adapter<AlertAdapter.ViewHolder>{
 
-    private static final String TAG = "AlertAdapter";
-
     private Context mContext;
 
     private List<AlertBean.DataBean> mAlertList;

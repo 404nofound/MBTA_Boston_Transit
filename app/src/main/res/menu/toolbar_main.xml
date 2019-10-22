@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/report"
-        android:icon="@drawable/ic_report"
-        android:title="Report"
+        android:icon="@drawable/ic_feedback"
+        android:title="Feedback"
         app:showAsAction="ifRoom"/>
     <!--<item
         android:id="@+id/delete"
@@ -13,7 +13,6 @@
         app:showAsAction="ifRoom"/>-->
     <item
         android:id="@+id/settings"
-        android:icon="@drawable/ic_settings"
         android:title="About"
         app:showAsAction="never"/>
 </menu>

@@ -2,6 +2,7 @@ package com.eddy.mbta.utils;
 
 import android.text.TextUtils;
 
+import com.eddy.mbta.R;
 import com.eddy.mbta.db.Station;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -13,6 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Utility {
+    public static String[] route_id = {"Red", "Mattapan", "Orange", "Green-B", "Green-C", "Green-D", "Green-E", "Blue"};
+    public static String[] start = {"Alewife", "Ashmont", "Oak Grove", "Park St", "North Station", "Park St", "Lechmere", "Bowdoin"};
+    public static String[] end = {"Ashmont/Braintree", "Mattapan", "Forest Hills", "Boston College", "Cleveland Circle", "Riverside", "Health St", "Wonderland"};
+    public static int[] icon = {R.drawable.ic_red, R.drawable.ic_mattapan, R.drawable.ic_orange, R.drawable.ic_greenb, R.drawable.ic_greenc, R.drawable.ic_greend, R.drawable.ic_greene, R.drawable.ic_blue};
+
     public static boolean handleStationResponse(String response, String train) {
         if (!TextUtils.isEmpty(response)) {
             try {

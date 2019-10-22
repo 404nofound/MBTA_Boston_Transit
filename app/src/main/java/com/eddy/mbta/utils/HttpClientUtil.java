@@ -12,10 +12,10 @@ public class HttpClientUtil {
         client.newCall(request).enqueue(callback);
     }
 
-    public static void sendOkHttpPostRequest(String address, String key, String value, okhttp3.Callback callback) {
+    public static void getStation(String address, String value, okhttp3.Callback callback) {
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = new FormBody.Builder()
-                .add(key, value)
+                .add("train", value)
                 .build();
         Request request = new Request.Builder().url(address).post(requestBody).build();
         client.newCall(request).enqueue(callback);

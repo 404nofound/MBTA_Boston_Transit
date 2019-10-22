@@ -26,8 +26,6 @@ import java.util.List;
 
 public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHolder>{
 
-    private static final String TAG = "StationAdapter";
-
     private Context mContext;
     private Window mWindow;
 
@@ -68,7 +66,6 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHold
                 SchedulePopWindow PopWin = new SchedulePopWindow(mContext, station.getStationName(), station.getAlias());
 
                 PopWin.showAtLocation(mWindow.getDecorView().findViewById(R.id.layout), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
-
                 final WindowManager.LayoutParams params = mWindow.getAttributes();
 
                 params.alpha = 0.7f;

@@ -35,10 +35,10 @@ public class StationFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_train, container, false);
 
-        init();
-
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
+
+        init();
 
         recyclerView.setLayoutManager(layoutManager);
         adapter = new TrainAdapter(trainList);
@@ -56,8 +56,7 @@ public class StationFragment extends Fragment {
         return root;
     }
 
-
-    public void init() {
+    private void init() {
         for (int i = 0; i < 8; i++) {
             trainList.add(i);
         }

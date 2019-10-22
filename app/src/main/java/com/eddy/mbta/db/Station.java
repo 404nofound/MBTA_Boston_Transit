@@ -24,9 +24,7 @@ public class Station extends LitePalSupport {
         this.id = id;
     }
 
-    public String getAlias() {
-        return alias;
-    }
+    public String getAlias() { return alias; }
 
     public void setAlias(String alias) {
         this.alias = alias;

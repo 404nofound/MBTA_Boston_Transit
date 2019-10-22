@@ -15,8 +15,10 @@ import com.eddy.mbta.R;
 import com.eddy.mbta.json.Schedule;
 import com.eddy.mbta.json.TimeScheduleBean;
 import com.eddy.mbta.ui.map.SchedulePopWindow;
+import com.eddy.mbta.utils.Utility;
 import com.google.gson.Gson;
 
+import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,13 +32,9 @@ import okhttp3.Response;
 
 public class TimeScheduleService extends Service {
 
-    private requestScheduleTask mTask;
+    private static requestScheduleTask mTask;
     private List<Schedule> list = new ArrayList<>();
     private Set<Integer> set = new TreeSet<>();
-
-    public String[] route_id = {"Red", "Mattapan", "Orange", "Green-B", "Green-C", "Green-D", "Green-E", "Blue"};
-    public String[] start = {"Alewife", "Ashmont", "Oak Grove", "Park St", "North Station", "Park St", "Lechmere", "Bowdoin"};
-    public String[] end = {"Braintree", "Mattapan", "Forest Hills", "Boston College", "Cleveland Circle", "Riverside", "Health St", "Wonderland"};
 
     private String stop_id;
 
@@ -57,25 +55,20 @@ public class TimeScheduleService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("Service", "onStartCommand() Executed");
 
-        String id = intent.getStringExtra("stop_id");
-
         if (TextUtils.isEmpty(stop_id)) {
-            stop_id = id;
-        } else if (!TextUtils.isEmpty(id) && !stop_id.equals(stop_id)) {
-            stop_id = id;
+            stop_id = intent.getStringExtra("stop_id");
         }
-
         Log.d("Service", "Station: " + stop_id);
-        mTask = new requestScheduleTask(stop_id);
+
+        mTask = new requestScheduleTask(stop_id, TimeScheduleService.this);
         mTask.execute((Void) null);
 
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        int period = 10000;
+        int period = 10 * 1000;
         long triggerAtTime = SystemClock.elapsedRealtime() + period;
 
         Intent i = new Intent(this, TimeScheduleService.class);
         PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
-        //manager.cancel(pi);
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pi);
 
         return super.onStartCommand(intent, flags, startId);
@@ -84,13 +77,19 @@ public class TimeScheduleService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (mTask != null) {
+            mTask.cancel(true);
+        }
         Log.d("Service", "onDestroy() Executed");
     }
 
-    private class requestScheduleTask extends AsyncTask<Void, Void, TimeScheduleBean> {
+    private static class requestScheduleTask extends AsyncTask<Void, Void, TimeScheduleBean> {
         private final String mId;
 
-        requestScheduleTask(String id) {
+        private WeakReference<TimeScheduleService> reference;
+
+        requestScheduleTask(String id, TimeScheduleService context) {
+            reference = new WeakReference<>(context);
             mId = id;
         }
 
@@ -116,8 +115,11 @@ public class TimeScheduleService extends Service {
         @Override
         protected void onPostExecute(final TimeScheduleBean timeScheduleItem) {
 
-            set.clear();
-            list.clear();
+            TimeScheduleService service = reference.get();
+            if (service == null) return;
+
+            service.set.clear();
+            service.list.clear();
             int number = timeScheduleItem.getData().size();
             for (int i = 0; i < number; i++) {
 
@@ -130,100 +132,84 @@ public class TimeScheduleService extends Service {
                 int direction_id = timeScheduleItem.getData().get(i).getAttributes().getDirection_id();
 
                 if ("Orange".equals(route_id)) {
-                    set.add(2);
-                    //if (first_tag > 2) first_tag = 2;
-                    //orange.setVisibility(View.VISIBLE);
+                    service.set.add(2);
                     schedule.setIcon(R.drawable.ic_orange);
                     if (direction_id == 0) {
-                        schedule.setStart(start[2]);
-                        schedule.setEnd(end[2]);
+                        schedule.setStart(Utility.start[2]);
+                        schedule.setEnd(Utility.end[2]);
                     } else {
-                        schedule.setStart(end[2]);
-                        schedule.setEnd(start[2]);
+                        schedule.setStart(Utility.end[2]);
+                        schedule.setEnd(Utility.start[2]);
                     }
                 } else if ("Red".equals(route_id)) {
-                    set.add(0);
-                    //if (first_tag > 0) first_tag = 0;
-                    //red.setVisibility(View.VISIBLE);
+                    service.set.add(0);
                     schedule.setIcon(R.drawable.ic_red);
                     if (direction_id == 0) {
-                        schedule.setStart(start[0]);
-                        schedule.setEnd(end[0]);
+                        schedule.setStart(Utility.start[0]);
+                        schedule.setEnd(Utility.end[0]);
                     } else {
-                        schedule.setStart(end[0]);
-                        schedule.setEnd(start[0]);
+                        schedule.setStart(Utility.end[0]);
+                        schedule.setEnd(Utility.start[0]);
                     }
                 } else if ("Mattapan".equals(route_id)) {
-                    set.add(1);
-                    //if (first_tag > 1) first_tag = 1;
-                    //mattapan.setVisibility(View.VISIBLE);
+                    service.set.add(1);
                     schedule.setIcon(R.drawable.ic_mattapan);
                     if (direction_id == 0) {
-                        schedule.setStart(start[1]);
-                        schedule.setEnd(end[1]);
+                        schedule.setStart(Utility.start[1]);
+                        schedule.setEnd(Utility.end[1]);
                     } else {
-                        schedule.setStart(end[1]);
-                        schedule.setEnd(start[1]);
+                        schedule.setStart(Utility.end[1]);
+                        schedule.setEnd(Utility.start[1]);
                     }
                 } else if ("Blue".equals(route_id)) {
-                    set.add(7);
-                    //if (first_tag > 7) first_tag = 7;
-                    //blue.setVisibility(View.VISIBLE);
+                    service.set.add(7);
                     schedule.setIcon(R.drawable.ic_blue);
                     if (direction_id == 0) {
-                        schedule.setStart(start[7]);
-                        schedule.setEnd(end[7]);
+                        schedule.setStart(Utility.start[7]);
+                        schedule.setEnd(Utility.end[7]);
                     } else {
-                        schedule.setStart(end[7]);
-                        schedule.setEnd(start[7]);
+                        schedule.setStart(Utility.end[7]);
+                        schedule.setEnd(Utility.start[7]);
                     }
                 } else if (route_id.endsWith("B")) {
-                    set.add(3);
-                    //if (first_tag > 3) first_tag = 3;
-                    //greenb.setVisibility(View.VISIBLE);
+                    service.set.add(3);
                     schedule.setIcon(R.drawable.ic_greenb);
                     if (direction_id == 0) {
-                        schedule.setStart(start[3]);
-                        schedule.setEnd(end[3]);
+                        schedule.setStart(Utility.start[3]);
+                        schedule.setEnd(Utility.end[3]);
                     } else {
-                        schedule.setStart(end[3]);
-                        schedule.setEnd(start[3]);
+                        schedule.setStart(Utility.end[3]);
+                        schedule.setEnd(Utility.start[3]);
                     }
                 } else if (route_id.endsWith("C")) {
-                    set.add(4);
-                    //if (first_tag > 4) first_tag = 4;
-                    //greenc.setVisibility(View.VISIBLE);
+                    service.set.add(4);
                     schedule.setIcon(R.drawable.ic_greenc);
                     if (direction_id == 0) {
-                        schedule.setStart(start[4]);
-                        schedule.setEnd(end[4]);
+                        schedule.setStart(Utility.start[4]);
+                        schedule.setEnd(Utility.end[4]);
                     } else {
-                        schedule.setStart(end[4]);
-                        schedule.setEnd(start[4]);
+                        schedule.setStart(Utility.end[4]);
+                        schedule.setEnd(Utility.start[4]);
                     }
                 } else if (route_id.endsWith("D")) {
-                    set.add(5);
-                    //if (first_tag > 5) first_tag = 5;
-                    //greend.setVisibility(View.VISIBLE);
+                    service.set.add(5);
                     schedule.setIcon(R.drawable.ic_greend);
                     if (direction_id == 0) {
-                        schedule.setStart(start[5]);
-                        schedule.setEnd(end[5]);
+                        schedule.setStart(Utility.start[5]);
+                        schedule.setEnd(Utility.end[5]);
                     } else {
-                        schedule.setStart(end[5]);
-                        schedule.setEnd(start[5]);
+                        schedule.setStart(Utility.end[5]);
+                        schedule.setEnd(Utility.start[5]);
                     }
                 } else if (route_id.endsWith("E")) {
-                    set.add(6);
-                    //if (first_tag > 6) first_tag = 6;
-                    //greene.setVisibility(View.VISIBLE);
+                    service.set.add(6);
                     schedule.setIcon(R.drawable.ic_greene);
                     if (direction_id == 0) {
-                        schedule.setStart(start[6]);
-                        schedule.setEnd(end[6]);
+                        schedule.setStart(Utility.start[6]);
+                        schedule.setEnd(Utility.end[6]);
                     } else {
-                        schedule.setStart(end[6]);
-                        schedule.setEnd(start[6]);
+                        schedule.setStart(Utility.end[6]);
+                        schedule.setEnd(Utility.start[6]);
                     }
                 }
 
@@ -236,8 +222,6 @@ public class TimeScheduleService extends Service {
                         } else {
                             showDate = df.parse(arrTimeData.substring(0, 19).replace("T", " "));
                         }
-                        //Date arr = df.parse(arrTimeData.substring(0, 19).replace("T", " "));
-                        //Date dep = df.parse(arrTimeData.substring(0, 19).replace("T", " "));
 
                         Date nowDate = df.parse(df.format(new Date()));
 
@@ -258,24 +242,21 @@ public class TimeScheduleService extends Service {
                 } else {
                     continue;
                 }
-                //schedule.setArrTime(arrTimeData);
                 schedule.setDepTime(depTimeData);
                 schedule.setRoute_id(route_id);
                 schedule.setDirection_id(direction_id);
 
-                list.add(schedule);
+                service.list.add(schedule);
             }
 
             Bean bean = new Bean();
-            bean.setList(list);
-            bean.setSet(set);
+            bean.setList(service.list);
+            bean.setSet(service.set);
 
             Message message = new Message();
             message.what = 1;
             message.obj = bean;
             SchedulePopWindow.handler.sendMessage(message);
-
-            Log.d("Service", "Service:"+list.size()+"");
 
             mTask = null;
         }

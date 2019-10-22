@@ -21,6 +21,7 @@ import com.eddy.mbta.R;
 import com.eddy.mbta.json.Schedule;
 import com.eddy.mbta.service.Bean;
 import com.eddy.mbta.service.TimeScheduleService;
+import com.eddy.mbta.utils.Utility;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -40,10 +41,6 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
     private View holderView;
     private TextView startStation, endStation;
     private ImageView red, mattapan, orange, greenb, greenc, greend, greene, blue, overturn;
-
-    public String[] route_id = {"Red", "Mattapan", "Orange", "Green-B", "Green-C", "Green-D", "Green-E", "Blue"};
-    public String[] start = {"Alewife", "Ashmont", "Oak Grove", "Park St", "North Station", "Park St", "Lechmere", "Bowdoin"};
-    public String[] end = {"Braintree", "Mattapan", "Forest Hills", "Boston College", "Cleveland Circle", "Riverside", "Health St", "Wonderland"};
 
     private int route = -1;
     private int direction = 0;
@@ -192,15 +189,15 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
 
         setTrainLine(route, direction);
 
-        Log.d("Service", start[route]+","+end[route]+","+route_id[route]+","+direction);
+        Log.d("Service", Utility.start[route]+","+Utility.end[route]+","+Utility.route_id[route]+","+direction);
 
     }
 
     static class CustomerHandler extends Handler {
 
-        private final WeakReference<SchedulePopWindow> mActivity;
-        public CustomerHandler(SchedulePopWindow activity) {
-            mActivity = new WeakReference<SchedulePopWindow> (activity);
+        private final WeakReference<SchedulePopWindow> mWindow;
+        public CustomerHandler(SchedulePopWindow context) {
+            mWindow = new WeakReference<SchedulePopWindow> (context);
         }
 
         @Override
@@ -209,11 +206,11 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
 
             if (msg.what == 1) {
                 Bean obj = (Bean) msg.obj;
-                SchedulePopWindow activity = mActivity.get();
-                if(activity != null) {
-                    activity.mTotalList = obj.getList();
-                    activity.set = obj.getSet();
-                    activity.init();
+                SchedulePopWindow windowReference = mWindow.get();
+                if(windowReference != null) {
+                    windowReference.mTotalList = obj.getList();
+                    windowReference.set = obj.getSet();
+                    windowReference.init();
                 }
             }
         }
@@ -224,16 +221,21 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
         direction = direction_id;
 
         if (direction_id == 0) {
-            startStation.setText(start[mRoute]);
-            endStation.setText(end[mRoute]);
+            startStation.setText(Utility.start[mRoute]);
+            endStation.setText(Utility.end[mRoute]);
         } else {
-            startStation.setText(end[mRoute]);
-            endStation.setText(start[mRoute]);
+            startStation.setText(Utility.end[mRoute]);
+            endStation.setText(Utility.start[mRoute]);
         }
 
-        mScheduleList.clear();
+        int preSize = mScheduleList.size();
+        if (preSize != 0) {
+            mScheduleList.clear();
+            adapter.notifyItemRangeRemoved(0, preSize);
+        }
+
         for (Schedule s : mTotalList) {
-            if (s.getRoute_id().equals(route_id[mRoute]) && s.getDirection_id() == direction_id) {
+            if (s.getRoute_id().equals(Utility.route_id[mRoute]) && s.getDirection_id() == direction_id) {
                 mScheduleList.add(s);
             }
         }
@@ -243,11 +245,10 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
         if (mScheduleList.size() != 0) {
             holderView.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
-            adapter.notifyDataSetChanged();
+            adapter.notifyItemRangeInserted(0, mScheduleList.size());
         } else {
             holderView.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
-            adapter.notifyDataSetChanged();
         }
     }
 
@@ -310,7 +311,6 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
 
         view.setBackgroundResource(R.drawable.bg_border);
     }
-
 }
 
 

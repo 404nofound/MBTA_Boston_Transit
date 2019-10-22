@@ -14,6 +14,7 @@ import com.eddy.mbta.json.AlertBean;
 import com.eddy.mbta.ui.alerts.AlertsFragment;
 import com.google.gson.Gson;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ import okhttp3.Response;
 
 public class AlertService extends Service {
 
-    private requestAlertTask mTask;
+    private static requestAlertTask mTask;
     private List<AlertBean.DataBean> list = new ArrayList<>();
 
     public AlertService() {
@@ -45,7 +46,7 @@ public class AlertService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("AlertService", "onStartCommand() Executed");
 
-        mTask = new requestAlertTask();
+        mTask = new requestAlertTask(AlertService.this);
         mTask.execute((Void) null);
 
         AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -62,12 +63,18 @@ public class AlertService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (mTask != null) {
+            mTask.cancel(true);
+        }
         Log.d("AlertService", "onDestroy() Executed");
     }
 
-    private class requestAlertTask extends AsyncTask<Void, Void, AlertBean> {
+    private static class requestAlertTask extends AsyncTask<Void, Void, AlertBean> {
 
-        requestAlertTask() {
+        private WeakReference<AlertService> reference;
+
+        requestAlertTask(AlertService context) {
+            reference = new WeakReference<>(context);
         }
 
         @Override
@@ -91,15 +98,16 @@ public class AlertService extends Service {
         @Override
         protected void onPostExecute(final AlertBean alertItem) {
 
-            list.clear();
-            list.addAll(alertItem.getData());
+            AlertService service = reference.get();
+            if (service == null) return;
+
+            service.list.clear();
+            service.list.addAll(alertItem.getData());
 
             Message message = new Message();
             message.what = 1;
-            message.obj = list;
+            message.obj = service.list;
             AlertsFragment.handler.sendMessage(message);
-
-            Log.d("AlertService", "Service:"+list.size()+"");
 
             mTask = null;
         }

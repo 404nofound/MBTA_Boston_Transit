@@ -95,7 +95,6 @@ public class AlertsFragment extends Fragment {
                     @Override
                     public void run() {
                         requestAlerts();
-                        adapter.notifyDataSetChanged();
                         swipeRefresh.setRefreshing(false);
                     }
                 });
@@ -105,9 +104,9 @@ public class AlertsFragment extends Fragment {
 
     static class CustomerHandler extends Handler {
 
-        private final WeakReference<AlertsFragment> mActivity;
-        public CustomerHandler(AlertsFragment activity) {
-            mActivity = new WeakReference<AlertsFragment> (activity);
+        private final WeakReference<AlertsFragment> mFragment;
+        public CustomerHandler(AlertsFragment context) {
+            mFragment = new WeakReference<AlertsFragment> (context);
         }
 
         @Override
@@ -116,13 +115,17 @@ public class AlertsFragment extends Fragment {
 
             if (msg.what == 1) {
 
-                AlertsFragment activity = mActivity.get();
-                if(activity != null) {
+                AlertsFragment fragment = mFragment.get();
+                if(fragment != null) {
                     List<AlertBean.DataBean> list = (List<AlertBean.DataBean>) msg.obj;
                     Log.d("AlertService", "Fragment:"+list.size());
-                    activity.alertList.clear();
-                    activity.alertList.addAll(list);
-                    activity.adapter.notifyDataSetChanged();
+                    int preSize = fragment.alertList.size();
+                    if (preSize != 0) {
+                        fragment.alertList.clear();
+                        fragment.adapter.notifyItemRangeRemoved(0, preSize);
+                    }
+                    fragment.alertList.addAll(list);
+                    fragment.adapter.notifyItemRangeInserted(0, fragment.alertList.size());
                 }
             }
         }
@@ -137,16 +140,19 @@ public class AlertsFragment extends Fragment {
             public void onResponse(Call call, final Response response) throws IOException {
 
                 Gson gson = new Gson();
-                AlertBean alertItem = gson.fromJson(response.body().string().trim(), AlertBean.class);
-
-                alertList.clear();
-                alertList.addAll(alertItem.getData());
+                final AlertBean alertItem = gson.fromJson(response.body().string().trim(), AlertBean.class);
 
                 if (getActivity() != null) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            adapter.notifyDataSetChanged();
+                            int preSize = alertList.size();
+                            if (preSize != 0) {
+                                alertList.clear();
+                                adapter.notifyItemRangeRemoved(0, preSize);
+                            }
+                            alertList.addAll(alertItem.getData());
+                            adapter.notifyItemRangeInserted(0, alertList.size());
                         }
                     });
                 }
@@ -171,7 +177,7 @@ public class AlertsFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 
-        if(handler!=null){
+        if(handler != null){
             handler.removeCallbacksAndMessages(null);
         }
 

@@ -25,8 +25,6 @@ import java.util.List;
 
 public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdapter.ViewHolder>{
 
-    private static final String TAG = "NearbyStationAdapter";
-
     private Context mContext;
 
     private List<NearbyStationBean.IncludedBean> mNearbyStationList;
@@ -88,7 +86,6 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
 
                 PopWin.showAtLocation(mRoot.findViewById(R.id.layout), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
 
-                //final Window window = getActivity().getWindow();
                 final WindowManager.LayoutParams params = mWindow.getAttributes();
 
                 params.alpha = 0.7f;
