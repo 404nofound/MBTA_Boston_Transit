@@ -59,7 +59,12 @@ public class TimeScheduleAdapter extends RecyclerView.Adapter<TimeScheduleAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         Schedule schedule = mScheduleList.get(position);
         holder.routeImage.setImageResource(schedule.getIcon());
-        holder.routeName.setText(schedule.getRoute_id());
+        if (schedule.getRedEndStation() != null) {
+            holder.routeName.setText(schedule.getRoute_id() + " : " + schedule.getRedEndStation());
+        } else {
+            holder.routeName.setText(schedule.getRoute_id());
+        }
+
         holder.time.setText(schedule.getArrTime());
     }
 

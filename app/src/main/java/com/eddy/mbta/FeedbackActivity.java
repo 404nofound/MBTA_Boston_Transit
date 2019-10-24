@@ -66,7 +66,7 @@ public class FeedbackActivity extends AppCompatActivity {
                             FeedbackActivity.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(FeedbackActivity.this, tip, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), tip, Toast.LENGTH_LONG).show();
                                 }
                             });
                         }
@@ -76,16 +76,16 @@ public class FeedbackActivity extends AppCompatActivity {
                             FeedbackActivity.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(FeedbackActivity.this, "Internet Error", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), "Internet Error", Toast.LENGTH_LONG).show();
                                 }
                             });
                         }
                     });
                     finish();
                 } else if (TextUtils.isEmpty(text)) {
-                    Toast.makeText(FeedbackActivity.this, "No Empty Please.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "No Empty Please.", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(FeedbackActivity.this, "Please notice word length.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Please notice word length.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.eddy.mbta.MyApplication;
 import com.eddy.mbta.R;
 import com.eddy.mbta.json.Schedule;
 import com.eddy.mbta.service.Bean;
@@ -81,9 +82,9 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
 
         stationName.setText(station_name);
 
-        Intent startIntent = new Intent(mContext, TimeScheduleService.class);
+        Intent startIntent = new Intent(MyApplication.getContext(), TimeScheduleService.class);
         startIntent.putExtra("stop_id", stop_id);
-        mContext.startService(startIntent);
+        MyApplication.getContext().startService(startIntent);
 
         recyclerView = view.findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(mContext, 1);
@@ -217,6 +218,9 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
     }
 
     private void setTrainLine(int mRoute, int direction_id) {
+
+        //List<Schedule> temp = new ArrayList<>();
+
         route = mRoute;
         direction = direction_id;
 
@@ -239,6 +243,7 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
                 mScheduleList.add(s);
             }
         }
+
         Log.d("Service", "Set FUnction"+mTotalList.size());
         Log.d("Service", "Set FUnction: Show List:"+mScheduleList.size());
 

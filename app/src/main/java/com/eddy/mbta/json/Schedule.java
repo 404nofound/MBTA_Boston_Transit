@@ -10,6 +10,8 @@ public class Schedule {
     private int direction_id;
     private String start;
     private String end;
+    private String trip;
+    private String redEndStation;
 
     public Schedule() {}
 
@@ -76,4 +78,21 @@ public class Schedule {
     public void setRoute_id(String route_id) {
         this.route_id = route_id;
     }
+
+    public String getTrip() {
+        return trip;
+    }
+
+    public void setTrip(String trip) {
+        this.trip = trip;
+    }
+
+    public String getRedEndStation() {
+        return redEndStation;
+    }
+
+    public void setRedEndStation(String redEndStation) {
+        this.redEndStation = redEndStation;
+    }
+
 }

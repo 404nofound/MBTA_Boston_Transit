@@ -22,6 +22,7 @@ import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -34,6 +35,7 @@ public class TimeScheduleService extends Service {
 
     private static requestScheduleTask mTask;
     private List<Schedule> list = new ArrayList<>();
+    private HashMap<String, String> map = new HashMap<>();
     private Set<Integer> set = new TreeSet<>();
 
     private String stop_id;
@@ -97,7 +99,7 @@ public class TimeScheduleService extends Service {
         protected TimeScheduleBean doInBackground(Void... params) {
             TimeScheduleBean timeScheduleItem = null;
             try {
-                String url = "https://api-v3.mbta.com/predictions?filter[route_type]=0,1&sort=direction_id,time&filter[stop]=" + mId;
+                String url = "https://api-v3.mbta.com/predictions?filter[route_type]=0,1&sort=direction_id,time&include=trip&filter[stop]=" + mId;
 
                 OkHttpClient client = new OkHttpClient();
                 Request request = new Request.Builder().url(url).build();
@@ -120,6 +122,10 @@ public class TimeScheduleService extends Service {
 
             service.set.clear();
             service.list.clear();
+            service.map.clear();
+
+            boolean isRedExist = false;
+
             int number = timeScheduleItem.getData().size();
             for (int i = 0; i < number; i++) {
 
@@ -142,11 +148,13 @@ public class TimeScheduleService extends Service {
                         schedule.setEnd(Utility.start[2]);
                     }
                 } else if ("Red".equals(route_id)) {
+                    isRedExist = true;
                     service.set.add(0);
                     schedule.setIcon(R.drawable.ic_red);
                     if (direction_id == 0) {
                         schedule.setStart(Utility.start[0]);
                         schedule.setEnd(Utility.end[0]);
+                        schedule.setTrip(timeScheduleItem.getData().get(i).getRelationships().getTrip().getData().getId());
                     } else {
                         schedule.setStart(Utility.end[0]);
                         schedule.setEnd(Utility.start[0]);
@@ -247,6 +255,23 @@ public class TimeScheduleService extends Service {
                 schedule.setDirection_id(direction_id);
 
                 service.list.add(schedule);
+            }
+
+            if (isRedExist) {
+                for (TimeScheduleBean.IncludedBean m : timeScheduleItem.getIncluded()) {
+                    if (m.getAttributes().getDirection_id() == 0
+                            && m.getRelationships().getRoute().getData().getId().equals("Red")) {
+                        service.map.put(m.getId(), m.getAttributes().getHeadsign());
+                    }
+                }
+
+                for (Schedule s : service.list) {
+                    if (s.getRoute_id().equals("Red") && s.getDirection_id() == 0) {
+                        if (service.map.containsKey(s.getTrip())) {
+                            s.setRedEndStation(service.map.get(s.getTrip()));
+                        }
+                    }
+                }
             }
 
             Bean bean = new Bean();

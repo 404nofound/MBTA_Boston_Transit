@@ -30,6 +30,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.eddy.mbta.MyApplication;
 import com.eddy.mbta.R;
 import com.eddy.mbta.json.NearbyStationBean;
 import com.eddy.mbta.json.RouteBean;
@@ -66,11 +67,10 @@ import okhttp3.Response;
 public class MapFragment extends Fragment implements
         OnMyLocationButtonClickListener,
         OnMyLocationClickListener,
-        LocationListener,
         GoogleMap.OnMarkerClickListener,
         OnInfoWindowClickListener,
-        OnMapReadyCallback,
-        NearbyStationAdapter.Listener {
+        GoogleMap.OnCameraIdleListener,
+        OnMapReadyCallback {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private View root;
@@ -78,6 +78,9 @@ public class MapFragment extends Fragment implements
     private boolean mPermissionDenied = false;
     private LocationManager locationManager;
     private GoogleMap mMap;
+    private KmlLayer layer;
+    private int kml_index = 0;
+
     private Location lastSearchLocation;
     private Location mLocation;
 
@@ -109,11 +112,11 @@ public class MapFragment extends Fragment implements
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         } else {
             Criteria criteria = new Criteria();
-            locationManager = (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+            locationManager = (LocationManager) MyApplication.getContext().getSystemService(Context.LOCATION_SERVICE);
             String provider = locationManager.getBestProvider(criteria, true);
 
             Log.d("HEIHEI", provider);
-            locationManager.requestLocationUpdates(provider, 5000, 1, this);
+            locationManager.requestLocationUpdates(provider, 5000, 1, mListener);
 
             mLocation = locationManager.getLastKnownLocation(provider);
             lastSearchLocation = mLocation;
@@ -128,7 +131,7 @@ public class MapFragment extends Fragment implements
         Window window = getActivity().getWindow();
 
         nearbyStationAdapter = new NearbyStationAdapter(nearbyStationList, window, root);
-        nearbyStationAdapter.setListener(this);
+        nearbyStationAdapter.setListener(direListener);
         recyclerView.setAdapter(nearbyStationAdapter);
 
         return root;
@@ -143,17 +146,17 @@ public class MapFragment extends Fragment implements
             boolean success = mMap.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(mContext, R.raw.style_json));
             if (!success) {
-                Toast.makeText(mContext, "Parse Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getContext(), "Parse Failed", Toast.LENGTH_SHORT).show();
             }
         } catch (Resources.NotFoundException e) {
-            Toast.makeText(mContext, "KML File Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MyApplication.getContext(), "KML File Error", Toast.LENGTH_SHORT).show();
         }
 
         try {
-            KmlLayer layer = new KmlLayer(mMap, R.raw.mbta, mContext);
+            layer = new KmlLayer(mMap, R.raw.mbta, MyApplication.getContext());
             layer.addLayerToMap();
         } catch (Exception e) {
-            Toast.makeText(mContext, "Loading Map Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MyApplication.getContext(), "Loading Map Error", Toast.LENGTH_SHORT).show();
         }
 
         LatLng my = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
@@ -163,6 +166,7 @@ public class MapFragment extends Fragment implements
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
         mMap.setOnInfoWindowClickListener(this);
+        mMap.setOnCameraIdleListener(this);
         enableMyLocation();
     }
 
@@ -214,7 +218,7 @@ public class MapFragment extends Fragment implements
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getActivity(), "Internet Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MyApplication.getContext(), "Internet Error", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -242,11 +246,11 @@ public class MapFragment extends Fragment implements
                 if(SchedulePopWindow.handler != null){
                     SchedulePopWindow.handler.removeCallbacksAndMessages(null);
                 }
-                Intent stopIntent = new Intent(mContext, TimeScheduleService.class);
-                mContext.stopService(stopIntent);
+                Intent stopIntent = new Intent(MyApplication.getContext(), TimeScheduleService.class);
+                MyApplication.getContext().stopService(stopIntent);
 
-                AlarmManager manager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-                PendingIntent pi = PendingIntent.getService(mContext, 0, stopIntent, 0);
+                AlarmManager manager = (AlarmManager) MyApplication.getContext().getSystemService(Context.ALARM_SERVICE);
+                PendingIntent pi = PendingIntent.getService(MyApplication.getContext(), 0, stopIntent, 0);
                 manager.cancel(pi);
 
                 params.alpha = 1f;
@@ -256,15 +260,51 @@ public class MapFragment extends Fragment implements
     }
 
     @Override
+    public void onCameraIdle() {
+
+        //mMap.getCameraPosition().zoom
+        Log.d("ZOOM", mMap.getCameraPosition().zoom+"");
+
+
+        if (mMap.getCameraPosition().zoom <= 12 && kml_index != 1) {
+
+            kml_index = 1;
+
+            layer.removeLayerFromMap();
+
+            try {
+                layer = new KmlLayer(mMap, R.raw.mbta_small, MyApplication.getContext());
+                layer.addLayerToMap();
+            } catch (Exception e) {
+                Toast.makeText(MyApplication.getContext(), "Loading Map Error", Toast.LENGTH_SHORT).show();
+            }
+        } else if (mMap.getCameraPosition().zoom > 12 && kml_index != 0) {
+
+            kml_index = 0;
+
+            layer.removeLayerFromMap();
+
+            try {
+                layer = new KmlLayer(mMap, R.raw.mbta, MyApplication.getContext());
+                layer.addLayerToMap();
+            } catch (Exception e) {
+                Toast.makeText(MyApplication.getContext(), "Loading Map Error", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
     public boolean onMarkerClick(Marker marker) {
         return false;
     }
 
-    @Override
-    public void onClick(int position) {
-        NearbyStationBean.IncludedBean station = nearbyStationList.get(position);
-        requestRoute(station.getAttributes().getLatitude(), station.getAttributes().getLongitude());
-    }
+    private NearbyStationAdapter.Listener direListener = new NearbyStationAdapter.Listener() {
+        @Override
+        public void onClick(int position) {
+            NearbyStationBean.IncludedBean station = nearbyStationList.get(position);
+            requestRoute(station.getAttributes().getLatitude(), station.getAttributes().getLongitude());
+        }
+    };
 
     private void requestRoute(final double latitude, final double longitude) {
         String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + mLocation.getLatitude() + "," + mLocation.getLongitude()
@@ -350,43 +390,47 @@ public class MapFragment extends Fragment implements
 
     @Override
     public void onMyLocationClick(@NonNull Location location) {
-        Toast.makeText(mContext, "Current location:\n" + location, Toast.LENGTH_LONG).show();
+        Toast.makeText(MyApplication.getContext(), "Current location:\n" + location, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public boolean onMyLocationButtonClick() {
-        Toast.makeText(mContext, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MyApplication.getContext(), "MyLocation button clicked", Toast.LENGTH_SHORT).show();
         // Return false so that we don't consume the event and the default behavior still occurs
         // (the camera animates to the user's current position).
         return false;
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-        mLocation = location;
-        float dis = location.distanceTo(lastSearchLocation);
-        Log.d("HEIHEI", dis+",");
+    private LocationListener mListener = new LocationListener() {
 
-        if (dis >= 20) {
+        @Override
+        public void onLocationChanged(Location location) {
+            mLocation = location;
+            float dis = location.distanceTo(lastSearchLocation);
+            Log.d("HEIHEI", dis+",");
 
-            lastSearchLocation = location;
-            requestNearbyStations(location.getLatitude(), location.getLongitude(), 0.01);
+            if (dis >= 20) {
+
+                lastSearchLocation = location;
+                requestNearbyStations(location.getLatitude(), location.getLongitude(), 0.01);
+            }
+            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+            //mMap.animateCamera(cameraUpdate);
+            //locationManager.removeUpdates(this);
+            Log.d("HEIHEI", lastSearchLocation.getLatitude()+","+mLocation.getLatitude());
         }
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
-        //mMap.animateCamera(cameraUpdate);
-        //locationManager.removeUpdates(this);
-        Log.d("HEIHEI", lastSearchLocation.getLatitude()+","+mLocation.getLatitude());
-    }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) { }
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) { }
 
-    @Override
-    public void onProviderEnabled(String provider) { }
+        @Override
+        public void onProviderEnabled(String provider) { }
 
-    @Override
-    public void onProviderDisabled(String provider) { }
+        @Override
+        public void onProviderDisabled(String provider) { }
+
+    };
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, int[] grantResults) {
@@ -422,4 +466,40 @@ public class MapFragment extends Fragment implements
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getActivity().getFragmentManager(), "dialog");
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (locationManager != null) {
+            Log.d("a1a1", "NOT NULL");
+            locationManager.removeUpdates(mListener);
+            locationManager = null;
+        }
+
+        direListener = null;
+
+
+        /*if(mMap != null) {
+            mMap.setOnMapClickListener(null);
+            mMap.setOnMarkerClickListener(null);
+            mMap.setInfoWindowAdapter(null);
+            mMap.setOnCameraChangeListener(null); // <--
+            mMap.setOnGroundOverlayClickListener(null);
+            mMap.setOnCameraMoveCanceledListener(null);
+            mMap.setOnCameraMoveListener(null);
+            mMap.setOnCameraMoveStartedListener(null);
+            mMap.setOnCircleClickListener(null);
+            mMap.setOnMyLocationChangeListener(null);
+            mMap.setOnMapLongClickListener(null);
+            mMap.setOnInfoWindowClickListener(null);
+            mMap.setOnInfoWindowCloseListener(null);
+            mMap.setOnInfoWindowLongClickListener(null);
+            mMap.setOnPoiClickListener(null);
+            mMap.setOnPolygonClickListener(null);
+            mMap.setOnPolylineClickListener(null);
+        }*/
+    }
+
+
 }

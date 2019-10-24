@@ -5,17 +5,14 @@ import java.util.List;
 public class TimeScheduleBean {
 
     /**
-     * data : [{"attributes":{"arrival_time":"2019-09-28T19:17:46-04:00","departure_time":"2019-09-28T19:20:10-04:00","direction_id":1,"schedule_relationship":"ADDED","status":null,"stop_sequence":90},"id":"prediction-ADDED-1569507200-70130-90","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70130","type":"stop"}},"trip":{"data":{"id":"ADDED-1569507200","type":"trip"}},"vehicle":{"data":{"id":"G-10024","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:26:36-04:00","departure_time":"2019-09-28T19:29:00-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":90},"id":"prediction-41840723-ClevelandCircleStMarys-70130-90","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70130","type":"stop"}},"trip":{"data":{"id":"41840723-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10033","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:17:36-04:00","departure_time":"2019-09-28T19:19:18-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":100},"id":"prediction-41840720-ClevelandCircleStMarys-70134-100","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70134","type":"stop"}},"trip":{"data":{"id":"41840720-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10045","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:21:18-04:00","departure_time":"2019-09-28T19:23:00-04:00","direction_id":1,"schedule_relationship":"ADDED","status":null,"stop_sequence":100},"id":"prediction-ADDED-1569507200-70134-100","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70134","type":"stop"}},"trip":{"data":{"id":"ADDED-1569507200","type":"trip"}},"vehicle":{"data":{"id":"G-10024","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:30:08-04:00","departure_time":"2019-09-28T19:31:50-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":100},"id":"prediction-41840723-ClevelandCircleStMarys-70134-100","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70134","type":"stop"}},"trip":{"data":{"id":"41840723-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10033","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:20:05-04:00","departure_time":"2019-09-28T19:21:23-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":110},"id":"prediction-41840720-ClevelandCircleStMarys-70136-110","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70136","type":"stop"}},"trip":{"data":{"id":"41840720-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10045","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:23:47-04:00","departure_time":"2019-09-28T19:25:05-04:00","direction_id":1,"schedule_relationship":"ADDED","status":null,"stop_sequence":110},"id":"prediction-ADDED-1569507200-70136-110","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70136","type":"stop"}},"trip":{"data":{"id":"ADDED-1569507200","type":"trip"}},"vehicle":{"data":{"id":"G-10024","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:32:37-04:00","departure_time":"2019-09-28T19:33:55-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":110},"id":"prediction-41840723-ClevelandCircleStMarys-70136-110","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70136","type":"stop"}},"trip":{"data":{"id":"41840723-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10033","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:21:44-04:00","departure_time":"2019-09-28T19:22:56-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":120},"id":"prediction-41840720-ClevelandCircleStMarys-70138-120","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70138","type":"stop"}},"trip":{"data":{"id":"41840720-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10045","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:25:26-04:00","departure_time":"2019-09-28T19:26:38-04:00","direction_id":1,"schedule_relationship":"ADDED","status":null,"stop_sequence":120},"id":"prediction-ADDED-1569507200-70138-120","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70138","type":"stop"}},"trip":{"data":{"id":"ADDED-1569507200","type":"trip"}},"vehicle":{"data":{"id":"G-10024","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:34:16-04:00","departure_time":"2019-09-28T19:35:28-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":120},"id":"prediction-41840723-ClevelandCircleStMarys-70138-120","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70138","type":"stop"}},"trip":{"data":{"id":"41840723-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10033","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:23:21-04:00","departure_time":"2019-09-28T19:24:14-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":130},"id":"prediction-41840720-ClevelandCircleStMarys-70140-130","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70140","type":"stop"}},"trip":{"data":{"id":"41840720-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10045","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:27:03-04:00","departure_time":"2019-09-28T19:27:56-04:00","direction_id":1,"schedule_relationship":"ADDED","status":null,"stop_sequence":130},"id":"prediction-ADDED-1569507200-70140-130","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70140","type":"stop"}},"trip":{"data":{"id":"ADDED-1569507200","type":"trip"}},"vehicle":{"data":{"id":"G-10024","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:35:53-04:00","departure_time":"2019-09-28T19:36:46-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":130},"id":"prediction-41840723-ClevelandCircleStMarys-70140-130","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70140","type":"stop"}},"trip":{"data":{"id":"41840723-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10033","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:25:48-04:00","departure_time":"2019-09-28T19:26:30-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":180},"id":"prediction-41840849-ClevelandCircleStMarys-70141-180","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70141","type":"stop"}},"trip":{"data":{"id":"41840849-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10031","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:38:12-04:00","departure_time":"2019-09-28T19:38:54-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":180},"id":"prediction-41840850-ClevelandCircleStMarys-70141-180","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70141","type":"stop"}},"trip":{"data":{"id":"41840850-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10206","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:45:55-04:00","departure_time":"2019-09-28T19:46:37-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":180},"id":"prediction-41840527-ClevelandCircleStMarys-70141-180","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70141","type":"stop"}},"trip":{"data":{"id":"41840527-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:57:08-04:00","departure_time":"2019-09-28T19:57:50-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":180},"id":"prediction-41840853-ClevelandCircleStMarys-70141-180","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70141","type":"stop"}},"trip":{"data":{"id":"41840853-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:06:09-04:00","departure_time":"2019-09-28T20:06:51-04:00","direction_id":0,"schedule_relationship":"ADDED","status":null,"stop_sequence":180},"id":"prediction-ADDED-1569507187-70141-180","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70141","type":"stop"}},"trip":{"data":{"id":"ADDED-1569507187","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:12:27-04:00","departure_time":"2019-09-28T20:13:09-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":180},"id":"prediction-41840856-ClevelandCircleStMarys-70141-180","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70141","type":"stop"}},"trip":{"data":{"id":"41840856-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:16:09-04:00","departure_time":"2019-09-28T20:16:51-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":180},"id":"prediction-41840857-ClevelandCircleStMarys-70141-180","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70141","type":"stop"}},"trip":{"data":{"id":"41840857-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:24:59-04:00","departure_time":"2019-09-28T20:25:41-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":180},"id":"prediction-41840858-ClevelandCircleStMarys-70141-180","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70141","type":"stop"}},"trip":{"data":{"id":"41840858-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:26:54-04:00","departure_time":"2019-09-28T19:27:37-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":190},"id":"prediction-41840849-ClevelandCircleStMarys-70139-190","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70139","type":"stop"}},"trip":{"data":{"id":"41840849-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10031","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:39:18-04:00","departure_time":"2019-09-28T19:40:01-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":190},"id":"prediction-41840850-ClevelandCircleStMarys-70139-190","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70139","type":"stop"}},"trip":{"data":{"id":"41840850-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10206","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:47:01-04:00","departure_time":"2019-09-28T19:47:44-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":190},"id":"prediction-41840527-ClevelandCircleStMarys-70139-190","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70139","type":"stop"}},"trip":{"data":{"id":"41840527-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:58:14-04:00","departure_time":"2019-09-28T19:58:57-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":190},"id":"prediction-41840853-ClevelandCircleStMarys-70139-190","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70139","type":"stop"}},"trip":{"data":{"id":"41840853-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:07:15-04:00","departure_time":"2019-09-28T20:07:58-04:00","direction_id":0,"schedule_relationship":"ADDED","status":null,"stop_sequence":190},"id":"prediction-ADDED-1569507187-70139-190","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70139","type":"stop"}},"trip":{"data":{"id":"ADDED-1569507187","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:13:33-04:00","departure_time":"2019-09-28T20:14:16-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":190},"id":"prediction-41840856-ClevelandCircleStMarys-70139-190","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70139","type":"stop"}},"trip":{"data":{"id":"41840856-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:17:15-04:00","departure_time":"2019-09-28T20:17:58-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":190},"id":"prediction-41840857-ClevelandCircleStMarys-70139-190","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70139","type":"stop"}},"trip":{"data":{"id":"41840857-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:26:05-04:00","departure_time":"2019-09-28T20:26:48-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":190},"id":"prediction-41840858-ClevelandCircleStMarys-70139-190","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70139","type":"stop"}},"trip":{"data":{"id":"41840858-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:28:22-04:00","departure_time":"2019-09-28T19:29:06-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":200},"id":"prediction-41840849-ClevelandCircleStMarys-70137-200","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70137","type":"stop"}},"trip":{"data":{"id":"41840849-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10031","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:40:46-04:00","departure_time":"2019-09-28T19:41:30-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":200},"id":"prediction-41840850-ClevelandCircleStMarys-70137-200","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70137","type":"stop"}},"trip":{"data":{"id":"41840850-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10206","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:48:29-04:00","departure_time":"2019-09-28T19:49:13-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":200},"id":"prediction-41840527-ClevelandCircleStMarys-70137-200","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70137","type":"stop"}},"trip":{"data":{"id":"41840527-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:59:42-04:00","departure_time":"2019-09-28T20:00:26-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":200},"id":"prediction-41840853-ClevelandCircleStMarys-70137-200","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70137","type":"stop"}},"trip":{"data":{"id":"41840853-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:08:43-04:00","departure_time":"2019-09-28T20:09:27-04:00","direction_id":0,"schedule_relationship":"ADDED","status":null,"stop_sequence":200},"id":"prediction-ADDED-1569507187-70137-200","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70137","type":"stop"}},"trip":{"data":{"id":"ADDED-1569507187","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:15:01-04:00","departure_time":"2019-09-28T20:15:45-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":200},"id":"prediction-41840856-ClevelandCircleStMarys-70137-200","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70137","type":"stop"}},"trip":{"data":{"id":"41840856-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:18:43-04:00","departure_time":"2019-09-28T20:19:27-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":200},"id":"prediction-41840857-ClevelandCircleStMarys-70137-200","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70137","type":"stop"}},"trip":{"data":{"id":"41840857-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:27:33-04:00","departure_time":"2019-09-28T20:28:17-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":200},"id":"prediction-41840858-ClevelandCircleStMarys-70137-200","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70137","type":"stop"}},"trip":{"data":{"id":"41840858-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:18:16-04:00","departure_time":"2019-09-28T19:19:05-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":210},"id":"prediction-41840848-ClevelandCircleStMarys-70135-210","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70135","type":"stop"}},"trip":{"data":{"id":"41840848-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10127","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:30:22-04:00","departure_time":"2019-09-28T19:31:11-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":210},"id":"prediction-41840849-ClevelandCircleStMarys-70135-210","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70135","type":"stop"}},"trip":{"data":{"id":"41840849-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10031","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:42:46-04:00","departure_time":"2019-09-28T19:43:35-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":210},"id":"prediction-41840850-ClevelandCircleStMarys-70135-210","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70135","type":"stop"}},"trip":{"data":{"id":"41840850-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10206","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:50:29-04:00","departure_time":"2019-09-28T19:51:18-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":210},"id":"prediction-41840527-ClevelandCircleStMarys-70135-210","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70135","type":"stop"}},"trip":{"data":{"id":"41840527-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:01:42-04:00","departure_time":"2019-09-28T20:02:31-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":210},"id":"prediction-41840853-ClevelandCircleStMarys-70135-210","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70135","type":"stop"}},"trip":{"data":{"id":"41840853-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:10:43-04:00","departure_time":"2019-09-28T20:11:32-04:00","direction_id":0,"schedule_relationship":"ADDED","status":null,"stop_sequence":210},"id":"prediction-ADDED-1569507187-70135-210","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70135","type":"stop"}},"trip":{"data":{"id":"ADDED-1569507187","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:17:01-04:00","departure_time":"2019-09-28T20:17:50-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":210},"id":"prediction-41840856-ClevelandCircleStMarys-70135-210","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70135","type":"stop"}},"trip":{"data":{"id":"41840856-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:20:43-04:00","departure_time":"2019-09-28T20:21:32-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":210},"id":"prediction-41840857-ClevelandCircleStMarys-70135-210","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70135","type":"stop"}},"trip":{"data":{"id":"41840857-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:29:33-04:00","departure_time":"2019-09-28T20:30:22-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":210},"id":"prediction-41840858-ClevelandCircleStMarys-70135-210","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70135","type":"stop"}},"trip":{"data":{"id":"41840858-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:19:59-04:00","departure_time":"2019-09-28T19:22:10-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":220},"id":"prediction-41840848-ClevelandCircleStMarys-70131-220","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70131","type":"stop"}},"trip":{"data":{"id":"41840848-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10127","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:32:05-04:00","departure_time":"2019-09-28T19:34:16-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":220},"id":"prediction-41840849-ClevelandCircleStMarys-70131-220","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70131","type":"stop"}},"trip":{"data":{"id":"41840849-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10031","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:44:29-04:00","departure_time":"2019-09-28T19:46:40-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":220},"id":"prediction-41840850-ClevelandCircleStMarys-70131-220","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70131","type":"stop"}},"trip":{"data":{"id":"41840850-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":{"id":"G-10206","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T19:52:12-04:00","departure_time":"2019-09-28T19:54:23-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":220},"id":"prediction-41840527-ClevelandCircleStMarys-70131-220","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70131","type":"stop"}},"trip":{"data":{"id":"41840527-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:03:25-04:00","departure_time":"2019-09-28T20:05:36-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":220},"id":"prediction-41840853-ClevelandCircleStMarys-70131-220","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70131","type":"stop"}},"trip":{"data":{"id":"41840853-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:12:26-04:00","departure_time":"2019-09-28T20:14:37-04:00","direction_id":0,"schedule_relationship":"ADDED","status":null,"stop_sequence":220},"id":"prediction-ADDED-1569507187-70131-220","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70131","type":"stop"}},"trip":{"data":{"id":"ADDED-1569507187","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:18:44-04:00","departure_time":"2019-09-28T20:20:55-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":220},"id":"prediction-41840856-ClevelandCircleStMarys-70131-220","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70131","type":"stop"}},"trip":{"data":{"id":"41840856-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:22:26-04:00","departure_time":"2019-09-28T20:24:37-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":220},"id":"prediction-41840857-ClevelandCircleStMarys-70131-220","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70131","type":"stop"}},"trip":{"data":{"id":"41840857-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-09-28T20:31:16-04:00","departure_time":"2019-09-28T20:33:27-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":220},"id":"prediction-41840858-ClevelandCircleStMarys-70131-220","relationships":{"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70131","type":"stop"}},"trip":{"data":{"id":"41840858-ClevelandCircleStMarys","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"}]
-     * included : [{"attributes":{"address":null,"at_street":null,"description":"Harvard Avenue - Green Line - Park Street & North","latitude":42.350263,"location_type":0,"longitude":-71.131298,"municipality":"Boston","name":"Harvard Avenue","on_street":null,"platform_code":null,"platform_name":"Park Street & North","vehicle_type":0,"wheelchair_boarding":1},"id":"70130","links":{"self":"/stops/70130"},"relationships":{"child_stops":{},"facilities":{"links":{"related":"/facilities/?filter[stop]=70130"}},"parent_station":{"data":{"id":"place-harvd","type":"stop"}},"recommended_transfers":{},"zone":{"data":null}},"type":"stop"},{"attributes":{"address":null,"at_street":null,"description":"Harvard Avenue - Green Line - (B) Boston College","latitude":42.350602,"location_type":0,"longitude":-71.130727,"municipality":"Boston","name":"Harvard Avenue","on_street":null,"platform_code":null,"platform_name":"Boston College","vehicle_type":0,"wheelchair_boarding":1},"id":"70131","links":{"self":"/stops/70131"},"relationships":{"child_stops":{},"facilities":{"links":{"related":"/facilities/?filter[stop]=70131"}},"parent_station":{"data":{"id":"place-harvd","type":"stop"}},"recommended_transfers":{},"zone":{"data":null}},"type":"stop"},{"attributes":{"address":null,"at_street":null,"description":"Packards Corner - Green Line - Park Street & North","latitude":42.351891,"location_type":0,"longitude":-71.125067,"municipality":"Boston","name":"Packards Corner","on_street":null,"platform_code":null,"platform_name":"Park Street & North","vehicle_type":0,"wheelchair_boarding":2},"id":"70134","links":{"self":"/stops/70134"},"relationships":{"child_stops":{},"facilities":{"links":{"related":"/facilities/?filter[stop]=70134"}},"parent_station":{"data":{"id":"place-brico","type":"stop"}},"recommended_transfers":{},"zone":{"data":null}},"type":"stop"},{"attributes":{"address":null,"at_street":null,"description":"Packards Corner - Green Line - (B) Boston College","latitude":42.351651,"location_type":0,"longitude":-71.12551,"municipality":"Boston","name":"Packards Corner","on_street":null,"platform_code":null,"platform_name":"Boston College","vehicle_type":0,"wheelchair_boarding":2},"id":"70135","links":{"self":"/stops/70135"},"relationships":{"child_stops":{},"facilities":{"links":{"related":"/facilities/?filter[stop]=70135"}},"parent_station":{"data":{"id":"place-brico","type":"stop"}},"recommended_transfers":{},"zone":{"data":null}},"type":"stop"},{"attributes":{"address":null,"at_street":null,"description":"Babcock Street - Green Line - Park Street & North","latitude":42.351776,"location_type":0,"longitude":-71.12153,"municipality":"Boston","name":"Babcock Street","on_street":null,"platform_code":null,"platform_name":"Park Street & North","vehicle_type":0,"wheelchair_boarding":2},"id":"70136","links":{"self":"/stops/70136"},"relationships":{"child_stops":{},"facilities":{"links":{"related":"/facilities/?filter[stop]=70136"}},"parent_station":{"data":{"id":"place-babck","type":"stop"}},"recommended_transfers":{},"zone":{"data":null}},"type":"stop"},{"attributes":{"address":null,"at_street":null,"description":"Babcock Street - Green Line - (B) Boston College","latitude":42.351903,"location_type":0,"longitude":-71.122042,"municipality":"Boston","name":"Babcock Street","on_street":null,"platform_code":null,"platform_name":"Boston College","vehicle_type":0,"wheelchair_boarding":2},"id":"70137","links":{"self":"/stops/70137"},"relationships":{"child_stops":{},"facilities":{"links":{"related":"/facilities/?filter[stop]=70137"}},"parent_station":{"data":{"id":"place-babck","type":"stop"}},"recommended_transfers":{},"zone":{"data":null}},"type":"stop"},{"attributes":{"address":null,"at_street":null,"description":"Pleasant Street - Green Line - Park Street & North","latitude":42.351445,"location_type":0,"longitude":-71.118753,"municipality":"Boston","name":"Pleasant Street","on_street":null,"platform_code":null,"platform_name":"Park Street & North","vehicle_type":0,"wheelchair_boarding":2},"id":"70138","links":{"self":"/stops/70138"},"relationships":{"child_stops":{},"facilities":{"links":{"related":"/facilities/?filter[stop]=70138"}},"parent_station":{"data":{"id":"place-plsgr","type":"stop"}},"recommended_transfers":{},"zone":{"data":null}},"type":"stop"},{"attributes":{"address":null,"at_street":null,"description":"Pleasant Street - Green Line - (B) Boston College","latitude":42.351566,"location_type":0,"longitude":-71.119281,"municipality":"Boston","name":"Pleasant Street","on_street":null,"platform_code":null,"platform_name":"Boston College","vehicle_type":0,"wheelchair_boarding":2},"id":"70139","links":{"self":"/stops/70139"},"relationships":{"child_stops":{},"facilities":{"links":{"related":"/facilities/?filter[stop]=70139"}},"parent_station":{"data":{"id":"place-plsgr","type":"stop"}},"recommended_transfers":{},"zone":{"data":null}},"type":"stop"},{"attributes":{"address":null,"at_street":null,"description":"Saint Paul Street - Green Line - Park Street & North","latitude":42.35111,"location_type":0,"longitude":-71.116014,"municipality":"Boston","name":"Saint Paul Street","on_street":null,"platform_code":null,"platform_name":"Park Street & North","vehicle_type":0,"wheelchair_boarding":2},"id":"70140","links":{"self":"/stops/70140"},"relationships":{"child_stops":{},"facilities":{"links":{"related":"/facilities/?filter[stop]=70140"}},"parent_station":{"data":{"id":"place-stplb","type":"stop"}},"recommended_transfers":{},"zone":{"data":null}},"type":"stop"},{"attributes":{"address":null,"at_street":null,"description":"Saint Paul Street - Green Line - (B) Boston College","latitude":42.351241,"location_type":0,"longitude":-71.116531,"municipality":"Boston","name":"Saint Paul Street","on_street":null,"platform_code":null,"platform_name":"Boston College","vehicle_type":0,"wheelchair_boarding":2},"id":"70141","links":{"self":"/stops/70141"},"relationships":{"child_stops":{},"facilities":{"links":{"related":"/facilities/?filter[stop]=70141"}},"parent_station":{"data":{"id":"place-stplb","type":"stop"}},"recommended_transfers":{},"zone":{"data":null}},"type":"stop"}]
+     * data : [{"attributes":{"arrival_time":"2019-10-23T12:23:33-04:00","departure_time":"2019-10-23T12:23:52-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":100},"id":"prediction-41527398-70081-100","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70081","type":"stop"}},"trip":{"data":{"id":"41527398","type":"trip"}},"vehicle":{"data":{"id":"R-5460A8F9","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T12:26:28-04:00","departure_time":"2019-10-23T12:26:47-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":100},"id":"prediction-41527191-70081-100","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70081","type":"stop"}},"trip":{"data":{"id":"41527191","type":"trip"}},"vehicle":{"data":{"id":"R-5460A90C","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T12:35:48-04:00","departure_time":"2019-10-23T12:36:07-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":100},"id":"prediction-41527399-70081-100","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70081","type":"stop"}},"trip":{"data":{"id":"41527399","type":"trip"}},"vehicle":{"data":{"id":"R-5460918C","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T12:38:55-04:00","departure_time":"2019-10-23T12:39:14-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":100},"id":"prediction-41527298-70081-100","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70081","type":"stop"}},"trip":{"data":{"id":"41527298","type":"trip"}},"vehicle":{"data":{"id":"R-54609DAD","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T12:45:50-04:00","departure_time":"2019-10-23T12:46:09-04:00","direction_id":0,"schedule_relationship":null,"status":"Stopped 10 stops away","stop_sequence":100},"id":"prediction-41527419-70081-100","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70081","type":"stop"}},"trip":{"data":{"id":"41527419","type":"trip"}},"vehicle":{"data":{"id":"R-5460A960","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T12:51:16-04:00","departure_time":"2019-10-23T12:51:35-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":100},"id":"prediction-41527313-70081-100","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70081","type":"stop"}},"trip":{"data":{"id":"41527313","type":"trip"}},"vehicle":{"data":{"id":"R-5460A340","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T12:58:24-04:00","departure_time":"2019-10-23T12:58:43-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":100},"id":"prediction-41527420-70081-100","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70081","type":"stop"}},"trip":{"data":{"id":"41527420","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T13:05:24-04:00","departure_time":"2019-10-23T13:05:43-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":100},"id":"prediction-41527293-70081-100","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70081","type":"stop"}},"trip":{"data":{"id":"41527293","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T13:12:24-04:00","departure_time":"2019-10-23T13:12:43-04:00","direction_id":0,"schedule_relationship":"ADDED","status":null,"stop_sequence":100},"id":"prediction-ADDED-1571242117-70081-100","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70081","type":"stop"}},"trip":{"data":{"id":"ADDED-1571242117","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T13:19:24-04:00","departure_time":"2019-10-23T13:19:43-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":100},"id":"prediction-41527320-70081-100","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70081","type":"stop"}},"trip":{"data":{"id":"41527320","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T13:26:24-04:00","departure_time":"2019-10-23T13:26:43-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":100},"id":"prediction-41527418-70081-100","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70081","type":"stop"}},"trip":{"data":{"id":"41527418","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T13:33:24-04:00","departure_time":"2019-10-23T13:33:43-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":100},"id":"prediction-41527301-70081-100","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70081","type":"stop"}},"trip":{"data":{"id":"41527301","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T13:40:24-04:00","departure_time":"2019-10-23T13:40:43-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":100},"id":"prediction-41527417-70081-100","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70081","type":"stop"}},"trip":{"data":{"id":"41527417","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T12:31:22-04:00","departure_time":"2019-10-23T12:32:17-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":120},"id":"prediction-41527403-70082-120","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70082","type":"stop"}},"trip":{"data":{"id":"41527403","type":"trip"}},"vehicle":{"data":{"id":"R-54609DBE","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T12:35:43-04:00","departure_time":"2019-10-23T12:36:38-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":120},"id":"prediction-41527317-70082-120","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70082","type":"stop"}},"trip":{"data":{"id":"41527317","type":"trip"}},"vehicle":{"data":{"id":"R-5460A8EF","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T12:47:35-04:00","departure_time":"2019-10-23T12:48:30-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":120},"id":"prediction-41527404-70082-120","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70082","type":"stop"}},"trip":{"data":{"id":"41527404","type":"trip"}},"vehicle":{"data":{"id":"R-5460A8F0","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T12:51:02-04:00","departure_time":"2019-10-23T12:51:57-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":120},"id":"prediction-41527291-70082-120","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70082","type":"stop"}},"trip":{"data":{"id":"41527291","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T13:03:15-04:00","departure_time":"2019-10-23T13:04:10-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":120},"id":"prediction-41527405-70082-120","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70082","type":"stop"}},"trip":{"data":{"id":"41527405","type":"trip"}},"vehicle":{"data":{"id":"R-5460A8F6","type":"vehicle"}}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T13:03:43-04:00","departure_time":"2019-10-23T13:04:38-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":120},"id":"prediction-41527319-70082-120","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70082","type":"stop"}},"trip":{"data":{"id":"41527319","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T13:17:09-04:00","departure_time":"2019-10-23T13:18:04-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":120},"id":"prediction-41527406-70082-120","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70082","type":"stop"}},"trip":{"data":{"id":"41527406","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T13:17:43-04:00","departure_time":"2019-10-23T13:18:38-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":120},"id":"prediction-41527311-70082-120","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70082","type":"stop"}},"trip":{"data":{"id":"41527311","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T13:27:09-04:00","departure_time":"2019-10-23T13:28:04-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":120},"id":"prediction-41527407-70082-120","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70082","type":"stop"}},"trip":{"data":{"id":"41527407","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T13:31:43-04:00","departure_time":"2019-10-23T13:32:38-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":120},"id":"prediction-41527303-70082-120","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70082","type":"stop"}},"trip":{"data":{"id":"41527303","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"},{"attributes":{"arrival_time":"2019-10-23T13:41:09-04:00","departure_time":"2019-10-23T13:42:04-04:00","direction_id":1,"schedule_relationship":null,"status":null,"stop_sequence":120},"id":"prediction-41527408-70082-120","relationships":{"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70082","type":"stop"}},"trip":{"data":{"id":"41527408","type":"trip"}},"vehicle":{"data":null}},"type":"prediction"}]
+     * included : [{"attributes":{"bikes_allowed":0,"block_id":"S931_-17","direction_id":0,"headsign":"Ashmont","name":"","wheelchair_accessible":1},"id":"41527191","links":{"self":"/trips/41527191"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-1-0","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"931_0009","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S931_-15","direction_id":1,"headsign":"Alewife","name":"","wheelchair_accessible":1},"id":"41527291","links":{"self":"/trips/41527291"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-1-1","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"931_0010","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S931_-8","direction_id":0,"headsign":"Ashmont","name":"","wheelchair_accessible":1},"id":"41527293","links":{"self":"/trips/41527293"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-1-0","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"931_0009","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S931_-3","direction_id":0,"headsign":"Ashmont","name":"","wheelchair_accessible":1},"id":"41527298","links":{"self":"/trips/41527298"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-1-0","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"931_0009","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S931_-12","direction_id":0,"headsign":"Ashmont","name":"","wheelchair_accessible":1},"id":"41527301","links":{"self":"/trips/41527301"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-1-0","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"931_0009","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S931_-6","direction_id":1,"headsign":"Alewife","name":"","wheelchair_accessible":1},"id":"41527303","links":{"self":"/trips/41527303"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-1-1","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"931_0010","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S931_-3","direction_id":1,"headsign":"Alewife","name":"","wheelchair_accessible":1},"id":"41527311","links":{"self":"/trips/41527311"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-1-1","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"931_0010","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S931_-6","direction_id":0,"headsign":"Ashmont","name":"","wheelchair_accessible":1},"id":"41527313","links":{"self":"/trips/41527313"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-1-0","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"931_0009","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S931_-12","direction_id":1,"headsign":"Alewife","name":"","wheelchair_accessible":1},"id":"41527317","links":{"self":"/trips/41527317"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-1-1","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"931_0010","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S931_-17","direction_id":1,"headsign":"Alewife","name":"","wheelchair_accessible":1},"id":"41527319","links":{"self":"/trips/41527319"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-1-1","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"931_0010","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S931_-10","direction_id":0,"headsign":"Ashmont","name":"","wheelchair_accessible":1},"id":"41527320","links":{"self":"/trips/41527320"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-1-0","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"931_0009","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S933_-37","direction_id":0,"headsign":"Braintree","name":"","wheelchair_accessible":1},"id":"41527398","links":{"self":"/trips/41527398"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-3-0","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"933_0009","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S933_-39","direction_id":0,"headsign":"Braintree","name":"","wheelchair_accessible":1},"id":"41527399","links":{"self":"/trips/41527399"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-3-0","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"933_0009","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S933_-27","direction_id":1,"headsign":"Alewife","name":"","wheelchair_accessible":1},"id":"41527403","links":{"self":"/trips/41527403"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-3-1","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"933_0010","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S933_-29","direction_id":1,"headsign":"Alewife","name":"","wheelchair_accessible":1},"id":"41527404","links":{"self":"/trips/41527404"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-3-1","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"933_0010","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S933_-32","direction_id":1,"headsign":"Alewife","name":"","wheelchair_accessible":1},"id":"41527405","links":{"self":"/trips/41527405"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-3-1","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"933_0010","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S933_-35","direction_id":1,"headsign":"Alewife","name":"","wheelchair_accessible":1},"id":"41527406","links":{"self":"/trips/41527406"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-3-1","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"933_0010","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S933_-37","direction_id":1,"headsign":"Alewife","name":"","wheelchair_accessible":1},"id":"41527407","links":{"self":"/trips/41527407"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-3-1","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"933_0010","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S933_-39","direction_id":1,"headsign":"Alewife","name":"","wheelchair_accessible":1},"id":"41527408","links":{"self":"/trips/41527408"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-3-1","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"933_0010","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S933_-29","direction_id":0,"headsign":"Braintree","name":"","wheelchair_accessible":1},"id":"41527417","links":{"self":"/trips/41527417"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-3-0","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"933_0009","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S933_-27","direction_id":0,"headsign":"Braintree","name":"","wheelchair_accessible":1},"id":"41527418","links":{"self":"/trips/41527418"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-3-0","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"933_0009","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S933_-18","direction_id":0,"headsign":"Braintree","name":"","wheelchair_accessible":1},"id":"41527419","links":{"self":"/trips/41527419"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-3-0","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"933_0009","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":"S933_-21","direction_id":0,"headsign":"Braintree","name":"","wheelchair_accessible":1},"id":"41527420","links":{"self":"/trips/41527420"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-3-0","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"933_0009","type":"shape"}}},"type":"trip"},{"attributes":{"bikes_allowed":0,"block_id":null,"direction_id":0,"headsign":"Braintree","name":"","wheelchair_accessible":0},"id":"ADDED-1571242117","links":{"self":"/trips/ADDED-1571242117"},"relationships":{"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-3-0","type":"route_pattern"}},"service":{"data":null},"shape":{"data":null}},"type":"trip"}]
      * jsonapi : {"version":"1.0"}
      */
-
 
     private JsonapiBean jsonapi;
     private List<DataBeanXXXX> data;
     private List<IncludedBean> included;
-
-
 
     public JsonapiBean getJsonapi() {
         return jsonapi;
@@ -59,26 +56,16 @@ public class TimeScheduleBean {
 
     public static class DataBeanXXXX {
         /**
-         * attributes : {"arrival_time":"2019-09-28T19:17:46-04:00","departure_time":"2019-09-28T19:20:10-04:00","direction_id":1,"schedule_relationship":"ADDED","status":null,"stop_sequence":90}
-         * id : prediction-ADDED-1569507200-70130-90
-         * relationships : {"route":{"data":{"id":"Green-B","type":"route"}},"stop":{"data":{"id":"70130","type":"stop"}},"trip":{"data":{"id":"ADDED-1569507200","type":"trip"}},"vehicle":{"data":{"id":"G-10024","type":"vehicle"}}}
+         * attributes : {"arrival_time":"2019-10-23T12:23:33-04:00","departure_time":"2019-10-23T12:23:52-04:00","direction_id":0,"schedule_relationship":null,"status":null,"stop_sequence":100}
+         * id : prediction-41527398-70081-100
+         * relationships : {"route":{"data":{"id":"Red","type":"route"}},"stop":{"data":{"id":"70081","type":"stop"}},"trip":{"data":{"id":"41527398","type":"trip"}},"vehicle":{"data":{"id":"R-5460A8F9","type":"vehicle"}}}
          * type : prediction
          */
-        private String stationName;
 
         private AttributesBean attributes;
         private String id;
         private RelationshipsBean relationships;
         private String type;
-
-
-        public String getStationName() {
-            return stationName;
-        }
-
-        public void setStationName(String stationName) {
-            this.stationName = stationName;
-        }
 
         public AttributesBean getAttributes() {
             return attributes;
@@ -114,18 +101,18 @@ public class TimeScheduleBean {
 
         public static class AttributesBean {
             /**
-             * arrival_time : 2019-09-28T19:17:46-04:00
-             * departure_time : 2019-09-28T19:20:10-04:00
-             * direction_id : 1
-             * schedule_relationship : ADDED
+             * arrival_time : 2019-10-23T12:23:33-04:00
+             * departure_time : 2019-10-23T12:23:52-04:00
+             * direction_id : 0
+             * schedule_relationship : null
              * status : null
-             * stop_sequence : 90
+             * stop_sequence : 100
              */
 
             private String arrival_time;
             private String departure_time;
             private int direction_id;
-            private String schedule_relationship;
+            private Object schedule_relationship;
             private Object status;
             private int stop_sequence;
 
@@ -153,11 +140,11 @@ public class TimeScheduleBean {
                 this.direction_id = direction_id;
             }
 
-            public String getSchedule_relationship() {
+            public Object getSchedule_relationship() {
                 return schedule_relationship;
             }
 
-            public void setSchedule_relationship(String schedule_relationship) {
+            public void setSchedule_relationship(Object schedule_relationship) {
                 this.schedule_relationship = schedule_relationship;
             }
 
@@ -180,10 +167,10 @@ public class TimeScheduleBean {
 
         public static class RelationshipsBean {
             /**
-             * route : {"data":{"id":"Green-B","type":"route"}}
-             * stop : {"data":{"id":"70130","type":"stop"}}
-             * trip : {"data":{"id":"ADDED-1569507200","type":"trip"}}
-             * vehicle : {"data":{"id":"G-10024","type":"vehicle"}}
+             * route : {"data":{"id":"Red","type":"route"}}
+             * stop : {"data":{"id":"70081","type":"stop"}}
+             * trip : {"data":{"id":"41527398","type":"trip"}}
+             * vehicle : {"data":{"id":"R-5460A8F9","type":"vehicle"}}
              */
 
             private RouteBean route;
@@ -225,7 +212,7 @@ public class TimeScheduleBean {
 
             public static class RouteBean {
                 /**
-                 * data : {"id":"Green-B","type":"route"}
+                 * data : {"id":"Red","type":"route"}
                  */
 
                 private DataBean data;
@@ -240,7 +227,7 @@ public class TimeScheduleBean {
 
                 public static class DataBean {
                     /**
-                     * id : Green-B
+                     * id : Red
                      * type : route
                      */
 
@@ -267,7 +254,7 @@ public class TimeScheduleBean {
 
             public static class StopBean {
                 /**
-                 * data : {"id":"70130","type":"stop"}
+                 * data : {"id":"70081","type":"stop"}
                  */
 
                 private DataBeanX data;
@@ -282,7 +269,7 @@ public class TimeScheduleBean {
 
                 public static class DataBeanX {
                     /**
-                     * id : 70130
+                     * id : 70081
                      * type : stop
                      */
 
@@ -309,7 +296,7 @@ public class TimeScheduleBean {
 
             public static class TripBean {
                 /**
-                 * data : {"id":"ADDED-1569507200","type":"trip"}
+                 * data : {"id":"41527398","type":"trip"}
                  */
 
                 private DataBeanXX data;
@@ -324,7 +311,7 @@ public class TimeScheduleBean {
 
                 public static class DataBeanXX {
                     /**
-                     * id : ADDED-1569507200
+                     * id : 41527398
                      * type : trip
                      */
 
@@ -351,7 +338,7 @@ public class TimeScheduleBean {
 
             public static class VehicleBean {
                 /**
-                 * data : {"id":"G-10024","type":"vehicle"}
+                 * data : {"id":"R-5460A8F9","type":"vehicle"}
                  */
 
                 private DataBeanXXX data;
@@ -366,7 +353,7 @@ public class TimeScheduleBean {
 
                 public static class DataBeanXXX {
                     /**
-                     * id : G-10024
+                     * id : R-5460A8F9
                      * type : vehicle
                      */
 
@@ -395,11 +382,11 @@ public class TimeScheduleBean {
 
     public static class IncludedBean {
         /**
-         * attributes : {"address":null,"at_street":null,"description":"Harvard Avenue - Green Line - Park Street & North","latitude":42.350263,"location_type":0,"longitude":-71.131298,"municipality":"Boston","name":"Harvard Avenue","on_street":null,"platform_code":null,"platform_name":"Park Street & North","vehicle_type":0,"wheelchair_boarding":1}
-         * id : 70130
-         * links : {"self":"/stops/70130"}
-         * relationships : {"child_stops":{},"facilities":{"links":{"related":"/facilities/?filter[stop]=70130"}},"parent_station":{"data":{"id":"place-harvd","type":"stop"}},"recommended_transfers":{},"zone":{"data":null}}
-         * type : stop
+         * attributes : {"bikes_allowed":0,"block_id":"S931_-17","direction_id":0,"headsign":"Ashmont","name":"","wheelchair_accessible":1}
+         * id : 41527191
+         * links : {"self":"/trips/41527191"}
+         * relationships : {"route":{"data":{"id":"Red","type":"route"}},"route_pattern":{"data":{"id":"Red-1-0","type":"route_pattern"}},"service":{"data":{"id":"RTL419-9-Wdy-01","type":"service"}},"shape":{"data":{"id":"931_0009","type":"shape"}}}
+         * type : trip
          */
 
         private AttributesBeanX attributes;
@@ -450,89 +437,51 @@ public class TimeScheduleBean {
 
         public static class AttributesBeanX {
             /**
-             * address : null
-             * at_street : null
-             * description : Harvard Avenue - Green Line - Park Street & North
-             * latitude : 42.350263
-             * location_type : 0
-             * longitude : -71.131298
-             * municipality : Boston
-             * name : Harvard Avenue
-             * on_street : null
-             * platform_code : null
-             * platform_name : Park Street & North
-             * vehicle_type : 0
-             * wheelchair_boarding : 1
+             * bikes_allowed : 0
+             * block_id : S931_-17
+             * direction_id : 0
+             * headsign : Ashmont
+             * name :
+             * wheelchair_accessible : 1
              */
 
-            private Object address;
-            private Object at_street;
-            private String description;
-            private double latitude;
-            private int location_type;
-            private double longitude;
-            private String municipality;
+            private int bikes_allowed;
+            private String block_id;
+            private int direction_id;
+            private String headsign;
             private String name;
-            private Object on_street;
-            private Object platform_code;
-            private String platform_name;
-            private int vehicle_type;
-            private int wheelchair_boarding;
+            private int wheelchair_accessible;
 
-            public Object getAddress() {
-                return address;
+            public int getBikes_allowed() {
+                return bikes_allowed;
             }
 
-            public void setAddress(Object address) {
-                this.address = address;
+            public void setBikes_allowed(int bikes_allowed) {
+                this.bikes_allowed = bikes_allowed;
             }
 
-            public Object getAt_street() {
-                return at_street;
+            public String getBlock_id() {
+                return block_id;
             }
 
-            public void setAt_street(Object at_street) {
-                this.at_street = at_street;
+            public void setBlock_id(String block_id) {
+                this.block_id = block_id;
             }
 
-            public String getDescription() {
-                return description;
+            public int getDirection_id() {
+                return direction_id;
             }
 
-            public void setDescription(String description) {
-                this.description = description;
+            public void setDirection_id(int direction_id) {
+                this.direction_id = direction_id;
             }
 
-            public double getLatitude() {
-                return latitude;
+            public String getHeadsign() {
+                return headsign;
             }
 
-            public void setLatitude(double latitude) {
-                this.latitude = latitude;
-            }
-
-            public int getLocation_type() {
-                return location_type;
-            }
-
-            public void setLocation_type(int location_type) {
-                this.location_type = location_type;
-            }
-
-            public double getLongitude() {
-                return longitude;
-            }
-
-            public void setLongitude(double longitude) {
-                this.longitude = longitude;
-            }
-
-            public String getMunicipality() {
-                return municipality;
-            }
-
-            public void setMunicipality(String municipality) {
-                this.municipality = municipality;
+            public void setHeadsign(String headsign) {
+                this.headsign = headsign;
             }
 
             public String getName() {
@@ -543,50 +492,18 @@ public class TimeScheduleBean {
                 this.name = name;
             }
 
-            public Object getOn_street() {
-                return on_street;
+            public int getWheelchair_accessible() {
+                return wheelchair_accessible;
             }
 
-            public void setOn_street(Object on_street) {
-                this.on_street = on_street;
-            }
-
-            public Object getPlatform_code() {
-                return platform_code;
-            }
-
-            public void setPlatform_code(Object platform_code) {
-                this.platform_code = platform_code;
-            }
-
-            public String getPlatform_name() {
-                return platform_name;
-            }
-
-            public void setPlatform_name(String platform_name) {
-                this.platform_name = platform_name;
-            }
-
-            public int getVehicle_type() {
-                return vehicle_type;
-            }
-
-            public void setVehicle_type(int vehicle_type) {
-                this.vehicle_type = vehicle_type;
-            }
-
-            public int getWheelchair_boarding() {
-                return wheelchair_boarding;
-            }
-
-            public void setWheelchair_boarding(int wheelchair_boarding) {
-                this.wheelchair_boarding = wheelchair_boarding;
+            public void setWheelchair_accessible(int wheelchair_accessible) {
+                this.wheelchair_accessible = wheelchair_accessible;
             }
         }
 
         public static class LinksBean {
             /**
-             * self : /stops/70130
+             * self : /trips/41527191
              */
 
             private String self;
@@ -602,115 +519,214 @@ public class TimeScheduleBean {
 
         public static class RelationshipsBeanX {
             /**
-             * child_stops : {}
-             * facilities : {"links":{"related":"/facilities/?filter[stop]=70130"}}
-             * parent_station : {"data":{"id":"place-harvd","type":"stop"}}
-             * recommended_transfers : {}
-             * zone : {"data":null}
+             * route : {"data":{"id":"Red","type":"route"}}
+             * route_pattern : {"data":{"id":"Red-1-0","type":"route_pattern"}}
+             * service : {"data":{"id":"RTL419-9-Wdy-01","type":"service"}}
+             * shape : {"data":{"id":"931_0009","type":"shape"}}
              */
 
-            private ChildStopsBean child_stops;
-            private FacilitiesBean facilities;
-            private ParentStationBean parent_station;
-            private RecommendedTransfersBean recommended_transfers;
-            private ZoneBean zone;
+            private RouteBeanX route;
+            private RoutePatternBean route_pattern;
+            private ServiceBean service;
+            private ShapeBean shape;
 
-            public ChildStopsBean getChild_stops() {
-                return child_stops;
+            public RouteBeanX getRoute() {
+                return route;
             }
 
-            public void setChild_stops(ChildStopsBean child_stops) {
-                this.child_stops = child_stops;
+            public void setRoute(RouteBeanX route) {
+                this.route = route;
             }
 
-            public FacilitiesBean getFacilities() {
-                return facilities;
+            public RoutePatternBean getRoute_pattern() {
+                return route_pattern;
             }
 
-            public void setFacilities(FacilitiesBean facilities) {
-                this.facilities = facilities;
+            public void setRoute_pattern(RoutePatternBean route_pattern) {
+                this.route_pattern = route_pattern;
             }
 
-            public ParentStationBean getParent_station() {
-                return parent_station;
+            public ServiceBean getService() {
+                return service;
             }
 
-            public void setParent_station(ParentStationBean parent_station) {
-                this.parent_station = parent_station;
+            public void setService(ServiceBean service) {
+                this.service = service;
             }
 
-            public RecommendedTransfersBean getRecommended_transfers() {
-                return recommended_transfers;
+            public ShapeBean getShape() {
+                return shape;
             }
 
-            public void setRecommended_transfers(RecommendedTransfersBean recommended_transfers) {
-                this.recommended_transfers = recommended_transfers;
+            public void setShape(ShapeBean shape) {
+                this.shape = shape;
             }
 
-            public ZoneBean getZone() {
-                return zone;
-            }
-
-            public void setZone(ZoneBean zone) {
-                this.zone = zone;
-            }
-
-            public static class ChildStopsBean {
-            }
-
-            public static class FacilitiesBean {
+            public static class RouteBeanX {
                 /**
-                 * links : {"related":"/facilities/?filter[stop]=70130"}
+                 * data : {"id":"Red","type":"route"}
                  */
 
-                private LinksBeanX links;
+                private DataBeanXXXXX data;
 
-                public LinksBeanX getLinks() {
-                    return links;
-                }
-
-                public void setLinks(LinksBeanX links) {
-                    this.links = links;
-                }
-
-                public static class LinksBeanX {
-                    /**
-                     * related : /facilities/?filter[stop]=70130
-                     */
-
-                    private String related;
-
-                    public String getRelated() {
-                        return related;
-                    }
-
-                    public void setRelated(String related) {
-                        this.related = related;
-                    }
-                }
-            }
-
-            public static class ParentStationBean {
-                public static class DataBeanXXXXX {
-                }
-            }
-
-            public static class RecommendedTransfersBean {
-            }
-
-            public static class ZoneBean {
-                /**
-                 * data : null
-                 */
-
-                private Object data;
-
-                public Object getData() {
+                public DataBeanXXXXX getData() {
                     return data;
                 }
 
-                public void setData(Object data) {
+                public void setData(DataBeanXXXXX data) {
                     this.data = data;
+                }
+
+                public static class DataBeanXXXXX {
+                    /**
+                     * id : Red
+                     * type : route
+                     */
+
+                    private String id;
+                    private String type;
+
+                    public String getId() {
+                        return id;
+                    }
+
+                    public void setId(String id) {
+                        this.id = id;
+                    }
+
+                    public String getType() {
+                        return type;
+                    }
+
+                    public void setType(String type) {
+                        this.type = type;
+                    }
+                }
+            }
+
+            public static class RoutePatternBean {
+                /**
+                 * data : {"id":"Red-1-0","type":"route_pattern"}
+                 */
+
+                private DataBeanXXXXXX data;
+
+                public DataBeanXXXXXX getData() {
+                    return data;
+                }
+
+                public void setData(DataBeanXXXXXX data) {
+                    this.data = data;
+                }
+
+                public static class DataBeanXXXXXX {
+                    /**
+                     * id : Red-1-0
+                     * type : route_pattern
+                     */
+
+                    private String id;
+                    private String type;
+
+                    public String getId() {
+                        return id;
+                    }
+
+                    public void setId(String id) {
+                        this.id = id;
+                    }
+
+                    public String getType() {
+                        return type;
+                    }
+
+                    public void setType(String type) {
+                        this.type = type;
+                    }
+                }
+            }
+
+            public static class ServiceBean {
+                /**
+                 * data : {"id":"RTL419-9-Wdy-01","type":"service"}
+                 */
+
+                private DataBeanXXXXXXX data;
+
+                public DataBeanXXXXXXX getData() {
+                    return data;
+                }
+
+                public void setData(DataBeanXXXXXXX data) {
+                    this.data = data;
+                }
+
+                public static class DataBeanXXXXXXX {
+                    /**
+                     * id : RTL419-9-Wdy-01
+                     * type : service
+                     */
+
+                    private String id;
+                    private String type;
+
+                    public String getId() {
+                        return id;
+                    }
+
+                    public void setId(String id) {
+                        this.id = id;
+                    }
+
+                    public String getType() {
+                        return type;
+                    }
+
+                    public void setType(String type) {
+                        this.type = type;
+                    }
+                }
+            }
+
+            public static class ShapeBean {
+                /**
+                 * data : {"id":"931_0009","type":"shape"}
+                 */
+
+                private DataBeanXXXXXXXX data;
+
+                public DataBeanXXXXXXXX getData() {
+                    return data;
+                }
+
+                public void setData(DataBeanXXXXXXXX data) {
+                    this.data = data;
+                }
+
+                public static class DataBeanXXXXXXXX {
+                    /**
+                     * id : 931_0009
+                     * type : shape
+                     */
+
+                    private String id;
+                    private String type;
+
+                    public String getId() {
+                        return id;
+                    }
+
+                    public void setId(String id) {
+                        this.id = id;
+                    }
+
+                    public String getType() {
+                        return type;
+                    }
+
+                    public void setType(String type) {
+                        this.type = type;
+                    }
                 }
             }
         }

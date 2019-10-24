@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.eddy.mbta.MyApplication;
 import com.eddy.mbta.R;
 import com.eddy.mbta.db.Station;
 import com.eddy.mbta.service.TimeScheduleService;
@@ -79,11 +80,11 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHold
                             SchedulePopWindow.handler.removeCallbacksAndMessages(null);
                         }
 
-                        Intent stopIntent = new Intent(mContext, TimeScheduleService.class);
-                        mContext.stopService(stopIntent);
+                        Intent stopIntent = new Intent(MyApplication.getContext(), TimeScheduleService.class);
+                        MyApplication.getContext().stopService(stopIntent);
 
-                        AlarmManager manager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-                        PendingIntent pi = PendingIntent.getService(mContext, 0, stopIntent, 0);
+                        AlarmManager manager = (AlarmManager) MyApplication.getContext().getSystemService(Context.ALARM_SERVICE);
+                        PendingIntent pi = PendingIntent.getService(MyApplication.getContext(), 0, stopIntent, 0);
                         manager.cancel(pi);
 
                         params.alpha = 1f;

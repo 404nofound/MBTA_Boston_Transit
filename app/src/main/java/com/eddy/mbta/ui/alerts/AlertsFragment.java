@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.eddy.mbta.MyApplication;
 import com.eddy.mbta.R;
 import com.eddy.mbta.json.AlertBean;
 import com.eddy.mbta.service.AlertService;
@@ -58,8 +59,8 @@ public class AlertsFragment extends Fragment {
 
         mContext = getActivity();
 
-        Intent startIntent = new Intent(mContext, AlertService.class);
-        mContext.startService(startIntent);
+        Intent startIntent = new Intent(MyApplication.getContext(), AlertService.class);
+        MyApplication.getContext().startService(startIntent);
 
         handler = new CustomerHandler(this);
 
@@ -165,7 +166,7 @@ public class AlertsFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getActivity(), "Internet Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MyApplication.getContext(), "Internet Error", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -181,11 +182,11 @@ public class AlertsFragment extends Fragment {
             handler.removeCallbacksAndMessages(null);
         }
 
-        Intent stopIntent = new Intent(mContext, AlertService.class);
-        mContext.stopService(stopIntent);
+        Intent stopIntent = new Intent(MyApplication.getContext(), AlertService.class);
+        MyApplication.getContext().stopService(stopIntent);
 
-        AlarmManager manager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent pi = PendingIntent.getService(mContext, 0, stopIntent, 0);
+        AlarmManager manager = (AlarmManager) MyApplication.getContext().getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pi = PendingIntent.getService(MyApplication.getContext(), 0, stopIntent, 0);
         manager.cancel(pi);
     }
 }

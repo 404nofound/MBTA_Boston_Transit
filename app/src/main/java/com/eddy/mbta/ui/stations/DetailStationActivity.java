@@ -92,7 +92,7 @@ public class DetailStationActivity extends AppCompatActivity {
     private void queryFromServer() {
         String url = "http://209.222.10.90/stop.php";
 
-        HttpClientUtil.getStation(url, train.replace(" ", "").toLowerCase(), new Callback() {
+        HttpClientUtil.getStation(url, train.replace("-", "").toLowerCase(), new Callback() {
             @Override
             public void onResponse(Call call, Response response)  throws IOException {
                 String responseText = response.body().string();
@@ -106,6 +106,13 @@ public class DetailStationActivity extends AppCompatActivity {
                             queryStation();
                         }
                     });
+                } else {
+                    DetailStationActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getApplicationContext(), "Server Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
 
@@ -114,7 +121,7 @@ public class DetailStationActivity extends AppCompatActivity {
                 DetailStationActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(DetailStationActivity.this, "Internet Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Internet Error", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -157,7 +164,7 @@ public class DetailStationActivity extends AppCompatActivity {
                 adapter.notifyItemRangeChanged(0, stationList.size());
                 break;
             case R.id.settings:
-                Toast.makeText(this, "Github Visit", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Github Visit", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://github.com/404nofound"));
                 startActivity(intent);
