@@ -10,7 +10,7 @@ import com.eddy.mbta.utils.NetUtil;
 
 public class NetBroadcastReceiver extends BroadcastReceiver {
 
-    public NetEvevt evevt = BaseActivity.event;
+    public NetEvent event = BaseActivity.net_event;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -19,11 +19,11 @@ public class NetBroadcastReceiver extends BroadcastReceiver {
         if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
             int netWorkState = NetUtil.getNetWorkState(context);
             // 接口回调传过去状态的类型
-            evevt.onNetChange(netWorkState);
+            event.onNetChange(netWorkState);
         }
     }
 
-    public interface NetEvevt {
+    public interface NetEvent {
         public void onNetChange(int netMobile);
     }
 }

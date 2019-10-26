@@ -167,7 +167,16 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
 
 
         if (route == -1) {
+
+            if (first_tag == 10) {
+                holderView.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+                overturn.setVisibility(View.GONE);
+                return;
+            }
+
             route = first_tag;
+            overturn.setVisibility(View.VISIBLE);
 
             if (first_tag == 0) {
                 setBackground(red);

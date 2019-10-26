@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -122,6 +123,19 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    public void onGpsChange() {
+
+        LocationManager locationManager = (LocationManager) MyApplication.getContext().getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        if (gps_enabled) {
+            Toast.makeText(MyApplication.getContext(), "GPS Enable", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(MyApplication.getContext(), "GPS Unable", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
     public void onNetChange(int netMobile) {
 
         if (netMobile != -1 && MyApplication.NET_STATUS == -1) {
@@ -157,7 +171,6 @@ public class MainActivity extends BaseActivity {
             PendingIntent pi2 = PendingIntent.getService(MyApplication.getContext(), 0, stopIntent2, 0);
             manager.cancel(pi2);
         }
-        //Log.d("HEIHEI", netMobile+"");
 
         if (netMobile == 0 || netMobile == 1) {
             MyApplication.NET_STATUS= 1;

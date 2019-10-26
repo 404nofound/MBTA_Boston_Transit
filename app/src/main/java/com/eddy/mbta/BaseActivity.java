@@ -1,20 +1,28 @@
 package com.eddy.mbta;
 
 import android.content.IntentFilter;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.eddy.mbta.receiver.GPSBroadcastReceiver;
 import com.eddy.mbta.receiver.NetBroadcastReceiver;
 import com.eddy.mbta.utils.NetUtil;
 
-abstract public class BaseActivity extends AppCompatActivity implements NetBroadcastReceiver.NetEvevt {
+abstract public class BaseActivity extends AppCompatActivity implements
+        NetBroadcastReceiver.NetEvent,
+        GPSBroadcastReceiver.GpsEvent {
 
     public NetBroadcastReceiver netBroadcastReceiver;
-    public static NetBroadcastReceiver.NetEvevt event;
+    public static NetBroadcastReceiver.NetEvent net_event;
 
+    public GPSBroadcastReceiver gpsBroadcastReceiver;
+    public static GPSBroadcastReceiver.GpsEvent gps_event;
+
+    //private LocationManager mLocationManager;
     /**
      * 网络类型
      */
@@ -25,7 +33,9 @@ abstract public class BaseActivity extends AppCompatActivity implements NetBroad
         // TODO Auto-generated method stub
         super.onCreate(arg0);
 
-        event= this;
+        net_event = this;
+        gps_event = this;
+
         //实例化IntentFilter对象
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
@@ -34,12 +44,19 @@ abstract public class BaseActivity extends AppCompatActivity implements NetBroad
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         netBroadcastReceiver = new NetBroadcastReceiver();
         registerReceiver(netBroadcastReceiver, filter);
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(LocationManager.MODE_CHANGED_ACTION);
+        //intentFilter.addAction(LocationManager.PROVIDERS_CHANGED_ACTION);
+        gpsBroadcastReceiver = new GPSBroadcastReceiver();
+        registerReceiver(gpsBroadcastReceiver, intentFilter);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(netBroadcastReceiver);
+        unregisterReceiver(gpsBroadcastReceiver);
     }
     /**
      * 初始化时判断有没有网络
@@ -58,6 +75,11 @@ abstract public class BaseActivity extends AppCompatActivity implements NetBroad
         // TODO Auto-generated method stub
         this.netMobile = netMobile;
         isNetConnect();
+
+    }
+
+    @Override
+    public void onGpsChange() {
 
     }
 

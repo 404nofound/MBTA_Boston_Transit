@@ -14,6 +14,9 @@
     <string name="open_location_settings">Open Settings</string>
     <string name="cancel">Cancel</string>
 
+    <string name="check_gps_network">If you are done, Continue</string>
+    <string name="confirm">Confirm</string>
+
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBenv056ScoAkEVbuAO5fGPkcBvz1GCPc4</string>
 
     <!--    Permissions    -->

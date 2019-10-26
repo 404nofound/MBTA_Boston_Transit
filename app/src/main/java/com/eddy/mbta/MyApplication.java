@@ -3,6 +3,7 @@ package com.eddy.mbta;
 import android.app.Application;
 import android.content.Context;
 
+import com.eddy.mbta.utils.NetUtil;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -19,6 +20,8 @@ public class MyApplication extends Application {
         super.onCreate();
         context = getApplicationContext();
         LitePal.initialize(this);
+
+        NET_STATUS = NetUtil.getNetWorkState(context);
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
