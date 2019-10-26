@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,7 @@ import com.eddy.mbta.MyApplication;
 import com.eddy.mbta.R;
 import com.eddy.mbta.json.NearbyStationBean;
 import com.eddy.mbta.service.TimeScheduleService;
+import com.eddy.mbta.utils.NetUtil;
 
 import java.util.List;
 
@@ -82,6 +84,11 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
                 int position = holder.getAdapterPosition();
 
                 NearbyStationBean.IncludedBean station = mNearbyStationList.get(position);
+
+                if (!NetUtil.isNetConnect(MyApplication.getContext())) {
+                    Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 SchedulePopWindow PopWin = new SchedulePopWindow(mContext, station.getAttributes().getName(), station.getId());
 

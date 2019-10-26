@@ -24,6 +24,7 @@ import com.eddy.mbta.R;
 import com.eddy.mbta.json.AlertBean;
 import com.eddy.mbta.service.AlertService;
 import com.eddy.mbta.utils.HttpClientUtil;
+import com.eddy.mbta.utils.NetUtil;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -59,10 +60,14 @@ public class AlertsFragment extends Fragment {
 
         mContext = getActivity();
 
-        Intent startIntent = new Intent(MyApplication.getContext(), AlertService.class);
-        MyApplication.getContext().startService(startIntent);
+        if (NetUtil.isNetConnect(MyApplication.getContext())) {
+            Intent startIntent = new Intent(MyApplication.getContext(), AlertService.class);
+            MyApplication.getContext().startService(startIntent);
 
-        handler = new CustomerHandler(this);
+            handler = new CustomerHandler(this);
+        } else {
+            Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+        }
 
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(mContext, 1);
@@ -84,6 +89,13 @@ public class AlertsFragment extends Fragment {
     }
 
     private void refresh() {
+
+        if (!NetUtil.isNetConnect(MyApplication.getContext())) {
+            Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+            swipeRefresh.setRefreshing(false);
+            return;
+        }
+
         new Thread(new Runnable() {
             @Override
             public void run() {

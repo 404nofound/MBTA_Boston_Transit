@@ -15,6 +15,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.eddy.mbta.utils.HttpClientUtil;
+import com.eddy.mbta.utils.NetUtil;
 
 import java.io.IOException;
 
@@ -41,6 +42,12 @@ public class FeedbackActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (!NetUtil.isNetConnect(MyApplication.getContext())) {
+                    Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 String text = editText.getText().toString();
                 if (text.length() <= 420 && !TextUtils.isEmpty(text)) {
 

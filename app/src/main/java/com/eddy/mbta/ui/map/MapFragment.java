@@ -2,8 +2,10 @@ package com.eddy.mbta.ui.map;
 
 import android.Manifest;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -13,6 +15,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -36,6 +39,7 @@ import com.eddy.mbta.json.NearbyStationBean;
 import com.eddy.mbta.json.RouteBean;
 import com.eddy.mbta.service.TimeScheduleService;
 import com.eddy.mbta.utils.HttpClientUtil;
+import com.eddy.mbta.utils.NetUtil;
 import com.eddy.mbta.utils.PermissionUtils;
 import com.eddy.mbta.utils.Utility;
 import com.google.android.gms.maps.CameraUpdate;
@@ -90,6 +94,8 @@ public class MapFragment extends Fragment implements
     private List<LatLng> routeList = new ArrayList<>();
     private Polyline polyline;
 
+    private String provider = null;
+
     public static MapFragment newInstance() {
         Bundle args = new Bundle ();
 
@@ -105,24 +111,146 @@ public class MapFragment extends Fragment implements
 
         mContext = getActivity();
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        if (!NetUtil.isNetConnect(MyApplication.getContext())) {
+            new AlertDialog.Builder(getActivity())
+                    .setMessage(R.string.network_alert)
+                    .setPositiveButton(R.string.data_roaming_setting, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                            startActivity(new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS));
+                        }
+                    })
+                    .setNeutralButton(R.string.finish,new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                            //getActivity().finish();
+                        }
+                    })
+                    .setNegativeButton(R.string.wifi_setting,new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                            startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                        }
+                    })
+                    .setCancelable(false)
+                    .show();
+        }
 
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         } else {
             Criteria criteria = new Criteria();
             locationManager = (LocationManager) MyApplication.getContext().getSystemService(Context.LOCATION_SERVICE);
-            String provider = locationManager.getBestProvider(criteria, true);
+            // = locationManager.getBestProvider(criteria, true);
 
-            Log.d("HEIHEI", provider);
-            locationManager.requestLocationUpdates(provider, 5000, 1, mListener);
+            try {
+                provider = locationManager.getBestProvider(criteria, true);
+                Log.d("HEIHEI", provider);
+            } catch(Exception ex) {}
 
-            mLocation = locationManager.getLastKnownLocation(provider);
-            lastSearchLocation = mLocation;
+            /*boolean gps_enabled = false;
+            boolean network_enabled = false;
 
-            requestNearbyStations(lastSearchLocation.getLatitude(), lastSearchLocation.getLongitude(), 0.01);
+            try {
+                gps_enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                Log.d("HEIHEI", "GPS:" + gps_enabled);
+            } catch(Exception ex) {}
+
+            try {
+                network_enabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+                Log.d("HEIHEI", "NET:" + network_enabled);
+            } catch(Exception ex) {}
+
+            if(!gps_enabled && !network_enabled) {
+                // notify user
+                *//*Log.d("HEIHEI", "WORK HERE");
+                new AlertDialog.Builder(getActivity())
+                        .setMessage(R.string.gps_network_not_enabled)
+                        .setPositiveButton(R.string.open_location_settings, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                                getActivity().finish();
+                            }
+                        })
+                        .show();*//*
+            } else if (gps_enabled) {
+                provider = LocationManager.GPS_PROVIDER;
+            } else if (network_enabled) {
+                provider = LocationManager.NETWORK_PROVIDER;
+            }*/
+
+
+            if (provider != null) {
+                if (provider.equals(LocationManager.GPS_PROVIDER)) {
+
+                    locationManager.requestLocationUpdates(provider, 5000, 1, mListener);
+
+                    mLocation = locationManager.getLastKnownLocation(provider);
+                    lastSearchLocation = mLocation;
+
+                    Log.d("HEIHEI", mLocation.getLatitude()+"");
+                    if (mLocation != null) {
+                        requestNearbyStations(lastSearchLocation.getLatitude(), lastSearchLocation.getLongitude(), 0.01);
+                    }
+
+                } else if (provider.equals(LocationManager.NETWORK_PROVIDER)) {
+
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage(R.string.gps_network_not_enabled)
+                            .setPositiveButton(R.string.open_location_settings, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                                    startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                                }
+                            })
+                            .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+
+                                }
+                            })
+                            .show();
+
+                    locationManager.requestLocationUpdates(provider, 5000, 1, mListener);
+
+                    mLocation = locationManager.getLastKnownLocation(provider);
+                    lastSearchLocation = mLocation;
+
+                    if (mLocation != null) {
+                        requestNearbyStations(lastSearchLocation.getLatitude(), lastSearchLocation.getLongitude(), 0.01);
+                    }
+                } else {
+
+                    new AlertDialog.Builder(getActivity())
+                            .setMessage(R.string.gps_network_not_enabled)
+                            .setPositiveButton(R.string.open_location_settings, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                                    startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                                }
+                            })
+                            .setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+
+                                }
+                            })
+                            .show();
+
+                }
+
+
+            }
         }
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
@@ -143,14 +271,19 @@ public class MapFragment extends Fragment implements
         mMap = googleMap;
 
         try {
+            Log.d("HEIHEI", "WORKSSSS");
             boolean success = mMap.setMapStyle(
                     MapStyleOptions.loadRawResourceStyle(mContext, R.raw.style_json));
             if (!success) {
                 Toast.makeText(MyApplication.getContext(), "Parse Failed", Toast.LENGTH_SHORT).show();
             }
         } catch (Resources.NotFoundException e) {
-            Toast.makeText(MyApplication.getContext(), "KML File Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MyApplication.getContext(), "Map Style File Error", Toast.LENGTH_SHORT).show();
         }
+
+        if (!NetUtil.isNetConnect(MyApplication.getContext())
+                || (!provider.equals(LocationManager.NETWORK_PROVIDER)
+                    && !provider.equals(LocationManager.GPS_PROVIDER))) return;
 
         try {
             layer = new KmlLayer(mMap, R.raw.mbta, MyApplication.getContext());
@@ -159,18 +292,25 @@ public class MapFragment extends Fragment implements
             Toast.makeText(MyApplication.getContext(), "Loading Map Error", Toast.LENGTH_SHORT).show();
         }
 
-        LatLng my = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(my, 13));
+        if (mLocation != null) {
+            LatLng my = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(my, 13));
 
-        mMap.setOnMarkerClickListener(this);
-        mMap.setOnMyLocationButtonClickListener(this);
-        mMap.setOnMyLocationClickListener(this);
-        mMap.setOnInfoWindowClickListener(this);
-        mMap.setOnCameraIdleListener(this);
-        enableMyLocation();
+            mMap.setOnMarkerClickListener(this);
+            mMap.setOnMyLocationButtonClickListener(this);
+            mMap.setOnMyLocationClickListener(this);
+            mMap.setOnInfoWindowClickListener(this);
+            mMap.setOnCameraIdleListener(this);
+            enableMyLocation();
+        }
     }
 
     private void requestNearbyStations(double mlat, double mlng, final double mradius) {
+
+        if (!NetUtil.isNetConnect(MyApplication.getContext())) {
+            Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         String url = "https://api-v3.mbta.com/stops?include=parent_station&filter[route_type]=0,1&filter[latitude]=" + mlat + "&filter[longitude]=" + mlng + "&filter[radius]=" + mradius + "&sort=distance";
 
@@ -229,6 +369,11 @@ public class MapFragment extends Fragment implements
     @Override
     public void onInfoWindowClick(Marker marker) {
 
+        if (!NetUtil.isNetConnect(MyApplication.getContext())) {
+            Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         SchedulePopWindow PopWin = new SchedulePopWindow(getActivity(), marker.getTitle(), marker.getSnippet().split("/")[1]);
 
         PopWin.showAtLocation(root.findViewById(R.id.layout), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -261,6 +406,8 @@ public class MapFragment extends Fragment implements
 
     @Override
     public void onCameraIdle() {
+
+        if (!NetUtil.isNetConnect(MyApplication.getContext())) return;
 
         //mMap.getCameraPosition().zoom
         Log.d("ZOOM", mMap.getCameraPosition().zoom+"");
@@ -301,6 +448,12 @@ public class MapFragment extends Fragment implements
     private NearbyStationAdapter.Listener direListener = new NearbyStationAdapter.Listener() {
         @Override
         public void onClick(int position) {
+
+            if (!NetUtil.isNetConnect(MyApplication.getContext())) {
+                Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             NearbyStationBean.IncludedBean station = nearbyStationList.get(position);
             requestRoute(station.getAttributes().getLatitude(), station.getAttributes().getLongitude());
         }
@@ -406,19 +559,23 @@ public class MapFragment extends Fragment implements
         @Override
         public void onLocationChanged(Location location) {
             mLocation = location;
-            float dis = location.distanceTo(lastSearchLocation);
-            Log.d("HEIHEI", dis+",");
 
-            if (dis >= 20) {
+            if (lastSearchLocation != null) {
+                float dis = location.distanceTo(lastSearchLocation);
+                Log.d("HEIHEI", dis+",");
 
-                lastSearchLocation = location;
-                requestNearbyStations(location.getLatitude(), location.getLongitude(), 0.01);
+                if (dis >= 20) {
+
+                    lastSearchLocation = location;
+                    requestNearbyStations(location.getLatitude(), location.getLongitude(), 0.01);
+                }
+                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+                //mMap.animateCamera(cameraUpdate);
+                //locationManager.removeUpdates(this);
+                Log.d("HEIHEI", lastSearchLocation.getLatitude()+","+mLocation.getLatitude());
             }
-            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-            //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
-            //mMap.animateCamera(cameraUpdate);
-            //locationManager.removeUpdates(this);
-            Log.d("HEIHEI", lastSearchLocation.getLatitude()+","+mLocation.getLatitude());
+
         }
 
         @Override

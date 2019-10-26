@@ -9,14 +9,16 @@ import android.view.Window;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.eddy.mbta.BaseActivity;
+import com.eddy.mbta.MyApplication;
 import com.eddy.mbta.R;
 import com.eddy.mbta.db.Station;
 import com.eddy.mbta.utils.HttpClientUtil;
+import com.eddy.mbta.utils.NetUtil;
 import com.eddy.mbta.utils.Utility;
 
 import org.litepal.LitePal;
@@ -30,7 +32,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class DetailStationActivity extends AppCompatActivity {
+public class DetailStationActivity extends BaseActivity {
 
     private List<Station> dataList = new ArrayList<>();
     private List<Station> stationList = new ArrayList<>();
@@ -90,6 +92,12 @@ public class DetailStationActivity extends AppCompatActivity {
     }
 
     private void queryFromServer() {
+
+        if (!NetUtil.isNetConnect(MyApplication.getContext())) {
+            Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String url = "http://209.222.10.90/stop.php";
 
         HttpClientUtil.getStation(url, train.replace("-", "").toLowerCase(), new Callback() {
@@ -164,6 +172,12 @@ public class DetailStationActivity extends AppCompatActivity {
                 adapter.notifyItemRangeChanged(0, stationList.size());
                 break;
             case R.id.settings:
+
+                if (!NetUtil.isNetConnect(MyApplication.getContext())) {
+                    Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+
                 Toast.makeText(getApplicationContext(), "Github Visit", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://github.com/404nofound"));
@@ -173,4 +187,42 @@ public class DetailStationActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    /*@Override
+    public void onNetChange(int netMobile) {
+
+        if ((netMobile == 0 || netMobile == 1) && MyApplication.NET_STATUS == -1) {
+            //onCreate(null);
+        } else if (netMobile == -1 && MyApplication.NET_STATUS == 1) {
+
+            if(AlertsFragment.handler != null){
+                AlertsFragment.handler.removeCallbacksAndMessages(null);
+            }
+
+            if(SchedulePopWindow.handler != null){
+                SchedulePopWindow.handler.removeCallbacksAndMessages(null);
+            }
+
+            Intent stopIntent1 = new Intent(MyApplication.getContext(), AlertService.class);
+            MyApplication.getContext().stopService(stopIntent1);
+
+            Intent stopIntent2 = new Intent(MyApplication.getContext(), TimeScheduleService.class);
+            MyApplication.getContext().stopService(stopIntent2);
+
+            AlarmManager manager = (AlarmManager) MyApplication.getContext().getSystemService(Context.ALARM_SERVICE);
+
+            PendingIntent pi1 = PendingIntent.getService(MyApplication.getContext(), 0, stopIntent1, 0);
+            manager.cancel(pi1);
+
+            PendingIntent pi2 = PendingIntent.getService(MyApplication.getContext(), 0, stopIntent2, 0);
+            manager.cancel(pi2);
+        }
+        Log.d("HEIHEI", netMobile+"");
+
+        if (netMobile == 0 || netMobile == 1) {
+            MyApplication.NET_STATUS= 1;
+        } else {
+            MyApplication.NET_STATUS= -1;
+        }
+    }*/
 }

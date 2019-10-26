@@ -10,8 +10,10 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 
+import com.eddy.mbta.MyApplication;
 import com.eddy.mbta.json.AlertBean;
 import com.eddy.mbta.ui.alerts.AlertsFragment;
+import com.eddy.mbta.utils.NetUtil;
 import com.google.gson.Gson;
 
 import java.lang.ref.WeakReference;
@@ -45,6 +47,8 @@ public class AlertService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("AlertService", "onStartCommand() Executed");
+
+        if (!NetUtil.isNetConnect(MyApplication.getContext())) onDestroy();
 
         mTask = new requestAlertTask(AlertService.this);
         mTask.execute((Void) null);

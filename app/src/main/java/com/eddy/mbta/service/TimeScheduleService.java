@@ -11,10 +11,12 @@ import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.eddy.mbta.MyApplication;
 import com.eddy.mbta.R;
 import com.eddy.mbta.json.Schedule;
 import com.eddy.mbta.json.TimeScheduleBean;
 import com.eddy.mbta.ui.map.SchedulePopWindow;
+import com.eddy.mbta.utils.NetUtil;
 import com.eddy.mbta.utils.Utility;
 import com.google.gson.Gson;
 
@@ -56,6 +58,8 @@ public class TimeScheduleService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("Service", "onStartCommand() Executed");
+
+        if (!NetUtil.isNetConnect(MyApplication.getContext())) onDestroy();
 
         if (TextUtils.isEmpty(stop_id)) {
             stop_id = intent.getStringExtra("stop_id");

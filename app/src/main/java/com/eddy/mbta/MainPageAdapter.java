@@ -42,6 +42,7 @@ public class MainPageAdapter extends FragmentPagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
+        super.destroyItem(container, position, object);
         /*if (position == 2) {
             super.destroyItem(container, position, object);
         }*/
