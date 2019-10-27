@@ -1,7 +1,5 @@
 package com.eddy.mbta.ui.map;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Gravity;
@@ -22,16 +20,14 @@ import com.eddy.mbta.MyApplication;
 import com.eddy.mbta.R;
 import com.eddy.mbta.json.NearbyStationBean;
 import com.eddy.mbta.service.TimeScheduleService;
-import com.eddy.mbta.utils.NetUtil;
 
 import java.util.List;
 
 public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdapter.ViewHolder>{
 
-    private Context mContext;
-
     private List<NearbyStationBean.IncludedBean> mNearbyStationList;
 
+    private Context mContext;
     private Window mWindow;
     private View mRoot;
 
@@ -85,7 +81,7 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
 
                 NearbyStationBean.IncludedBean station = mNearbyStationList.get(position);
 
-                if (!NetUtil.isNetConnect(MyApplication.getContext())) {
+                if (MyApplication.NET_STATUS == -1) {
                     Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -106,12 +102,9 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
                         if(SchedulePopWindow.handler != null){
                             SchedulePopWindow.handler.removeCallbacksAndMessages(null);
                         }
+
                         Intent stopIntent = new Intent(MyApplication.getContext(), TimeScheduleService.class);
                         MyApplication.getContext().stopService(stopIntent);
-
-                        AlarmManager manager = (AlarmManager) MyApplication.getContext().getSystemService(Context.ALARM_SERVICE);
-                        PendingIntent pi = PendingIntent.getService(MyApplication.getContext(), 0, stopIntent, 0);
-                        manager.cancel(pi);
 
                         params.alpha = 1f;
                         mWindow.setAttributes(params);

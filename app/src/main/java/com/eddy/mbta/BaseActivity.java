@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.eddy.mbta.receiver.GPSBroadcastReceiver;
 import com.eddy.mbta.receiver.NetBroadcastReceiver;
-import com.eddy.mbta.utils.NetUtil;
+import com.eddy.mbta.utils.LogUtil;
 
 abstract public class BaseActivity extends AppCompatActivity implements
         NetBroadcastReceiver.NetEvent,
@@ -22,21 +22,14 @@ abstract public class BaseActivity extends AppCompatActivity implements
     public GPSBroadcastReceiver gpsBroadcastReceiver;
     public static GPSBroadcastReceiver.GpsEvent gps_event;
 
-    //private LocationManager mLocationManager;
-    /**
-     * 网络类型
-     */
-    private int netMobile;
 
     @Override
-    protected void onCreate(Bundle arg0) {
-        // TODO Auto-generated method stub
-        super.onCreate(arg0);
+    protected void onCreate(Bundle arg) {
+        super.onCreate(arg);
 
         net_event = this;
         gps_event = this;
 
-        //实例化IntentFilter对象
         IntentFilter filter = new IntentFilter();
         filter.addAction(WifiManager.WIFI_STATE_CHANGED_ACTION);
         filter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
@@ -47,7 +40,7 @@ abstract public class BaseActivity extends AppCompatActivity implements
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(LocationManager.MODE_CHANGED_ACTION);
-        //intentFilter.addAction(LocationManager.PROVIDERS_CHANGED_ACTION);
+        intentFilter.addAction(LocationManager.PROVIDERS_CHANGED_ACTION);
         gpsBroadcastReceiver = new GPSBroadcastReceiver();
         registerReceiver(gpsBroadcastReceiver, intentFilter);
     }
@@ -57,47 +50,18 @@ abstract public class BaseActivity extends AppCompatActivity implements
         super.onDestroy();
         unregisterReceiver(netBroadcastReceiver);
         unregisterReceiver(gpsBroadcastReceiver);
-    }
-    /**
-     * 初始化时判断有没有网络
-     */
-
-    public boolean inspectNet() {
-        this.netMobile = NetUtil.getNetWorkState(BaseActivity.this);
-        return isNetConnect();
+        LogUtil.d("BaseActivity", "onDestroy()");
     }
 
-    /**
-     * 网络变化之后的类型
-     */
     @Override
     public void onNetChange(int netMobile) {
-        // TODO Auto-generated method stub
-        this.netMobile = netMobile;
-        isNetConnect();
-
+        MyApplication.NET_STATUS = netMobile;
+        LogUtil.d("BaseActivity", "NET: "+netMobile);
     }
 
     @Override
-    public void onGpsChange() {
-
+    public void onGpsChange(boolean is_gps_enabled) {
+        MyApplication.GPS_ENABLED = is_gps_enabled;
+        LogUtil.d("BaseActivity", "GPS: "+is_gps_enabled);
     }
-
-    /**
-     * 判断有无网络 。
-     *
-     * @return true 有网, false 没有网络.
-     */
-    public boolean isNetConnect() {
-        if (netMobile == 1) {
-            return true;
-        } else if (netMobile == 0) {
-            return true;
-        } else if (netMobile == -1) {
-            return false;
-
-        }
-        return false;
-    }
-
 }

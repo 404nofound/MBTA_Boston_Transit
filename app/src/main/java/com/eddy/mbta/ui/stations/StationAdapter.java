@@ -1,7 +1,5 @@
 package com.eddy.mbta.ui.stations;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Gravity;
@@ -23,7 +21,6 @@ import com.eddy.mbta.R;
 import com.eddy.mbta.db.Station;
 import com.eddy.mbta.service.TimeScheduleService;
 import com.eddy.mbta.ui.map.SchedulePopWindow;
-import com.eddy.mbta.utils.NetUtil;
 
 import java.util.List;
 
@@ -66,7 +63,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHold
                 int position = holder.getAdapterPosition();
                 Station station = mStationList.get(position);
 
-                if (!NetUtil.isNetConnect(MyApplication.getContext())) {
+                if (MyApplication.NET_STATUS == -1) {
                     Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -89,10 +86,6 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHold
 
                         Intent stopIntent = new Intent(MyApplication.getContext(), TimeScheduleService.class);
                         MyApplication.getContext().stopService(stopIntent);
-
-                        AlarmManager manager = (AlarmManager) MyApplication.getContext().getSystemService(Context.ALARM_SERVICE);
-                        PendingIntent pi = PendingIntent.getService(MyApplication.getContext(), 0, stopIntent, 0);
-                        manager.cancel(pi);
 
                         params.alpha = 1f;
                         mWindow.setAttributes(params);

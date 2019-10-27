@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +21,7 @@ import com.eddy.mbta.R;
 import com.eddy.mbta.json.Schedule;
 import com.eddy.mbta.service.Bean;
 import com.eddy.mbta.service.TimeScheduleService;
+import com.eddy.mbta.utils.LogUtil;
 import com.eddy.mbta.utils.Utility;
 
 import java.lang.ref.WeakReference;
@@ -91,6 +91,8 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
         recyclerView.setLayoutManager(layoutManager);
         adapter = new TimeScheduleAdapter(mScheduleList);
         recyclerView.setAdapter(adapter);
+
+        this.setOutsideTouchable(true);
 
         // 设置外部可点击
         this.setOutsideTouchable(true);
@@ -165,7 +167,6 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
             }
         }
 
-
         if (route == -1) {
 
             if (first_tag == 10) {
@@ -199,8 +200,7 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
 
         setTrainLine(route, direction);
 
-        Log.d("Service", Utility.start[route]+","+Utility.end[route]+","+Utility.route_id[route]+","+direction);
-
+        LogUtil.d("Service", Utility.start[route]+","+Utility.end[route]+","+Utility.route_id[route]+","+direction);
     }
 
     static class CustomerHandler extends Handler {
@@ -228,8 +228,6 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
 
     private void setTrainLine(int mRoute, int direction_id) {
 
-        //List<Schedule> temp = new ArrayList<>();
-
         route = mRoute;
         direction = direction_id;
 
@@ -253,8 +251,8 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
             }
         }
 
-        Log.d("Service", "Set FUnction"+mTotalList.size());
-        Log.d("Service", "Set FUnction: Show List:"+mScheduleList.size());
+        LogUtil.d("Service", "Set FUnction"+mTotalList.size());
+        LogUtil.d("Service", "Set FUnction: Show List:"+mScheduleList.size());
 
         if (mScheduleList.size() != 0) {
             holderView.setVisibility(View.GONE);

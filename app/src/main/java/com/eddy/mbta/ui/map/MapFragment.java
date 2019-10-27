@@ -1,8 +1,6 @@
 package com.eddy.mbta.ui.map;
 
 import android.Manifest;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,7 +11,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +33,7 @@ import com.eddy.mbta.json.NearbyStationBean;
 import com.eddy.mbta.json.RouteBean;
 import com.eddy.mbta.service.TimeScheduleService;
 import com.eddy.mbta.utils.HttpClientUtil;
-import com.eddy.mbta.utils.NetUtil;
+import com.eddy.mbta.utils.LogUtil;
 import com.eddy.mbta.utils.PermissionUtils;
 import com.eddy.mbta.utils.Utility;
 import com.google.android.gms.maps.CameraUpdate;
@@ -93,6 +90,9 @@ public class MapFragment extends Fragment implements
 
     private String provider = null;
 
+    private Location boston;
+    private View holderView;
+
     public static MapFragment newInstance() {
         Bundle args = new Bundle ();
 
@@ -107,6 +107,15 @@ public class MapFragment extends Fragment implements
         root = inflater.inflate(R.layout.fragment_map, container, false);
         mContext = getActivity();
 
+        holderView = root.findViewById(R.id.holder_place);
+        RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
+        recyclerView.setLayoutManager(layoutManager);
+
+        boston = new Location("");
+        boston.setLatitude(42.3601);
+        boston.setLongitude(-71.0589);
+
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         } else {
@@ -116,8 +125,6 @@ public class MapFragment extends Fragment implements
             try {
                 provider = locationManager.getBestProvider(criteria, true);
             } catch(Exception ex) {}
-
-            locationManager.requestLocationUpdates(provider, 5000, 1, mListener);
 
             List<String> providers = locationManager.getProviders(true);
             for (String provider : providers) {
@@ -131,17 +138,24 @@ public class MapFragment extends Fragment implements
             }
 
             if (mLocation != null) {
-                lastSearchLocation = mLocation;
-                requestNearbyStations(lastSearchLocation.getLatitude(), lastSearchLocation.getLongitude(), 0.01);
+                if (mLocation.distanceTo(boston) > 16000) {
+
+                    mLocation = null;
+
+                    LogUtil.d("MapFragment", "Location Far Away");
+
+                    holderView.setVisibility(View.VISIBLE);
+
+                    Toast.makeText(MyApplication.getContext(), "You are far away from Boston", Toast.LENGTH_SHORT).show();
+                } else {
+                    lastSearchLocation = mLocation;
+                    requestNearbyStations(lastSearchLocation.getLatitude(), lastSearchLocation.getLongitude(), 0.01);
+                }
             }
         }
 
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 1);
-        recyclerView.setLayoutManager(layoutManager);
 
         Window window = getActivity().getWindow();
 
@@ -167,9 +181,7 @@ public class MapFragment extends Fragment implements
             Toast.makeText(MyApplication.getContext(), "Map Style File Error", Toast.LENGTH_SHORT).show();
         }
 
-        if (!NetUtil.isNetConnect(MyApplication.getContext())
-                || (!provider.equals(LocationManager.NETWORK_PROVIDER)
-                    && !provider.equals(LocationManager.GPS_PROVIDER))) return;
+        if (MyApplication.NET_STATUS == -1) return;
 
         try {
             layer = new KmlLayer(mMap, R.raw.mbta, MyApplication.getContext());
@@ -179,6 +191,9 @@ public class MapFragment extends Fragment implements
         }
 
         if (mLocation != null) {
+
+            LogUtil.d("MapFragment", "Map Listeners");
+
             LatLng my = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(my, 13));
 
@@ -188,13 +203,30 @@ public class MapFragment extends Fragment implements
             mMap.setOnInfoWindowClickListener(this);
             mMap.setOnCameraIdleListener(this);
             enableMyLocation();
+        } else {
+
+            LogUtil.d("MapFragment", "Show Boston");
+
+            LatLng my = new LatLng(boston.getLatitude(), boston.getLongitude());
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(my, 11));
+
+            mMap.setOnMarkerClickListener(this);
+            mMap.setOnInfoWindowClickListener(this);
+            mMap.setOnCameraIdleListener(this);
+        }
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        } else {
+            LogUtil.d("MapFragment", "Location Update Start");
+            locationManager.requestLocationUpdates(provider, 5000, 1, mListener);
         }
     }
 
     @Override
     public void onInfoWindowClick(Marker marker) {
 
-        if (!NetUtil.isNetConnect(MyApplication.getContext())) {
+        if (MyApplication.NET_STATUS == -1) {
             Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -215,12 +247,9 @@ public class MapFragment extends Fragment implements
                 if(SchedulePopWindow.handler != null){
                     SchedulePopWindow.handler.removeCallbacksAndMessages(null);
                 }
+
                 Intent stopIntent = new Intent(MyApplication.getContext(), TimeScheduleService.class);
                 MyApplication.getContext().stopService(stopIntent);
-
-                AlarmManager manager = (AlarmManager) MyApplication.getContext().getSystemService(Context.ALARM_SERVICE);
-                PendingIntent pi = PendingIntent.getService(MyApplication.getContext(), 0, stopIntent, 0);
-                manager.cancel(pi);
 
                 params.alpha = 1f;
                 window.setAttributes(params);
@@ -231,9 +260,9 @@ public class MapFragment extends Fragment implements
     @Override
     public void onCameraIdle() {
 
-        if (!NetUtil.isNetConnect(MyApplication.getContext())) return;
+        if (MyApplication.NET_STATUS == -1) return;
 
-        Log.d("ZOOM", mMap.getCameraPosition().zoom+"");
+        LogUtil.d("Camera", mMap.getCameraPosition().zoom+"");
 
         if (mMap.getCameraPosition().zoom <= 12 && kml_index != 1) {
 
@@ -269,7 +298,7 @@ public class MapFragment extends Fragment implements
         @Override
         public void onClick(int position) {
 
-            if (!NetUtil.isNetConnect(MyApplication.getContext())) {
+            if (MyApplication.NET_STATUS == -1) {
                 Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -281,12 +310,13 @@ public class MapFragment extends Fragment implements
 
     private void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // Permission to access the location is missing.
             PermissionUtils.requestPermission(getActivity(), LOCATION_PERMISSION_REQUEST_CODE, Manifest.permission.ACCESS_FINE_LOCATION, true);
-            //requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
         } else if (mMap != null) {
-            // Access to the location has been granted to the app.
             mMap.setMyLocationEnabled(true);
+
+            locationManager.removeUpdates(mListener);
+            LogUtil.d("MapFragment", "Location Update Start");
+            locationManager.requestLocationUpdates(provider, 5000, 1, mListener);
         }
     }
 
@@ -298,8 +328,6 @@ public class MapFragment extends Fragment implements
     @Override
     public boolean onMyLocationButtonClick() {
         Toast.makeText(MyApplication.getContext(), "MyLocation button clicked", Toast.LENGTH_SHORT).show();
-        // Return false so that we don't consume the event and the default behavior still occurs
-        // (the camera animates to the user's current position).
         return false;
     }
 
@@ -307,7 +335,6 @@ public class MapFragment extends Fragment implements
     public void onResume() {
         super.onResume();
         if (mPermissionDenied) {
-            // Permission was not granted, display error dialog.
             showMissingPermissionError();
             mPermissionDenied = false;
         }
@@ -318,46 +345,53 @@ public class MapFragment extends Fragment implements
         super.onDestroy();
 
         if (locationManager != null) {
-            Log.d("a1a1", "NOT NULL");
             locationManager.removeUpdates(mListener);
             locationManager = null;
         }
 
         mListener = null;
         direListener = null;
-
     }
 
     private LocationListener mListener = new LocationListener() {
 
         @Override
         public void onLocationChanged(Location location) {
+
             mLocation = location;
+            LogUtil.d("MapFragment", "Update mLocation in Listener");
 
             if (lastSearchLocation == null) {
+
+                if (mLocation.distanceTo(boston) > 16000) {
+
+                    LogUtil.d("MapFragment", "Far Again, Removed");
+
+                    locationManager.removeUpdates(mListener);
+                    return;
+                }
+
                 lastSearchLocation = mLocation;
                 onMapReady(mMap);
                 requestNearbyStations(lastSearchLocation.getLatitude(), lastSearchLocation.getLongitude(), 0.01);
 
                 return;
             }
-            Log.d("HEIHEI", "LISTNER WORKS");
 
-            if (lastSearchLocation != null) {
-                float dis = location.distanceTo(lastSearchLocation);
-                Log.d("HEIHEI", dis+",");
+            float dis = location.distanceTo(lastSearchLocation);
 
-                if (dis >= 20) {
+            if (dis >= 20) {
 
-                    lastSearchLocation = location;
-                    requestNearbyStations(location.getLatitude(), location.getLongitude(), 0.01);
-                }
-                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
-                //mMap.animateCamera(cameraUpdate);
-                //locationManager.removeUpdates(this);
-                Log.d("HEIHEI", lastSearchLocation.getLatitude()+","+mLocation.getLatitude());
+                LogUtil.d("MapFragment", "Update Nearby Stations");
+
+                lastSearchLocation = location;
+                requestNearbyStations(location.getLatitude(), location.getLongitude(), 0.01);
             }
+            //LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            //CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+            //mMap.animateCamera(cameraUpdate);
+            //locationManager.removeUpdates(this);
+
 
         }
 
@@ -381,17 +415,12 @@ public class MapFragment extends Fragment implements
 
         if (PermissionUtils.isPermissionGranted(permissions, grantResults,
                 Manifest.permission.ACCESS_FINE_LOCATION)) {
-            // Enable the my location layer if the permission has been granted.
             enableMyLocation();
         } else {
-            // Display the missing permission error dialog when the fragments resume.
             mPermissionDenied = true;
         }
     }
 
-    /**
-     * Displays a dialog with error message explaining that the location permission is missing.
-     */
     private void showMissingPermissionError() {
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getActivity().getFragmentManager(), "dialog");
@@ -399,7 +428,7 @@ public class MapFragment extends Fragment implements
 
     private void requestNearbyStations(double mlat, double mlng, final double mradius) {
 
-        if (!NetUtil.isNetConnect(MyApplication.getContext())) {
+        if (MyApplication.NET_STATUS == -1) {
             Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -413,7 +442,7 @@ public class MapFragment extends Fragment implements
                 Gson gson = new Gson();
                 final NearbyStationBean nearbyStationItem = gson.fromJson(response.body().string().trim(), NearbyStationBean.class);
 
-                if (nearbyStationItem.getIncluded().size() == 0) {
+                if (nearbyStationItem.getIncluded() != null && nearbyStationItem.getIncluded().size() == 0) {
                     if (mradius >= 0.05) {
                         Snackbar.make(getView(), "It seems like you are away from stations, Please using search station function.", Snackbar.LENGTH_LONG)
                                 .setAction("Dismiss", new View.OnClickListener() {
@@ -430,6 +459,9 @@ public class MapFragment extends Fragment implements
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+
+                                holderView.setVisibility(View.GONE);
+
                                 int previousSize = nearbyStationList.size();
                                 if (previousSize != 0) {
                                     nearbyStationList.clear();
@@ -459,10 +491,14 @@ public class MapFragment extends Fragment implements
     }
 
     private void requestRoute(final double latitude, final double longitude) {
+
+        if (MyApplication.NET_STATUS == -1) {
+            Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + mLocation.getLatitude() + "," + mLocation.getLongitude()
                 + "&destination=" + latitude + "," + longitude + "&mode=walking&key=AIzaSyA9EJnO5l1_984auwYgXZRaDychH78sd28";
-
-        Log.d("GOOGLE", url);
 
         HttpClientUtil.sendOkHttpRequest(url, new Callback() {
             @Override

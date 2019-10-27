@@ -7,10 +7,12 @@ import android.location.LocationManager;
 import android.text.TextUtils;
 
 import com.eddy.mbta.BaseActivity;
+import com.eddy.mbta.MyApplication;
 
 public class GPSBroadcastReceiver extends BroadcastReceiver {
 
     public GpsEvent event = BaseActivity.gps_event;
+    public LocationManager locationManager = (LocationManager) MyApplication.getContext().getSystemService(Context.LOCATION_SERVICE);
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -20,13 +22,15 @@ public class GPSBroadcastReceiver extends BroadcastReceiver {
                 event.onGpsChange();
             }*/
             if (intent.getAction().equalsIgnoreCase(LocationManager.MODE_CHANGED_ACTION)) {
-                event.onGpsChange();
+
+                boolean is_gps_enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                event.onGpsChange(is_gps_enabled);
             }
         }
     }
 
     public interface GpsEvent {
-        public void onGpsChange();
+        void onGpsChange(boolean is_gps_enabled);
     }
 }
 

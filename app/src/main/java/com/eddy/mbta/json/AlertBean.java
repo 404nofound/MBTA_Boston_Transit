@@ -30,8 +30,6 @@ public class AlertBean {
 
         private AttributesBean attributes;
         private String id;
-        private LinksBean links;
-        private String type;
 
         public AttributesBean getAttributes() {
             return attributes;
@@ -47,22 +45,6 @@ public class AlertBean {
 
         public void setId(String id) {
             this.id = id;
-        }
-
-        public LinksBean getLinks() {
-            return links;
-        }
-
-        public void setLinks(LinksBean links) {
-            this.links = links;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
         }
 
         public static class AttributesBean {
@@ -252,20 +234,6 @@ public class AlertBean {
 
         }
 
-        public static class LinksBean {
-            /**
-             * self : /alerts/293625
-             */
 
-            private String self;
-
-            public String getSelf() {
-                return self;
-            }
-
-            public void setSelf(String self) {
-                this.self = self;
-            }
-        }
     }
 }

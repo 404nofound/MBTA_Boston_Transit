@@ -8,12 +8,11 @@ import android.os.AsyncTask;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.SystemClock;
-import android.util.Log;
 
 import com.eddy.mbta.MyApplication;
 import com.eddy.mbta.json.AlertBean;
 import com.eddy.mbta.ui.alerts.AlertsFragment;
-import com.eddy.mbta.utils.NetUtil;
+import com.eddy.mbta.utils.LogUtil;
 import com.google.gson.Gson;
 
 import java.lang.ref.WeakReference;
@@ -29,6 +28,9 @@ public class AlertService extends Service {
     private static requestAlertTask mTask;
     private List<AlertBean.DataBean> list = new ArrayList<>();
 
+    private AlarmManager manager;
+    private PendingIntent pi;
+
     public AlertService() {
     }
 
@@ -37,28 +39,27 @@ public class AlertService extends Service {
         return null;
     }
 
-
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("AlertService", "onCreate() Executed");
+        LogUtil.d("AlertService", "onCreate() Executed");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("AlertService", "onStartCommand() Executed");
+        LogUtil.d("AlertService", "onStartCommand() Executed");
 
-        if (!NetUtil.isNetConnect(MyApplication.getContext())) onDestroy();
+        if (MyApplication.NET_STATUS == -1) onDestroy();
 
         mTask = new requestAlertTask(AlertService.this);
         mTask.execute((Void) null);
 
-        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        manager = (AlarmManager) getSystemService(ALARM_SERVICE);
         int period = 5 * 60 * 1000;
         long triggerAtTime = SystemClock.elapsedRealtime() + period;
 
         Intent i = new Intent(this, AlertService.class);
-        PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
+        pi = PendingIntent.getService(this, 0, i, 0);
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pi);
 
         return super.onStartCommand(intent, flags, startId);
@@ -70,7 +71,12 @@ public class AlertService extends Service {
         if (mTask != null) {
             mTask.cancel(true);
         }
-        Log.d("AlertService", "onDestroy() Executed");
+
+        if (manager != null && pi != null) {
+            manager.cancel(pi);
+        }
+
+        LogUtil.d("AlertService", "onDestroy() Executed");
     }
 
     private static class requestAlertTask extends AsyncTask<Void, Void, AlertBean> {
@@ -101,6 +107,8 @@ public class AlertService extends Service {
 
         @Override
         protected void onPostExecute(final AlertBean alertItem) {
+
+            if (alertItem == null) return;
 
             AlertService service = reference.get();
             if (service == null) return;
