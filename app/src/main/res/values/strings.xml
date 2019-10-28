@@ -1,9 +1,21 @@
 <resources>
-    <string name="app_name">Boston Transit</string>
+    <string name="app_name">Boston T</string>
 
     <string name="tab_text_1">Map</string>
     <string name="tab_text_2">Station</string>
     <string name="tab_text_3">Alert</string>
+
+    <string name="network_alert">Please turn on Wi-Fi or Data Roaming</string>
+    <string name="data_roaming_setting">Data Roaming</string>
+    <string name="wifi_setting">Wi-Fi</string>
+    <string name="finish">Finish</string>
+
+    <string name="gps_network_not_enabled">Please enable GPS Location Service</string>
+    <string name="open_location_settings">Open Settings</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="check_gps_network">If you are done, Continue</string>
+    <string name="confirm">Confirm</string>
 
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBenv056ScoAkEVbuAO5fGPkcBvz1GCPc4</string>
 

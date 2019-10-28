@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.eddy.mbta.MyApplication;
 import com.eddy.mbta.R;
 import com.eddy.mbta.db.Station;
 import com.eddy.mbta.utils.HttpClientUtil;
@@ -32,7 +33,6 @@ import okhttp3.Response;
 
 public class DetailStationActivity extends AppCompatActivity {
 
-    private List<Station> dataList = new ArrayList<>();
     private List<Station> stationList = new ArrayList<>();
 
     private StationAdapter adapter;
@@ -74,7 +74,7 @@ public class DetailStationActivity extends AppCompatActivity {
     }
 
     private void queryStation() {
-        dataList = LitePal.where("trainName = ?", train).find(Station.class);
+        List<Station> dataList = LitePal.where("trainName = ?", train).find(Station.class);
         if (dataList.size() > 0) {
             if (stationList.size() != 0) {
                 stationList.clear();
@@ -90,6 +90,12 @@ public class DetailStationActivity extends AppCompatActivity {
     }
 
     private void queryFromServer() {
+
+        if (MyApplication.NET_STATUS == -1) {
+            Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String url = "http://209.222.10.90/stop.php";
 
         HttpClientUtil.getStation(url, train.replace("-", "").toLowerCase(), new Callback() {
@@ -164,7 +170,14 @@ public class DetailStationActivity extends AppCompatActivity {
                 adapter.notifyItemRangeChanged(0, stationList.size());
                 break;
             case R.id.settings:
+
+                if (MyApplication.NET_STATUS == -1) {
+                    Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+
                 Toast.makeText(getApplicationContext(), "Github Visit", Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://github.com/404nofound"));
                 startActivity(intent);
@@ -172,5 +185,10 @@ public class DetailStationActivity extends AppCompatActivity {
             default:
         }
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

@@ -1,7 +1,5 @@
 package com.eddy.mbta.ui.stations;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Gravity;
@@ -13,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,6 +63,11 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHold
                 int position = holder.getAdapterPosition();
                 Station station = mStationList.get(position);
 
+                if (MyApplication.NET_STATUS == -1) {
+                    Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 SchedulePopWindow PopWin = new SchedulePopWindow(mContext, station.getStationName(), station.getAlias());
 
                 PopWin.showAtLocation(mWindow.getDecorView().findViewById(R.id.layout), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -82,10 +86,6 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHold
 
                         Intent stopIntent = new Intent(MyApplication.getContext(), TimeScheduleService.class);
                         MyApplication.getContext().stopService(stopIntent);
-
-                        AlarmManager manager = (AlarmManager) MyApplication.getContext().getSystemService(Context.ALARM_SERVICE);
-                        PendingIntent pi = PendingIntent.getService(MyApplication.getContext(), 0, stopIntent, 0);
-                        manager.cancel(pi);
 
                         params.alpha = 1f;
                         mWindow.setAttributes(params);

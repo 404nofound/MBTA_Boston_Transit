@@ -9,12 +9,13 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.SystemClock;
 import android.text.TextUtils;
-import android.util.Log;
 
+import com.eddy.mbta.MyApplication;
 import com.eddy.mbta.R;
 import com.eddy.mbta.json.Schedule;
 import com.eddy.mbta.json.TimeScheduleBean;
 import com.eddy.mbta.ui.map.SchedulePopWindow;
+import com.eddy.mbta.utils.LogUtil;
 import com.eddy.mbta.utils.Utility;
 import com.google.gson.Gson;
 
@@ -39,6 +40,8 @@ public class TimeScheduleService extends Service {
     private Set<Integer> set = new TreeSet<>();
 
     private String stop_id;
+    private AlarmManager manager;
+    private PendingIntent pi;
 
     public TimeScheduleService() { }
 
@@ -50,27 +53,31 @@ public class TimeScheduleService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("Service", "onCreate() Executed");
+        LogUtil.d("TimeScheduleService", "onCreate() Executed");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("Service", "onStartCommand() Executed");
+        LogUtil.d("TimeScheduleService", "onStartCommand() Executed");
+
+        if (MyApplication.NET_STATUS == -1) onDestroy();
 
         if (TextUtils.isEmpty(stop_id)) {
             stop_id = intent.getStringExtra("stop_id");
+            MyApplication.station = stop_id;
         }
-        Log.d("Service", "Station: " + stop_id);
+
+        LogUtil.d("TimeScheduleService", "Station: " + stop_id);
 
         mTask = new requestScheduleTask(stop_id, TimeScheduleService.this);
         mTask.execute((Void) null);
 
-        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        manager = (AlarmManager) getSystemService(ALARM_SERVICE);
         int period = 10 * 1000;
         long triggerAtTime = SystemClock.elapsedRealtime() + period;
 
         Intent i = new Intent(this, TimeScheduleService.class);
-        PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
+        pi = PendingIntent.getService(this, 0, i, 0);
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pi);
 
         return super.onStartCommand(intent, flags, startId);
@@ -82,7 +89,12 @@ public class TimeScheduleService extends Service {
         if (mTask != null) {
             mTask.cancel(true);
         }
-        Log.d("Service", "onDestroy() Executed");
+
+        if (manager != null && pi != null) {
+            manager.cancel(pi);
+        }
+
+        LogUtil.d("TimeScheduleService", "onDestroy() Executed");
     }
 
     private static class requestScheduleTask extends AsyncTask<Void, Void, TimeScheduleBean> {
@@ -116,6 +128,8 @@ public class TimeScheduleService extends Service {
 
         @Override
         protected void onPostExecute(final TimeScheduleBean timeScheduleItem) {
+
+            if (timeScheduleItem == null) return;
 
             TimeScheduleService service = reference.get();
             if (service == null) return;

@@ -1,7 +1,5 @@
 package com.eddy.mbta.ui.map;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Gravity;
@@ -13,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,10 +25,9 @@ import java.util.List;
 
 public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdapter.ViewHolder>{
 
-    private Context mContext;
-
     private List<NearbyStationBean.IncludedBean> mNearbyStationList;
 
+    private Context mContext;
     private Window mWindow;
     private View mRoot;
 
@@ -83,6 +81,11 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
 
                 NearbyStationBean.IncludedBean station = mNearbyStationList.get(position);
 
+                if (MyApplication.NET_STATUS == -1) {
+                    Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 SchedulePopWindow PopWin = new SchedulePopWindow(mContext, station.getAttributes().getName(), station.getId());
 
                 PopWin.showAtLocation(mRoot.findViewById(R.id.layout), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
@@ -99,12 +102,9 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
                         if(SchedulePopWindow.handler != null){
                             SchedulePopWindow.handler.removeCallbacksAndMessages(null);
                         }
+
                         Intent stopIntent = new Intent(MyApplication.getContext(), TimeScheduleService.class);
                         MyApplication.getContext().stopService(stopIntent);
-
-                        AlarmManager manager = (AlarmManager) MyApplication.getContext().getSystemService(Context.ALARM_SERVICE);
-                        PendingIntent pi = PendingIntent.getService(MyApplication.getContext(), 0, stopIntent, 0);
-                        manager.cancel(pi);
 
                         params.alpha = 1f;
                         mWindow.setAttributes(params);

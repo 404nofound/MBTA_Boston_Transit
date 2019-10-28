@@ -13,6 +13,6 @@
         app:showAsAction="ifRoom"/>-->
     <item
         android:id="@+id/settings"
-        android:title="About"
+        android:title="Visit Github"
         app:showAsAction="never"/>
 </menu>

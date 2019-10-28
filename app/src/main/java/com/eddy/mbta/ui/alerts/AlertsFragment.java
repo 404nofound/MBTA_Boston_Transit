@@ -1,13 +1,10 @@
 package com.eddy.mbta.ui.alerts;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +21,7 @@ import com.eddy.mbta.R;
 import com.eddy.mbta.json.AlertBean;
 import com.eddy.mbta.service.AlertService;
 import com.eddy.mbta.utils.HttpClientUtil;
+import com.eddy.mbta.utils.LogUtil;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -42,7 +40,6 @@ public class AlertsFragment extends Fragment {
     private SwipeRefreshLayout swipeRefresh;
 
     public static Handler handler;
-    private Context mContext;
 
     public static AlertsFragment newInstance() {
         Bundle args = new Bundle ();
@@ -57,12 +54,16 @@ public class AlertsFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_alerts, container, false);
 
-        mContext = getActivity();
+        Context mContext = getActivity();
 
-        Intent startIntent = new Intent(MyApplication.getContext(), AlertService.class);
-        MyApplication.getContext().startService(startIntent);
+        if (MyApplication.NET_STATUS != -1) {
+            Intent startIntent = new Intent(MyApplication.getContext(), AlertService.class);
+            MyApplication.getContext().startService(startIntent);
 
-        handler = new CustomerHandler(this);
+            handler = new CustomerHandler(this);
+        } else {
+            Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+        }
 
         RecyclerView recyclerView = root.findViewById(R.id.recycler_view);
         GridLayoutManager layoutManager = new GridLayoutManager(mContext, 1);
@@ -115,11 +116,12 @@ public class AlertsFragment extends Fragment {
             super.handleMessage(msg);
 
             if (msg.what == 1) {
-
                 AlertsFragment fragment = mFragment.get();
                 if(fragment != null) {
                     List<AlertBean.DataBean> list = (List<AlertBean.DataBean>) msg.obj;
-                    Log.d("AlertService", "Fragment:"+list.size());
+
+                    LogUtil.d("AlertService", "Fragment:"+list.size());
+
                     int preSize = fragment.alertList.size();
                     if (preSize != 0) {
                         fragment.alertList.clear();
@@ -133,6 +135,11 @@ public class AlertsFragment extends Fragment {
     }
 
     private void requestAlerts() {
+
+        if (MyApplication.NET_STATUS == -1) {
+            Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         String url = "https://api-v3.mbta.com/alerts?filter[route_type]=0,1&sort=lifecycle";
 
@@ -184,9 +191,5 @@ public class AlertsFragment extends Fragment {
 
         Intent stopIntent = new Intent(MyApplication.getContext(), AlertService.class);
         MyApplication.getContext().stopService(stopIntent);
-
-        AlarmManager manager = (AlarmManager) MyApplication.getContext().getSystemService(Context.ALARM_SERVICE);
-        PendingIntent pi = PendingIntent.getService(MyApplication.getContext(), 0, stopIntent, 0);
-        manager.cancel(pi);
     }
 }
