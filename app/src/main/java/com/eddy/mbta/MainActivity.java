@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.eddy.mbta.service.AlertService;
@@ -23,15 +24,16 @@ import com.eddy.mbta.utils.LogUtil;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends BaseActivity {
 
     private static final long TIME = 2000;
     private long exitTime;
+    private AdView mAdView;
+    private AdRequest adRequest;
+    private ViewPager mViewPager;
+    private int times = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,22 +49,16 @@ public class MainActivity extends BaseActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_main);
         }
 
-        ViewPager mViewPager = findViewById(R.id.view_pager);
+        mViewPager = findViewById(R.id.view_pager);
         MainPageAdapter adapter = new MainPageAdapter(this, getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-
-        AdView mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        //AdRequest adRequest = new AdRequest.Builder().addTestDevice("87B8E83525FCB69F71AE1154E35EF784").build();
+        mAdView = findViewById(R.id.adView);
+        adRequest = new AdRequest.Builder().build();
+        //adRequest = new AdRequest.Builder().addTestDevice("87B8E83525FCB69F71AE1154E35EF784").build();
         mAdView.loadAd(adRequest);
 
         mAdView.setAdListener(new AdListener() {
@@ -74,6 +70,16 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onAdFailedToLoad(int errorCode) {
                 // Code to be executed when an ad request fails.
+                times++;
+                if (MyApplication.NET_STATUS != -1 && times < 5) {
+                    //adRequest = new AdRequest.Builder().addTestDevice("87B8E83525FCB69F71AE1154E35EF784").build();
+                    adRequest = new AdRequest.Builder().build();
+                    mAdView.loadAd(adRequest);
+                } else {
+                    CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mViewPager.getLayoutParams();
+                    layoutParams.bottomMargin=0;//将默认的距离底部20dp，改为0，这样底部区域全被listview填满。
+                    mViewPager.setLayoutParams(layoutParams);
+                }
             }
 
             @Override
