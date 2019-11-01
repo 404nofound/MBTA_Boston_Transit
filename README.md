@@ -12,6 +12,10 @@
 
 #### Video is still on processing
 
+<img align="center" src="https://github.com/404nofound/MBTA_Boston_Transit/blob/master/screenshots/1.png" alt="" width="288" height="512" style="display: inline; float: right"/><img align="center" src="https://github.com/404nofound/MBTA_Boston_Transit/blob/master/screenshots/2.png" alt="" width="288" height="512" style="display: inline; float: right"/>
+
+<img align="center" src="https://github.com/404nofound/MBTA_Boston_Transit/blob/master/screenshots/3.png" alt="" width="288" height="512" style="display: inline; float: right"/><img align="center" src="https://github.com/404nofound/MBTA_Boston_Transit/blob/master/screenshots/4.png" alt="" width="288" height="512" style="display: inline; float: right"/>
+
 ## About Boston T
 
 For Boston Train System, the delay happens all the time, even though it won the second place in whole US transportation system recently, but most residents disagree with it. My project designed a real-time train App to help residents find when train will arrive or departure at a special station and show trains' current location in the map, this app also supports emergency alert, route plan and show stations’ detail info functions, etc. I hope this app can reduce residents’ waiting time and help user schedule their trip.
