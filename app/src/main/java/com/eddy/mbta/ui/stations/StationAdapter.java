@@ -61,6 +61,9 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
+
+                if (position == -1) return;
+
                 Station station = mStationList.get(position);
 
                 if (MyApplication.NET_STATUS == -1) {

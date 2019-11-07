@@ -5,9 +5,6 @@ import android.content.Context;
 import android.location.LocationManager;
 
 import com.eddy.mbta.utils.NetUtil;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 
 import org.litepal.LitePal;
 
@@ -22,12 +19,6 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-
-        MobileAds.initialize(context, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
 
         LitePal.initialize(this);
 

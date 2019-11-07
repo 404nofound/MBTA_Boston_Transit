@@ -55,6 +55,8 @@ public class TrainAdapter extends RecyclerView.Adapter<TrainAdapter.ViewHolder>{
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
 
+                if (position == -1) return;
+
                 Intent intent = new Intent(mContext, DetailStationActivity.class);
                 intent.putExtra("train", Utility.route_id[position]);
                 mContext.startActivity(intent);

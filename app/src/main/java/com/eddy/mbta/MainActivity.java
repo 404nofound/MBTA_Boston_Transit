@@ -24,16 +24,16 @@ import com.eddy.mbta.utils.LogUtil;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends BaseActivity {
 
     private static final long TIME = 2000;
     private long exitTime;
-    private AdView mAdView;
-    private AdRequest adRequest;
     private ViewPager mViewPager;
-    private int times = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,30 +56,33 @@ public class MainActivity extends BaseActivity {
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        mAdView = findViewById(R.id.adView);
-        adRequest = new AdRequest.Builder().build();
-        //adRequest = new AdRequest.Builder().addTestDevice("87B8E83525FCB69F71AE1154E35EF784").build();
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
+        AdView mAdView = findViewById(R.id.adView);
+        //AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("87B8E83525FCB69F71AE1154E35EF784").build();
         mAdView.loadAd(adRequest);
 
         mAdView.setAdListener(new AdListener() {
             @Override
             public void onAdLoaded() {
+                final float scale = MainActivity.this.getResources().getDisplayMetrics().density;
+
+                CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mViewPager.getLayoutParams();
+                layoutParams.bottomMargin = (int) (50 * scale + 0.5f);//将默认的距离底部20dp，改为0，这样底部区域全被填满。
+                mViewPager.setLayoutParams(layoutParams);
                 // Code to be executed when an ad finishes loading.
             }
 
             @Override
             public void onAdFailedToLoad(int errorCode) {
-                // Code to be executed when an ad request fails.
-                times++;
-                if (MyApplication.NET_STATUS != -1 && times < 5) {
-                    //adRequest = new AdRequest.Builder().addTestDevice("87B8E83525FCB69F71AE1154E35EF784").build();
-                    adRequest = new AdRequest.Builder().build();
-                    mAdView.loadAd(adRequest);
-                } else {
-                    CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mViewPager.getLayoutParams();
-                    layoutParams.bottomMargin=0;//将默认的距离底部20dp，改为0，这样底部区域全被listview填满。
-                    mViewPager.setLayoutParams(layoutParams);
-                }
+                CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) mViewPager.getLayoutParams();
+                layoutParams.bottomMargin = 0;//将默认的距离底部20dp，改为0，这样底部区域全被填满。
+                mViewPager.setLayoutParams(layoutParams);
             }
 
             @Override
@@ -142,6 +145,8 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onGpsChange(boolean is_gps_enabled) {
 
+        LogUtil.d("MainActivity", "GPS: " + is_gps_enabled);
+
         LocationManager locationManager = (LocationManager) MyApplication.getContext().getSystemService(Context.LOCATION_SERVICE);
         boolean gps_enabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
@@ -154,6 +159,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onNetChange(int netMobile) {
+        LogUtil.d("MainActivity", "Net: " + netMobile);
 
         if (netMobile != -1 && MyApplication.NET_STATUS == -1) {
 
@@ -229,4 +235,5 @@ public class MainActivity extends BaseActivity {
         Intent stopIntent2 = new Intent(MyApplication.getContext(), TimeScheduleService.class);
         MyApplication.getContext().stopService(stopIntent2);
     }
+
 }

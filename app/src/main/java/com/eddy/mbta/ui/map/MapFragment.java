@@ -67,7 +67,7 @@ public class MapFragment extends Fragment implements
         OnMyLocationClickListener,
         GoogleMap.OnMarkerClickListener,
         OnInfoWindowClickListener,
-        GoogleMap.OnCameraIdleListener,
+        //GoogleMap.OnCameraIdleListener,
         OnMapReadyCallback {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
@@ -76,8 +76,8 @@ public class MapFragment extends Fragment implements
     private boolean mPermissionDenied = false;
     private LocationManager locationManager;
     private GoogleMap mMap;
-    private KmlLayer layer;
-    private int kml_index = 0;
+    //private KmlLayer layer;
+    //private int kml_index = 0;
 
     private Location mLocation = null;
     private Location lastSearchLocation = null;
@@ -184,12 +184,24 @@ public class MapFragment extends Fragment implements
         if (MyApplication.NET_STATUS == -1) return;
 
         try {
-            layer = new KmlLayer(mMap, R.raw.mbta, MyApplication.getContext());
+            KmlLayer layer = new KmlLayer(mMap, R.raw.mbta, MyApplication.getContext());
             layer.addLayerToMap();
         } catch (Exception e) {
             Toast.makeText(MyApplication.getContext(), "Loading Map Error", Toast.LENGTH_SHORT).show();
         }
 
+        loadListeners();
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        } else {
+            //locationManager.removeUpdates(mListener);
+            LogUtil.d("MapFragment", "Location Update Start");
+            locationManager.requestLocationUpdates(provider, 5000, 1, mListener);
+        }
+    }
+
+    public void loadListeners() {
         if (mLocation != null) {
 
             LogUtil.d("MapFragment", "Map Listeners");
@@ -201,7 +213,7 @@ public class MapFragment extends Fragment implements
             mMap.setOnMyLocationButtonClickListener(this);
             mMap.setOnMyLocationClickListener(this);
             mMap.setOnInfoWindowClickListener(this);
-            mMap.setOnCameraIdleListener(this);
+            //mMap.setOnCameraIdleListener(this);
             enableMyLocation();
         } else {
 
@@ -212,14 +224,7 @@ public class MapFragment extends Fragment implements
 
             mMap.setOnMarkerClickListener(this);
             mMap.setOnInfoWindowClickListener(this);
-            mMap.setOnCameraIdleListener(this);
-        }
-
-        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        } else {
-            LogUtil.d("MapFragment", "Location Update Start");
-            locationManager.requestLocationUpdates(provider, 5000, 1, mListener);
+            //mMap.setOnCameraIdleListener(this);
         }
     }
 
@@ -257,7 +262,7 @@ public class MapFragment extends Fragment implements
         });
     }
 
-    @Override
+    /*@Override
     public void onCameraIdle() {
 
         if (MyApplication.NET_STATUS == -1) return;
@@ -287,7 +292,7 @@ public class MapFragment extends Fragment implements
                 Toast.makeText(MyApplication.getContext(), "Loading Map Error", Toast.LENGTH_SHORT).show();
             }
         }
-    }
+    }*/
 
     @Override
     public boolean onMarkerClick(Marker marker) {
@@ -371,8 +376,11 @@ public class MapFragment extends Fragment implements
                     return;
                 }
 
+                LogUtil.d("MapFragment", "Load Nearby Station/Map Again");
+
                 lastSearchLocation = mLocation;
-                onMapReady(mMap);
+                //onMapReady(mMap);
+                loadListeners();
                 requestNearbyStations(lastSearchLocation.getLatitude(), lastSearchLocation.getLongitude(), 0.01);
 
                 return;

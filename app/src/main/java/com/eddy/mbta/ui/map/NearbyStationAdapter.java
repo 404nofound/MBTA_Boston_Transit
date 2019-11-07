@@ -70,6 +70,8 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
 
+                if (position == -1) return;
+
                 listener.onClick(position);
             }
         });
@@ -78,6 +80,8 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();
+
+                if (position == -1) return;
 
                 NearbyStationBean.IncludedBean station = mNearbyStationList.get(position);
 
