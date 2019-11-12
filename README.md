@@ -8,8 +8,6 @@
       alt="Download from Google Play" 
       height="70">](https://play.google.com/store/apps/details?id=com.eddy.mbta)
 
-## Demo
-
 <img align="right" src="https://github.com/404nofound/MBTA_Boston_Transit/blob/master/demo1.gif" alt="" width="288" height="512" style="display: inline; float: right"/>
 
 ## About Boston T
@@ -34,7 +32,7 @@ on processing
 
 [authorSvg]: https://img.shields.io/badge/author-S.YC-brightgreen.svg
 
-[versSvg]: https://img.shields.io/badge/appVersion-v1.5-brightgreen.svg
+[versSvg]: https://img.shields.io/badge/appVersion-v1.9-brightgreen.svg
 
 [sdkSvg]: https://img.shields.io/badge/minSdkVersion-23-brightgreen.svg
 
