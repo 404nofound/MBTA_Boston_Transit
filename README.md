@@ -12,7 +12,7 @@
 
 #### Video is still on processing
 
-<img align="center" src="http://www.yichangshao.com/demo/demo.gif" alt="" width="288" height="512" style="display: inline; float: right"/>
+<img align="right" src="https://github.com/404nofound/MBTA_Boston_Transit/blob/master/demo1.gif" alt="" width="288" height="512" style="display: inline; float: right"/>
 
 ## About Boston T
 
