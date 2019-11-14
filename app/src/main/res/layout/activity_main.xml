@@ -38,8 +38,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-6702065213480038/8986125154">
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="ca-app-pub-4075829839329155/2054018749">
     </com.google.android.gms.ads.AdView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

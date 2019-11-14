@@ -1,10 +1,17 @@
 package com.eddy.mbta.ui.alerts;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,10 +40,13 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
+
 public class AlertsFragment extends Fragment {
 
     private AlertAdapter adapter;
     private List<AlertBean.DataBean> alertList = new ArrayList<>();
+    private List<AlertBean.DataBean> preList = new ArrayList<>();
     private SwipeRefreshLayout swipeRefresh;
 
     public static Handler handler;
@@ -120,6 +130,13 @@ public class AlertsFragment extends Fragment {
                 if(fragment != null) {
                     List<AlertBean.DataBean> list = (List<AlertBean.DataBean>) msg.obj;
 
+                    if (fragment.preList == null || fragment.preList.size() == 0) {
+                        fragment.preList.addAll(list);
+                    } else {
+                        fragment.preList.clear();
+                        fragment.preList.addAll(fragment.alertList);
+                    }
+
                     LogUtil.d("AlertService", "Fragment:"+list.size());
 
                     int preSize = fragment.alertList.size();
@@ -129,6 +146,67 @@ public class AlertsFragment extends Fragment {
                     }
                     fragment.alertList.addAll(list);
                     fragment.adapter.notifyItemRangeInserted(0, fragment.alertList.size());
+
+                    for (AlertBean.DataBean cur : list) {
+                        boolean exist = false;
+                        for(AlertBean.DataBean pre : fragment.preList) {
+                            if (cur.getId().equals(pre.getId())) {
+                                exist = true;
+                                break;
+                            }
+                        }
+
+                        NotificationManager mNotificationManager = (NotificationManager) fragment.getActivity().getSystemService(NOTIFICATION_SERVICE);
+
+                        if (!exist) {
+
+                            Log.d("AlertService", cur.getId()+"AAAAA");
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+                                String channelId = "101";
+
+                                CharSequence name = fragment.getString(R.string.channel_name);
+                                String description = fragment.getString(R.string.channel_description);
+                                int importance = NotificationManager.IMPORTANCE_HIGH;
+                                NotificationChannel mChannel = new NotificationChannel(channelId, name, importance);
+
+                                mChannel.setDescription(description);
+                                mChannel.enableLights(true);
+                                mChannel.setShowBadge(true);
+                                mChannel.setLightColor(Color.RED);
+                                mChannel.enableVibration(true);
+                                mNotificationManager.createNotificationChannel(mChannel);
+
+                                Notification notification = new Notification.Builder(fragment.getActivity(), "101")
+                                        .setContentTitle(cur.getAttributes().getService_effect())
+                                        .setTicker(cur.getAttributes().getService_effect())
+                                        .setStyle(new Notification.BigTextStyle().bigText(cur.getAttributes().getHeader()))
+                                        .setContentText(cur.getAttributes().getHeader())
+                                        .setSmallIcon(R.mipmap.small)
+                                        .setLargeIcon(BitmapFactory.decodeResource(fragment.getActivity().getResources(), R.mipmap.main_icon))
+                                        .setWhen(System.currentTimeMillis())
+                                        .build();
+
+                                //NotificationManager manager = (NotificationManager) fragment.getActivity().getSystemService(NOTIFICATION_SERVICE);
+                                mNotificationManager.notify(MyApplication.notification_id++, notification);
+                            } else {
+
+                                Notification notification = new Notification.Builder(fragment.getActivity())
+                                        .setContentTitle(cur.getAttributes().getService_effect())
+                                        .setTicker(cur.getAttributes().getService_effect())
+                                        .setStyle(new Notification.BigTextStyle().bigText(cur.getAttributes().getHeader()))
+                                        .setContentText(cur.getAttributes().getHeader())
+                                        .setSmallIcon(R.mipmap.small)
+                                        .setLargeIcon(BitmapFactory.decodeResource(fragment.getActivity().getResources(), R.mipmap.main_icon))
+                                        .setWhen(System.currentTimeMillis())
+                                        .build();
+
+                                //NotificationManager mNotificationManager = (NotificationManager) fragment.getActivity().getSystemService(NOTIFICATION_SERVICE);
+                                mNotificationManager.notify(MyApplication.notification_id++, notification);
+                            }
+                        }
+                    }
                 }
             }
         }

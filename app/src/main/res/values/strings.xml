@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Boston T</string>
 
+    <string name="channel_name">Map</string>
+    <string name="channel_description">Map</string>
+
     <string name="tab_text_1">Map</string>
     <string name="tab_text_2">Station</string>
     <string name="tab_text_3">Alert</string>

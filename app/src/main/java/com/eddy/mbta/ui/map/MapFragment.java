@@ -316,8 +316,10 @@ public class MapFragment extends Fragment implements
     private void enableMyLocation() {
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             PermissionUtils.requestPermission(getActivity(), LOCATION_PERMISSION_REQUEST_CODE, Manifest.permission.ACCESS_FINE_LOCATION, true);
-        } else if (mMap != null) {
-            mMap.setMyLocationEnabled(true);
+        } else {
+            if (mMap != null) {
+                mMap.setMyLocationEnabled(true);
+            }
 
             locationManager.removeUpdates(mListener);
             LogUtil.d("MapFragment", "Location Update Start");
