@@ -200,7 +200,7 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
 
         setTrainLine(route, direction);
 
-        LogUtil.d("Service", Utility.start[route]+","+Utility.end[route]+","+Utility.route_id[route]+","+direction);
+        LogUtil.d("ScheduleFragment", Utility.start[route]+","+Utility.end[route]+","+Utility.route_id[route]+","+direction);
     }
 
     static class CustomerHandler extends Handler {
@@ -251,8 +251,8 @@ public class SchedulePopWindow extends PopupWindow implements View.OnClickListen
             }
         }
 
-        LogUtil.d("Service", "Set FUnction"+mTotalList.size());
-        LogUtil.d("Service", "Set FUnction: Show List:"+mScheduleList.size());
+        LogUtil.d("ScheduleFragment", "Set FUnction"+mTotalList.size());
+        LogUtil.d("ScheduleFragment", "Set FUnction: Show List:"+mScheduleList.size());
 
         if (mScheduleList.size() != 0) {
             holderView.setVisibility(View.GONE);

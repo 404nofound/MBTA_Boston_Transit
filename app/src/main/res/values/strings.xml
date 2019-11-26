@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Boston T</string>
 
-    <string name="channel_name">Map</string>
-    <string name="channel_description">Map</string>
+    <string name="channel_name">Alerts Notification</string>
+    <string name="channel_description">Get notification when posting new alerts</string>
 
     <string name="tab_text_1">Map</string>
     <string name="tab_text_2">Station</string>
@@ -19,6 +19,8 @@
 
     <string name="check_gps_network">If you are done, Continue</string>
     <string name="confirm">Confirm</string>
+
+    <string name="notification_not_enabled">Please enable Notification to receive Alerts</string>
 
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBenv056ScoAkEVbuAO5fGPkcBvz1GCPc4</string>
 

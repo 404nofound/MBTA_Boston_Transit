@@ -35,8 +35,6 @@ public class MainActivity extends BaseActivity {
     private long exitTime;
     private ViewPager mViewPager;
 
-    //private FirebaseAnalytics mFirebaseAnalytics;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,13 +50,13 @@ public class MainActivity extends BaseActivity {
         }
 
         mViewPager = findViewById(R.id.view_pager);
+        mViewPager.setOffscreenPageLimit(2);
+
         MainPageAdapter adapter = new MainPageAdapter(this, getSupportFragmentManager());
         mViewPager.setAdapter(adapter);
 
         TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-        //mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -70,12 +68,6 @@ public class MainActivity extends BaseActivity {
         //AdRequest adRequest = new AdRequest.Builder().build();
         AdRequest adRequest = new AdRequest.Builder().addTestDevice("87B8E83525FCB69F71AE1154E35EF784").build();
         mAdView.loadAd(adRequest);
-
-        /*for(int i=0;i<1000;i++) {
-            LogUtil.d("HHHH", "works");
-            //AdRequest adRequest = new AdRequest.Builder().addTestDevice("87B8E83525FCB69F71AE1154E35EF784").build();
-            mAdView.loadAd(adRequest);
-        }*/
 
         mAdView.setAdListener(new AdListener() {
             @Override
@@ -216,6 +208,7 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(MyApplication.getContext(),"Press Again to Exit",Toast.LENGTH_LONG).show();
                 exitTime = System.currentTimeMillis();
             } else {
+                onDestroy();
                 //如果再次按后退的时间小于规定时间，则退出
                 finish();
                 //android.os.Process.killProcess(android.os.Process.myPid());

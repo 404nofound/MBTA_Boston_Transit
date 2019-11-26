@@ -3,7 +3,9 @@ package com.eddy.mbta.ui.alerts;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -11,13 +13,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +31,7 @@ import com.eddy.mbta.json.AlertBean;
 import com.eddy.mbta.service.AlertService;
 import com.eddy.mbta.utils.HttpClientUtil;
 import com.eddy.mbta.utils.LogUtil;
+import com.eddy.mbta.utils.PermissionUtils;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -62,11 +65,14 @@ public class AlertsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
+        LogUtil.d("ViewPager", "AlertFragment");
+
         View root = inflater.inflate(R.layout.fragment_alerts, container, false);
 
         Context mContext = getActivity();
 
         if (MyApplication.NET_STATUS != -1) {
+            LogUtil.d("AlertFragment", "start");
             Intent startIntent = new Intent(MyApplication.getContext(), AlertService.class);
             MyApplication.getContext().startService(startIntent);
 
@@ -126,7 +132,7 @@ public class AlertsFragment extends Fragment {
             super.handleMessage(msg);
 
             if (msg.what == 1) {
-                AlertsFragment fragment = mFragment.get();
+                final AlertsFragment fragment = mFragment.get();
                 if(fragment != null) {
                     List<AlertBean.DataBean> list = (List<AlertBean.DataBean>) msg.obj;
 
@@ -147,6 +153,29 @@ public class AlertsFragment extends Fragment {
                     fragment.alertList.addAll(list);
                     fragment.adapter.notifyItemRangeInserted(0, fragment.alertList.size());
 
+                    if (MyApplication.notification_ask_first && !PermissionUtils.isNotificationPermissionOpen(fragment.getActivity())) {
+                        //Only ask for once
+                        MyApplication.notification_ask_first = false;
+
+                        new AlertDialog.Builder(fragment.getActivity())
+                                .setMessage(R.string.notification_not_enabled)
+                                .setPositiveButton(R.string.open_location_settings, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                                        PermissionUtils.openNotificationPermissionSetting(fragment.getActivity());
+                                    }
+                                })
+                                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                                        Toast.makeText(fragment.getActivity(), "It can be enabled from the System Settings > Apps > Boston Transit > Notification", Toast.LENGTH_LONG).show();
+                                    }
+                                })
+                                .setCancelable(true)
+                                .show();
+                        return;
+                    }
+
                     for (AlertBean.DataBean cur : list) {
                         boolean exist = false;
                         for(AlertBean.DataBean pre : fragment.preList) {
@@ -160,7 +189,7 @@ public class AlertsFragment extends Fragment {
 
                         if (!exist) {
 
-                            Log.d("AlertService", cur.getId()+"AAAAA");
+                            LogUtil.d("AlertService", cur.getId()+"");
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
@@ -179,7 +208,7 @@ public class AlertsFragment extends Fragment {
                                 mNotificationManager.createNotificationChannel(mChannel);
 
                                 Notification notification = new Notification.Builder(fragment.getActivity(), "101")
-                                        .setContentTitle(cur.getAttributes().getService_effect())
+                                        .setContentTitle(cur.getAttributes().getService_effect() + " - " + list.get(0).getAttributes().getLifecycle())
                                         .setTicker(cur.getAttributes().getService_effect())
                                         .setStyle(new Notification.BigTextStyle().bigText(cur.getAttributes().getHeader()))
                                         .setContentText(cur.getAttributes().getHeader())
@@ -188,21 +217,24 @@ public class AlertsFragment extends Fragment {
                                         .setWhen(System.currentTimeMillis())
                                         .build();
 
-                                //NotificationManager manager = (NotificationManager) fragment.getActivity().getSystemService(NOTIFICATION_SERVICE);
                                 mNotificationManager.notify(MyApplication.notification_id++, notification);
                             } else {
 
+                                Intent intent = new Intent();
+                                PendingIntent pendingIntent = PendingIntent.getBroadcast(fragment.getActivity(), 0, intent, 0);
+
                                 Notification notification = new Notification.Builder(fragment.getActivity())
-                                        .setContentTitle(cur.getAttributes().getService_effect())
-                                        .setTicker(cur.getAttributes().getService_effect())
-                                        .setStyle(new Notification.BigTextStyle().bigText(cur.getAttributes().getHeader()))
-                                        .setContentText(cur.getAttributes().getHeader())
+                                        .setContentTitle(list.get(0).getAttributes().getService_effect() + " - " + list.get(0).getAttributes().getLifecycle())
+                                        .setTicker(list.get(0).getAttributes().getLifecycle())
+                                        .setStyle(new Notification.BigTextStyle().bigText(list.get(0).getAttributes().getHeader()))
+                                        .setContentText("See more details in App. Tap to close")
+                                        .setAutoCancel(true)
+                                        .setContentIntent(pendingIntent)
                                         .setSmallIcon(R.mipmap.small)
-                                        .setLargeIcon(BitmapFactory.decodeResource(fragment.getActivity().getResources(), R.mipmap.main_icon))
+                                        .setLargeIcon(BitmapFactory.decodeResource(fragment.getActivity().getResources(), R.mipmap.middle))
                                         .setWhen(System.currentTimeMillis())
                                         .build();
 
-                                //NotificationManager mNotificationManager = (NotificationManager) fragment.getActivity().getSystemService(NOTIFICATION_SERVICE);
                                 mNotificationManager.notify(MyApplication.notification_id++, notification);
                             }
                         }

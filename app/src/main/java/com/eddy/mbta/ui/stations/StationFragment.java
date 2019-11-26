@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.eddy.mbta.R;
+import com.eddy.mbta.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,8 @@ public class StationFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        LogUtil.d("ViewPager", "StationFragment");
 
         View root = inflater.inflate(R.layout.fragment_train, container, false);
 

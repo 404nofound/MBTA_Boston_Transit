@@ -1,13 +1,11 @@
 package com.eddy.mbta.service;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.os.SystemClock;
 import android.text.TextUtils;
 
 import com.eddy.mbta.MyApplication;
@@ -40,8 +38,22 @@ public class TimeScheduleService extends Service {
     private Set<Integer> set = new TreeSet<>();
 
     private String stop_id;
-    private AlarmManager manager;
-    private PendingIntent pi;
+    //private AlarmManager manager;
+    //private PendingIntent pi;
+
+    private Handler handler = new Handler();
+
+    Runnable runnable=new Runnable() {
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+
+            Intent i = new Intent(TimeScheduleService.this, TimeScheduleService.class);
+            startService(i);
+
+            handler.postDelayed(this, 10000);
+        }
+    };
 
     public TimeScheduleService() { }
 
@@ -53,6 +65,9 @@ public class TimeScheduleService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        handler.postDelayed(runnable, 10000);
+
         LogUtil.d("TimeScheduleService", "onCreate() Executed");
     }
 
@@ -72,14 +87,14 @@ public class TimeScheduleService extends Service {
         mTask = new requestScheduleTask(stop_id, TimeScheduleService.this);
         mTask.execute((Void) null);
 
-        manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        /*manager = (AlarmManager) getSystemService(ALARM_SERVICE);
         int period = 10 * 1000;
         long triggerAtTime = SystemClock.elapsedRealtime() + period;
 
         Intent i = new Intent(this, TimeScheduleService.class);
         pi = PendingIntent.getService(this, 0, i, 0);
         manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAtTime, pi);
-
+*/
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -90,9 +105,13 @@ public class TimeScheduleService extends Service {
             mTask.cancel(true);
         }
 
-        if (manager != null && pi != null) {
-            manager.cancel(pi);
+        if (handler != null && runnable != null) {
+            handler.removeCallbacks(runnable);
         }
+
+        /*if (manager != null && pi != null) {
+            manager.cancel(pi);
+        }*/
 
         LogUtil.d("TimeScheduleService", "onDestroy() Executed");
     }
@@ -295,7 +314,10 @@ public class TimeScheduleService extends Service {
             Message message = new Message();
             message.what = 1;
             message.obj = bean;
-            SchedulePopWindow.handler.sendMessage(message);
+
+            if (SchedulePopWindow.handler != null) {
+                SchedulePopWindow.handler.sendMessage(message);
+            }
 
             mTask = null;
         }

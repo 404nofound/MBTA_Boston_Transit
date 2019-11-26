@@ -104,6 +104,8 @@ public class MapFragment extends Fragment implements
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
+        LogUtil.d("ViewPager", "MapFragment");
+
         root = inflater.inflate(R.layout.fragment_map, container, false);
         mContext = getActivity();
 

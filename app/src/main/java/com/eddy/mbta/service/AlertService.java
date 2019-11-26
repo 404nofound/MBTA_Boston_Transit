@@ -119,7 +119,10 @@ public class AlertService extends Service {
             Message message = new Message();
             message.what = 1;
             message.obj = service.list;
-            AlertsFragment.handler.sendMessage(message);
+
+            if (AlertsFragment.handler != null) {
+                AlertsFragment.handler.sendMessage(message);
+            }
 
             mTask = null;
         }

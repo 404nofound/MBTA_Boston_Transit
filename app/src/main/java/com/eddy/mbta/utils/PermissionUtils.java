@@ -22,12 +22,18 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.eddy.mbta.R;
 
@@ -35,6 +41,33 @@ import com.eddy.mbta.R;
  * Utility class for access to runtime permissions.
  */
 public abstract class PermissionUtils {
+
+    public static boolean isNotificationPermissionOpen(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return NotificationManagerCompat.from(context).getImportance() != NotificationManager.IMPORTANCE_NONE;
+        }
+        return NotificationManagerCompat.from(context).areNotificationsEnabled();
+    }
+
+    public static void openNotificationPermissionSetting(Context context) {
+        try {
+            Intent localIntent = new Intent();
+            localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //直接跳转到应用通知设置的代码：
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                localIntent.setAction(Settings.ACTION_APP_NOTIFICATION_SETTINGS);
+                localIntent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+                context.startActivity(localIntent);
+            } else {
+                localIntent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                localIntent.putExtra("app_package", context.getPackageName());
+                localIntent.putExtra("app_uid", context.getApplicationInfo().uid);
+                context.startActivity(localIntent);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Requests the fine location permission. If a rationale with an additional explanation should
