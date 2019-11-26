@@ -8,15 +8,11 @@
       alt="Download from Google Play" 
       height="70">](https://play.google.com/store/apps/details?id=com.eddy.mbta)
 
-## Demo
-
-#### Video is still on processing
-
-<img align="center" src="https://github.com/404nofound/MBTA_Boston_Transit/blob/master/screenshots/1.png" alt="" width="288" height="512" style="display: inline; float: right"/><img align="center" src="https://github.com/404nofound/MBTA_Boston_Transit/blob/master/screenshots/2.png" alt="" width="288" height="512" style="display: inline; float: right"/>
-
-<img align="center" src="https://github.com/404nofound/MBTA_Boston_Transit/blob/master/screenshots/3.png" alt="" width="288" height="512" style="display: inline; float: right"/><img align="center" src="https://github.com/404nofound/MBTA_Boston_Transit/blob/master/screenshots/4.png" alt="" width="288" height="512" style="display: inline; float: right"/>
+<img align="right" src="https://github.com/404nofound/MBTA_Boston_Transit/blob/master/demo1.gif" alt="" width="288" height="512" style="display: inline; float: right"/>
 
 ## About Boston T
+
+[Video](http://www.yichangshao.com/demo/demo.mp4)
 
 For Boston Train System, the delay happens all the time, even though it won the second place in whole US transportation system recently, but most residents disagree with it. My project designed a real-time train App to help residents find when train will arrive or departure at a special station and show trains' current location in the map, this app also supports emergency alert, route plan and show stations’ detail info functions, etc. I hope this app can reduce residents’ waiting time and help user schedule their trip.
 
@@ -38,7 +34,7 @@ on processing
 
 [authorSvg]: https://img.shields.io/badge/author-S.YC-brightgreen.svg
 
-[versSvg]: https://img.shields.io/badge/appVersion-v1.5-brightgreen.svg
+[versSvg]: https://img.shields.io/badge/appVersion-v1.9-brightgreen.svg
 
 [sdkSvg]: https://img.shields.io/badge/minSdkVersion-23-brightgreen.svg
 
