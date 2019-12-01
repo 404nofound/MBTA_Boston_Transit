@@ -16,9 +16,7 @@ public class AlertBean {
         return data;
     }
 
-    public void setData(List<DataBean> data) {
-        this.data = data;
-    }
+    public void setData(List<DataBean> data) { this.data = data; }
 
     public static class DataBean {
         /**
@@ -76,61 +74,10 @@ public class AlertBean {
              * url : https://www.mbta.com/southshore
              */
 
-            private Object banner;
-            private String cause;
-            private String created_at;
-            private String description;
-            private String effect;
             private String header;
             private String lifecycle;
             private String service_effect;
-            private int severity;
-            private String short_header;
-            private String timeframe;
             private String updated_at;
-            private String url;
-            private List<ActivePeriodBean> active_period;
-
-
-            public Object getBanner() {
-                return banner;
-            }
-
-            public void setBanner(Object banner) {
-                this.banner = banner;
-            }
-
-            public String getCause() {
-                return cause;
-            }
-
-            public void setCause(String cause) {
-                this.cause = cause;
-            }
-
-            public String getCreated_at() {
-                return created_at;
-            }
-
-            public void setCreated_at(String created_at) {
-                this.created_at = created_at;
-            }
-
-            public String getDescription() {
-                return description;
-            }
-
-            public void setDescription(String description) {
-                this.description = description;
-            }
-
-            public String getEffect() {
-                return effect;
-            }
-
-            public void setEffect(String effect) {
-                this.effect = effect;
-            }
 
             public String getHeader() {
                 return header;
@@ -152,33 +99,7 @@ public class AlertBean {
                 return service_effect;
             }
 
-            public void setService_effect(String service_effect) {
-                this.service_effect = service_effect;
-            }
-
-            public int getSeverity() {
-                return severity;
-            }
-
-            public void setSeverity(int severity) {
-                this.severity = severity;
-            }
-
-            public String getShort_header() {
-                return short_header;
-            }
-
-            public void setShort_header(String short_header) {
-                this.short_header = short_header;
-            }
-
-            public String getTimeframe() {
-                return timeframe;
-            }
-
-            public void setTimeframe(String timeframe) {
-                this.timeframe = timeframe;
-            }
+            public void setService_effect(String service_effect) { this.service_effect = service_effect; }
 
             public String getUpdated_at() {
                 return updated_at;
@@ -186,50 +107,6 @@ public class AlertBean {
 
             public void setUpdated_at(String updated_at) {
                 this.updated_at = updated_at;
-            }
-
-            public String getUrl() {
-                return url;
-            }
-
-            public void setUrl(String url) {
-                this.url = url;
-            }
-
-            public List<ActivePeriodBean> getActive_period() {
-                return active_period;
-            }
-
-            public void setActive_period(List<ActivePeriodBean> active_period) {
-                this.active_period = active_period;
-            }
-
-
-
-            public static class ActivePeriodBean {
-                /**
-                 * end : null
-                 * start : 2019-02-01T04:30:00-05:00
-                 */
-
-                private Object end;
-                private String start;
-
-                public Object getEnd() {
-                    return end;
-                }
-
-                public void setEnd(Object end) {
-                    this.end = end;
-                }
-
-                public String getStart() {
-                    return start;
-                }
-
-                public void setStart(String start) {
-                    this.start = start;
-                }
             }
 
         }

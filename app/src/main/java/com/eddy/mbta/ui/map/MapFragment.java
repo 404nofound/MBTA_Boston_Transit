@@ -83,7 +83,7 @@ public class MapFragment extends Fragment implements
     private Location lastSearchLocation = null;
 
     private NearbyStationAdapter nearbyStationAdapter;
-    private List<NearbyStationBean.IncludedBean> nearbyStationList = new ArrayList<>();
+    private List<NearbyStationBean.DataBeanX> nearbyStationList = new ArrayList<>();
 
     private List<LatLng> routeList = new ArrayList<>();
     private Polyline polyline;
@@ -310,7 +310,7 @@ public class MapFragment extends Fragment implements
                 return;
             }
 
-            NearbyStationBean.IncludedBean station = nearbyStationList.get(position);
+            NearbyStationBean.DataBeanX station = nearbyStationList.get(position);
             requestRoute(station.getAttributes().getLatitude(), station.getAttributes().getLongitude());
         }
     };
@@ -445,7 +445,7 @@ public class MapFragment extends Fragment implements
             return;
         }
 
-        String url = "https://api-v3.mbta.com/stops?include=parent_station&filter[route_type]=0,1&filter[latitude]=" + mlat + "&filter[longitude]=" + mlng + "&filter[radius]=" + mradius + "&sort=distance";
+        String url = "https://api-v3.mbta.com/stops?filter[route_type]=0,1&sort=distance&filter[latitude]=" + mlat + "&filter[longitude]=" + mlng + "&filter[radius]=" + mradius;
 
         HttpClientUtil.sendOkHttpRequest(url, new Callback() {
             @Override
@@ -454,8 +454,8 @@ public class MapFragment extends Fragment implements
                 Gson gson = new Gson();
                 final NearbyStationBean nearbyStationItem = gson.fromJson(response.body().string().trim(), NearbyStationBean.class);
 
-                if (nearbyStationItem.getIncluded() != null && nearbyStationItem.getIncluded().size() == 0) {
-                    if (mradius >= 0.05) {
+                if (nearbyStationItem.getData() != null && nearbyStationItem.getData().size() == 0) {
+                    if (mradius > 0.05) {
                         Snackbar.make(getView(), "It seems like you are away from stations, Please using search station function.", Snackbar.LENGTH_LONG)
                                 .setAction("Dismiss", new View.OnClickListener() {
                                     @Override
@@ -479,7 +479,11 @@ public class MapFragment extends Fragment implements
                                     nearbyStationList.clear();
                                     nearbyStationAdapter.notifyItemRangeRemoved(0, previousSize);
                                 }
-                                nearbyStationList.addAll(nearbyStationItem.getIncluded());
+
+                                for (int i = 0; i < nearbyStationItem.getData().size() - 1; i += 2) {
+                                    nearbyStationList.add(nearbyStationItem.getData().get(i));
+                                }
+
                                 nearbyStationAdapter.notifyItemRangeInserted(0, nearbyStationList.size());
                             }
                         });

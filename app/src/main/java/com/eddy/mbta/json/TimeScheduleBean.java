@@ -10,17 +10,8 @@ public class TimeScheduleBean {
      * jsonapi : {"version":"1.0"}
      */
 
-    private JsonapiBean jsonapi;
     private List<DataBeanXXXX> data;
     private List<IncludedBean> included;
-
-    public JsonapiBean getJsonapi() {
-        return jsonapi;
-    }
-
-    public void setJsonapi(JsonapiBean jsonapi) {
-        this.jsonapi = jsonapi;
-    }
 
     public List<DataBeanXXXX> getData() {
         return data;
@@ -30,29 +21,9 @@ public class TimeScheduleBean {
         this.data = data;
     }
 
-    public List<IncludedBean> getIncluded() {
-        return included;
-    }
+    public List<IncludedBean> getIncluded() { return included; }
 
-    public void setIncluded(List<IncludedBean> included) {
-        this.included = included;
-    }
-
-    public static class JsonapiBean {
-        /**
-         * version : 1.0
-         */
-
-        private String version;
-
-        public String getVersion() {
-            return version;
-        }
-
-        public void setVersion(String version) {
-            this.version = version;
-        }
-    }
+    public void setIncluded(List<IncludedBean> included) { this.included = included; }
 
     public static class DataBeanXXXX {
         /**
@@ -63,9 +34,7 @@ public class TimeScheduleBean {
          */
 
         private AttributesBean attributes;
-        private String id;
         private RelationshipsBean relationships;
-        private String type;
 
         public AttributesBean getAttributes() {
             return attributes;
@@ -75,29 +44,11 @@ public class TimeScheduleBean {
             this.attributes = attributes;
         }
 
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
         public RelationshipsBean getRelationships() {
             return relationships;
         }
 
-        public void setRelationships(RelationshipsBean relationships) {
-            this.relationships = relationships;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
+        public void setRelationships(RelationshipsBean relationships) { this.relationships = relationships; }
 
         public static class AttributesBean {
             /**
@@ -112,9 +63,6 @@ public class TimeScheduleBean {
             private String arrival_time;
             private String departure_time;
             private int direction_id;
-            private Object schedule_relationship;
-            private Object status;
-            private int stop_sequence;
 
             public String getArrival_time() {
                 return arrival_time;
@@ -128,9 +76,7 @@ public class TimeScheduleBean {
                 return departure_time;
             }
 
-            public void setDeparture_time(String departure_time) {
-                this.departure_time = departure_time;
-            }
+            public void setDeparture_time(String departure_time) { this.departure_time = departure_time; }
 
             public int getDirection_id() {
                 return direction_id;
@@ -138,30 +84,6 @@ public class TimeScheduleBean {
 
             public void setDirection_id(int direction_id) {
                 this.direction_id = direction_id;
-            }
-
-            public Object getSchedule_relationship() {
-                return schedule_relationship;
-            }
-
-            public void setSchedule_relationship(Object schedule_relationship) {
-                this.schedule_relationship = schedule_relationship;
-            }
-
-            public Object getStatus() {
-                return status;
-            }
-
-            public void setStatus(Object status) {
-                this.status = status;
-            }
-
-            public int getStop_sequence() {
-                return stop_sequence;
-            }
-
-            public void setStop_sequence(int stop_sequence) {
-                this.stop_sequence = stop_sequence;
             }
         }
 
@@ -174,9 +96,7 @@ public class TimeScheduleBean {
              */
 
             private RouteBean route;
-            private StopBean stop;
             private TripBean trip;
-            private VehicleBean vehicle;
 
             public RouteBean getRoute() {
                 return route;
@@ -186,29 +106,9 @@ public class TimeScheduleBean {
                 this.route = route;
             }
 
-            public StopBean getStop() {
-                return stop;
-            }
+            public TripBean getTrip() { return trip; }
 
-            public void setStop(StopBean stop) {
-                this.stop = stop;
-            }
-
-            public TripBean getTrip() {
-                return trip;
-            }
-
-            public void setTrip(TripBean trip) {
-                this.trip = trip;
-            }
-
-            public VehicleBean getVehicle() {
-                return vehicle;
-            }
-
-            public void setVehicle(VehicleBean vehicle) {
-                this.vehicle = vehicle;
-            }
+            public void setTrip(TripBean trip) { this.trip = trip; }
 
             public static class RouteBean {
                 /**
@@ -232,7 +132,6 @@ public class TimeScheduleBean {
                      */
 
                     private String id;
-                    private String type;
 
                     public String getId() {
                         return id;
@@ -240,56 +139,6 @@ public class TimeScheduleBean {
 
                     public void setId(String id) {
                         this.id = id;
-                    }
-
-                    public String getType() {
-                        return type;
-                    }
-
-                    public void setType(String type) {
-                        this.type = type;
-                    }
-                }
-            }
-
-            public static class StopBean {
-                /**
-                 * data : {"id":"70081","type":"stop"}
-                 */
-
-                private DataBeanX data;
-
-                public DataBeanX getData() {
-                    return data;
-                }
-
-                public void setData(DataBeanX data) {
-                    this.data = data;
-                }
-
-                public static class DataBeanX {
-                    /**
-                     * id : 70081
-                     * type : stop
-                     */
-
-                    private String id;
-                    private String type;
-
-                    public String getId() {
-                        return id;
-                    }
-
-                    public void setId(String id) {
-                        this.id = id;
-                    }
-
-                    public String getType() {
-                        return type;
-                    }
-
-                    public void setType(String type) {
-                        this.type = type;
                     }
                 }
             }
@@ -316,7 +165,6 @@ public class TimeScheduleBean {
                      */
 
                     private String id;
-                    private String type;
 
                     public String getId() {
                         return id;
@@ -324,56 +172,6 @@ public class TimeScheduleBean {
 
                     public void setId(String id) {
                         this.id = id;
-                    }
-
-                    public String getType() {
-                        return type;
-                    }
-
-                    public void setType(String type) {
-                        this.type = type;
-                    }
-                }
-            }
-
-            public static class VehicleBean {
-                /**
-                 * data : {"id":"R-5460A8F9","type":"vehicle"}
-                 */
-
-                private DataBeanXXX data;
-
-                public DataBeanXXX getData() {
-                    return data;
-                }
-
-                public void setData(DataBeanXXX data) {
-                    this.data = data;
-                }
-
-                public static class DataBeanXXX {
-                    /**
-                     * id : R-5460A8F9
-                     * type : vehicle
-                     */
-
-                    private String id;
-                    private String type;
-
-                    public String getId() {
-                        return id;
-                    }
-
-                    public void setId(String id) {
-                        this.id = id;
-                    }
-
-                    public String getType() {
-                        return type;
-                    }
-
-                    public void setType(String type) {
-                        this.type = type;
                     }
                 }
             }
@@ -391,49 +189,19 @@ public class TimeScheduleBean {
 
         private AttributesBeanX attributes;
         private String id;
-        private LinksBean links;
         private RelationshipsBeanX relationships;
-        private String type;
 
-        public AttributesBeanX getAttributes() {
-            return attributes;
-        }
+        public AttributesBeanX getAttributes() { return attributes; }
 
-        public void setAttributes(AttributesBeanX attributes) {
-            this.attributes = attributes;
-        }
+        public void setAttributes(AttributesBeanX attributes) { this.attributes = attributes; }
 
-        public String getId() {
-            return id;
-        }
+        public String getId() { return id; }
 
-        public void setId(String id) {
-            this.id = id;
-        }
+        public void setId(String id) { this.id = id; }
 
-        public LinksBean getLinks() {
-            return links;
-        }
+        public RelationshipsBeanX getRelationships() { return relationships; }
 
-        public void setLinks(LinksBean links) {
-            this.links = links;
-        }
-
-        public RelationshipsBeanX getRelationships() {
-            return relationships;
-        }
-
-        public void setRelationships(RelationshipsBeanX relationships) {
-            this.relationships = relationships;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
+        public void setRelationships(RelationshipsBeanX relationships) { this.relationships = relationships; }
 
         public static class AttributesBeanX {
             /**
@@ -445,76 +213,16 @@ public class TimeScheduleBean {
              * wheelchair_accessible : 1
              */
 
-            private int bikes_allowed;
-            private String block_id;
             private int direction_id;
             private String headsign;
-            private String name;
-            private int wheelchair_accessible;
 
-            public int getBikes_allowed() {
-                return bikes_allowed;
-            }
+            public int getDirection_id() { return direction_id; }
 
-            public void setBikes_allowed(int bikes_allowed) {
-                this.bikes_allowed = bikes_allowed;
-            }
+            public void setDirection_id(int direction_id) { this.direction_id = direction_id; }
 
-            public String getBlock_id() {
-                return block_id;
-            }
+            public String getHeadsign() { return headsign; }
 
-            public void setBlock_id(String block_id) {
-                this.block_id = block_id;
-            }
-
-            public int getDirection_id() {
-                return direction_id;
-            }
-
-            public void setDirection_id(int direction_id) {
-                this.direction_id = direction_id;
-            }
-
-            public String getHeadsign() {
-                return headsign;
-            }
-
-            public void setHeadsign(String headsign) {
-                this.headsign = headsign;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public int getWheelchair_accessible() {
-                return wheelchair_accessible;
-            }
-
-            public void setWheelchair_accessible(int wheelchair_accessible) {
-                this.wheelchair_accessible = wheelchair_accessible;
-            }
-        }
-
-        public static class LinksBean {
-            /**
-             * self : /trips/41527191
-             */
-
-            private String self;
-
-            public String getSelf() {
-                return self;
-            }
-
-            public void setSelf(String self) {
-                this.self = self;
-            }
+            public void setHeadsign(String headsign) { this.headsign = headsign; }
         }
 
         public static class RelationshipsBeanX {
@@ -526,41 +234,10 @@ public class TimeScheduleBean {
              */
 
             private RouteBeanX route;
-            private RoutePatternBean route_pattern;
-            private ServiceBean service;
-            private ShapeBean shape;
 
-            public RouteBeanX getRoute() {
-                return route;
-            }
+            public RouteBeanX getRoute() { return route; }
 
-            public void setRoute(RouteBeanX route) {
-                this.route = route;
-            }
-
-            public RoutePatternBean getRoute_pattern() {
-                return route_pattern;
-            }
-
-            public void setRoute_pattern(RoutePatternBean route_pattern) {
-                this.route_pattern = route_pattern;
-            }
-
-            public ServiceBean getService() {
-                return service;
-            }
-
-            public void setService(ServiceBean service) {
-                this.service = service;
-            }
-
-            public ShapeBean getShape() {
-                return shape;
-            }
-
-            public void setShape(ShapeBean shape) {
-                this.shape = shape;
-            }
+            public void setRoute(RouteBeanX route) { this.route = route; }
 
             public static class RouteBeanX {
                 /**
@@ -584,7 +261,6 @@ public class TimeScheduleBean {
                      */
 
                     private String id;
-                    private String type;
 
                     public String getId() {
                         return id;
@@ -592,140 +268,6 @@ public class TimeScheduleBean {
 
                     public void setId(String id) {
                         this.id = id;
-                    }
-
-                    public String getType() {
-                        return type;
-                    }
-
-                    public void setType(String type) {
-                        this.type = type;
-                    }
-                }
-            }
-
-            public static class RoutePatternBean {
-                /**
-                 * data : {"id":"Red-1-0","type":"route_pattern"}
-                 */
-
-                private DataBeanXXXXXX data;
-
-                public DataBeanXXXXXX getData() {
-                    return data;
-                }
-
-                public void setData(DataBeanXXXXXX data) {
-                    this.data = data;
-                }
-
-                public static class DataBeanXXXXXX {
-                    /**
-                     * id : Red-1-0
-                     * type : route_pattern
-                     */
-
-                    private String id;
-                    private String type;
-
-                    public String getId() {
-                        return id;
-                    }
-
-                    public void setId(String id) {
-                        this.id = id;
-                    }
-
-                    public String getType() {
-                        return type;
-                    }
-
-                    public void setType(String type) {
-                        this.type = type;
-                    }
-                }
-            }
-
-            public static class ServiceBean {
-                /**
-                 * data : {"id":"RTL419-9-Wdy-01","type":"service"}
-                 */
-
-                private DataBeanXXXXXXX data;
-
-                public DataBeanXXXXXXX getData() {
-                    return data;
-                }
-
-                public void setData(DataBeanXXXXXXX data) {
-                    this.data = data;
-                }
-
-                public static class DataBeanXXXXXXX {
-                    /**
-                     * id : RTL419-9-Wdy-01
-                     * type : service
-                     */
-
-                    private String id;
-                    private String type;
-
-                    public String getId() {
-                        return id;
-                    }
-
-                    public void setId(String id) {
-                        this.id = id;
-                    }
-
-                    public String getType() {
-                        return type;
-                    }
-
-                    public void setType(String type) {
-                        this.type = type;
-                    }
-                }
-            }
-
-            public static class ShapeBean {
-                /**
-                 * data : {"id":"931_0009","type":"shape"}
-                 */
-
-                private DataBeanXXXXXXXX data;
-
-                public DataBeanXXXXXXXX getData() {
-                    return data;
-                }
-
-                public void setData(DataBeanXXXXXXXX data) {
-                    this.data = data;
-                }
-
-                public static class DataBeanXXXXXXXX {
-                    /**
-                     * id : 931_0009
-                     * type : shape
-                     */
-
-                    private String id;
-                    private String type;
-
-                    public String getId() {
-                        return id;
-                    }
-
-                    public void setId(String id) {
-                        this.id = id;
-                    }
-
-                    public String getType() {
-                        return type;
-                    }
-
-                    public void setType(String type) {
-                        this.type = type;
                     }
                 }
             }

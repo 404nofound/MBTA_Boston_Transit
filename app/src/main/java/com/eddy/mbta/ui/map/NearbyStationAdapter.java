@@ -25,7 +25,7 @@ import java.util.List;
 
 public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdapter.ViewHolder>{
 
-    private List<NearbyStationBean.IncludedBean> mNearbyStationList;
+    private List<NearbyStationBean.DataBeanX> mNearbyStationList;
 
     private Context mContext;
     private Window mWindow;
@@ -51,7 +51,7 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
         }
     }
 
-    public NearbyStationAdapter(List<NearbyStationBean.IncludedBean> nearbyStationList, Window window, View root) {
+    public NearbyStationAdapter(List<NearbyStationBean.DataBeanX> nearbyStationList, Window window, View root) {
         mNearbyStationList = nearbyStationList;
         mWindow = window;
         mRoot = root;
@@ -83,14 +83,14 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
 
                 if (position == -1) return;
 
-                NearbyStationBean.IncludedBean station = mNearbyStationList.get(position);
+                NearbyStationBean.DataBeanX station = mNearbyStationList.get(position);
 
                 if (MyApplication.NET_STATUS == -1) {
                     Toast.makeText(MyApplication.getContext(), "No Internet", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                SchedulePopWindow PopWin = new SchedulePopWindow(mContext, station.getAttributes().getName(), station.getId());
+                SchedulePopWindow PopWin = new SchedulePopWindow(mContext, station.getAttributes().getName(), station.getRelationships().getParent_station().getData().getId());
 
                 PopWin.showAtLocation(mRoot.findViewById(R.id.layout), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
 
@@ -122,7 +122,7 @@ public class NearbyStationAdapter extends RecyclerView.Adapter<NearbyStationAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        NearbyStationBean.IncludedBean station = mNearbyStationList.get(position);
+        NearbyStationBean.DataBeanX station = mNearbyStationList.get(position);
         holder.stationName.setText(station.getAttributes().getName());
 
         int wheel = station.getAttributes().getWheelchair_boarding();
