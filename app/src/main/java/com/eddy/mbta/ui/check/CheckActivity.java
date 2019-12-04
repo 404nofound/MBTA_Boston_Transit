@@ -74,18 +74,18 @@ public class CheckActivity extends BaseActivity {
                     .show();
 
             if (!MyApplication.GPS_ENABLED) {
-                new AlertDialog.Builder(this)
-                        .setMessage(R.string.gps_network_not_enabled)
-                        .setPositiveButton(R.string.open_location_settings, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                            }
-                        })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                                finish();
+                                    new AlertDialog.Builder(this)
+                                            .setMessage(R.string.gps_network_not_enabled)
+                                            .setPositiveButton(R.string.open_location_settings, new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                                                    startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                                                }
+                                            })
+                                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                                                    finish();
                             }
                         })
                         .setCancelable(false)

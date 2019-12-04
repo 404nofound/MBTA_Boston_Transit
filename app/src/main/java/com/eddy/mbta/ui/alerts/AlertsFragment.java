@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
@@ -53,6 +54,9 @@ public class AlertsFragment extends Fragment {
     private SwipeRefreshLayout swipeRefresh;
 
     public static Handler handler;
+
+    private SharedPreferences sharedPref = MyApplication.getContext().getSharedPreferences("first_time", Context.MODE_PRIVATE);
+    private SharedPreferences.Editor editor = sharedPref.edit();
 
     public static AlertsFragment newInstance() {
         Bundle args = new Bundle ();
@@ -153,9 +157,12 @@ public class AlertsFragment extends Fragment {
                     fragment.alertList.addAll(list);
                     fragment.adapter.notifyItemRangeInserted(0, fragment.alertList.size());
 
-                    if (MyApplication.notification_ask_first && !PermissionUtils.isNotificationPermissionOpen(fragment.getActivity())) {
+                    boolean first_time = fragment.sharedPref.getBoolean("first_time", true);
+
+                    if (first_time && !PermissionUtils.isNotificationPermissionOpen(fragment.getActivity())) {
                         //Only ask for once
-                        MyApplication.notification_ask_first = false;
+                        fragment.editor.putBoolean("first_time", false);
+                        fragment.editor.commit();
 
                         new AlertDialog.Builder(fragment.getActivity())
                                 .setMessage(R.string.notification_not_enabled)

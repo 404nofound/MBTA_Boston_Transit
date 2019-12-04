@@ -6,8 +6,8 @@ android {
         applicationId "com.eddy.mbta"
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 11
-        versionName "2.0"
+        versionCode 13
+        versionName "2.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

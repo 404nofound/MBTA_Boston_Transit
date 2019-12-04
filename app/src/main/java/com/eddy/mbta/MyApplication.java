@@ -14,7 +14,6 @@ public class MyApplication extends Application {
     public static int NET_STATUS = -1;
     public static boolean GPS_ENABLED = false;
     public static String station = "";
-    public static boolean notification_ask_first = true;
     public static int notification_id = 0;
 
     @Override
