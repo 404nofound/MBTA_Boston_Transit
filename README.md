@@ -12,7 +12,7 @@
 
 ## About Boston T
 
-[Video](https://www.yichangshao.com/demo/demo.mp4)
+[Video](http://3.21.206.219/demo/demo.mp4)
 
 For Boston Train System, the delay happens all the time, even though it won the second place in whole US transportation system recently, but most residents disagree with it. My project designed a real-time train App to help residents find when train will arrive or departure at a special station and show trains' current location in the map, this app also supports emergency alert, route plan and show stations’ detail info functions, etc. I hope this app can reduce residents’ waiting time and help user schedule their trip.
 
