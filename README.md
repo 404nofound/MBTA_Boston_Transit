@@ -30,7 +30,7 @@ For Boston Train System, the delay happens all the time, even though it won the 
 
 on processing
 
-[App logo]: https://yichangshao.com/app/icon.png
+[App logo]: http://3.21.206.219/app/icon.png
 
 [authorSvg]: https://img.shields.io/badge/author-S.YC-brightgreen.svg
 
